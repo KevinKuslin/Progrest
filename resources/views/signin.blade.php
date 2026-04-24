@@ -11,6 +11,7 @@
         <div class="w-full h-full flex rounded-[20px] bg-white shadow opacity-90">
             <div class="col-6 bg-amber-800 flex items-center justify-center w-full">
                 <p>ppppppppppppppppifiowfi</p>
+                <p>Ziuuuuuuu</p>
             </div>
             <div class="col-6 bg-amber-200 flex items-center justify-center w-full">
 
