@@ -46,7 +46,7 @@
                 <div class="relative w-full flex items-center justify-center mb-3 mt-0">
                     
                     <div class="absolute left-0">
-                        <a href="javascript:history.back()" class="w-9 h-9 md:w-10 md:h-10 bg-[#14452F] hover:bg-[#217750] text-white rounded-full flex items-center justify-center transition-colors shadow-sm cursor-pointer">
+                        <a href="/landing" class="w-9 h-9 md:w-10 md:h-10 bg-[#14452F] hover:bg-[#217750] text-white rounded-full flex items-center justify-center transition-colors shadow-sm cursor-pointer">
                             <x-lucide-corner-up-left class="w-4 h-4 md:w-5 md:h-5 stroke-[2.5px]" />
                         </a>
                     </div>
@@ -63,25 +63,37 @@
                     Plan your project effectively through simplified interactivity and collaboration with users around the world.
                 </p>
 
-                <form action="/dashboard" method="POST" class="space-y-3 lg:space-y-3.5">
-                    <div>
-                        <label class="block text-xs md:text-sm font-bold text-[#111827] mb-1">E-mail Address</label>
+                <form id="loginForm" action="/login" method="POST" class="space-y-3 lg:space-y-3.5" novalidate>
+                    @csrf
+                    
+                    <div id="emailWrapper" class="group">
+                        <label class="block text-xs md:text-sm font-bold text-[#111827] mb-1">Email Address</label>
                         <div class="relative">
-                            <input type="email" placeholder="E-mail must be appropriate" 
-                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-10 md:pr-12 py-2.5 focus:outline-none focus:border-[#14452F] focus:bg-white/80 text-xs md:text-sm transition-all text-[#111827] placeholder-gray-400 bg-white/50">
+                            <input id="emailInput" type="email" name="email" required pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$" placeholder="Enter your email" 
+                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-10 md:pr-12 py-2.5 focus:outline-none focus:border-[#14452F] focus:bg-white/80 text-xs md:text-sm transition-all text-[#111827] placeholder-gray-400 bg-white/50 group-[.has-error]:border-[#217750] group-[.has-error]:bg-white">
                             <div class="absolute right-3 md:right-4 top-1/2 -translate-y-1/2">
                                 <x-lucide-mail class="w-4 h-4 md:w-5 md:h-5 text-[#14452F]" />
+                            </div>
+
+                            <div class="absolute left-0 top-[115%] w-max max-w-[280px] p-3 bg-[#14452F] border border-[#217750] rounded-xl shadow-xl opacity-0 invisible transition-all duration-300 group-[.has-error]:opacity-100 group-[.has-error]:visible z-50 translate-y-2 group-[.has-error]:translate-y-0">
+                                <div class="absolute -top-1.5 left-5 w-3 h-3 bg-[#14452F] border-l border-t border-[#217750] rotate-45"></div>
+                                <div id="emailError" class="text-xs text-white font-medium relative z-10 leading-relaxed tracking-wide"></div>
                             </div>
                         </div>
                     </div>
 
-                    <div>
+                    <div id="passwordWrapper" class="group">
                         <label class="block text-xs md:text-sm font-bold text-[#111827] mb-1">Password</label>
                         <div class="relative">
-                            <input type="password" placeholder="Password must be 6-12 characters" 
-                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-10 md:pr-12 py-2.5 focus:outline-none focus:border-[#14452F] focus:bg-white/80 text-xs md:text-sm transition-all text-[#111827] placeholder-gray-400 bg-white/50">
+                            <input id="passwordInput" type="password" name="password" required pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" placeholder="Enter your password" 
+                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-10 md:pr-12 py-2.5 focus:outline-none focus:border-[#14452F] focus:bg-white/80 text-xs md:text-sm transition-all text-[#111827] placeholder-gray-400 bg-white/50 group-[.has-error]:border-[#217750] group-[.has-error]:bg-white">
                             <div class="absolute right-3 md:right-4 top-1/2 -translate-y-1/2">
                                 <x-lucide-lock class="w-4 h-4 md:w-5 md:h-5 text-[#14452F]" />
+                            </div>
+
+                            <div class="absolute left-0 top-[115%] w-max max-w-[280px] p-3 bg-[#14452F] border border-[#217750] rounded-xl shadow-xl opacity-0 invisible transition-all duration-300 group-[.has-error]:opacity-100 group-[.has-error]:visible z-50 translate-y-2 group-[.has-error]:translate-y-0">
+                                <div class="absolute -top-1.5 left-5 w-3 h-3 bg-[#14452F] border-l border-t border-[#217750] rotate-45"></div>
+                                <div id="passwordError" class="text-xs text-white font-medium relative z-10 leading-relaxed tracking-wide"></div>
                             </div>
                         </div>
                     </div>
@@ -91,7 +103,7 @@
                         <label for="remember" class="ml-2 text-xs md:text-sm text-[#545454] cursor-pointer hover:text-[#14452F] transition-colors">Remember Me</label>
                     </div>
 
-                    <div class="text-center text-xs md:text-sm text-[#545454] mt-3 mb-2">
+                    <div class="text-center text-xs md:text-sm text-[#545454] mt-5 mb-3">
                         Don't have an account? <a href="/register" class="font-bold text-[#6B7280] hover:text-[#14452F] transition-colors underline decoration-1 underline-offset-4">Get Progrest Now</a>
                     </div>
 
@@ -99,7 +111,7 @@
                         Log In
                     </button>
 
-                    <div class="flex items-center my-2 opacity-70">
+                    <div class="flex items-center opacity-70">
                         <hr class="flex-grow border-gray-300">
                         <span class="px-3 text-[9px] md:text-[10px] text-gray-500 font-bold uppercase tracking-wider">OR</span>
                         <hr class="flex-grow border-gray-300">
@@ -110,23 +122,70 @@
                         Continue with Google
                     </a>
 
-                    <div class="text-center mt-4">
+                    <div class="text-center mt-3">
                         <a href="/forgot" class="text-xs md:text-sm font-bold text-[#6B7280] hover:text-[#14452F] transition-colors underline decoration-1 underline-offset-4">Forgot Your Password?</a>
                     </div>
                 </form>
             </div>
         </div>
 
-        <div class="w-full lg:w-1/2 relative h-48 sm:h-64 md:h-80 lg:h-full animate-reveal delay-200 opacity-0 order-first lg:order-last shrink-0 mt-2 lg:mt-0">
-            <div class="absolute top-[5%] md:top-[10%] lg:top-[12%] left-[8%] md:left-[15%] lg:left-[8%] w-[60%] md:w-[45%] lg:w-[72%] aspect-[3/2] bg-[#E9F2EE] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg border-2 lg:border-4 border-white transform transition-all duration-500 hover:scale-105 lg:hover:-translate-y-6 lg:hover:-translate-x-6 hover:-rotate-3 hover:z-40 z-10 hover:shadow-2xl">
+        <div class="w-full lg:w-1/2 relative h-40 sm:h-56 lg:h-full animate-reveal delay-200 opacity-0 order-first lg:order-last shrink-0 mt-2 lg:mt-0">
+            <div class="absolute top-[5%] lg:top-[12%] left-[8%] lg:left-[8%] w-[60%] lg:w-[72%] aspect-[3/2] bg-[#E9F2EE] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg border-2 lg:border-4 border-white transform transition-all duration-500 hover:scale-105 lg:hover:-translate-y-6 lg:hover:-translate-x-6 hover:-rotate-3 hover:z-40 z-10 hover:shadow-2xl">
                 <img src="images/Teamwork_Stock.png" alt="" class="w-full h-full object-cover">
             </div>
             
-            <div class="absolute bottom-[5%] md:bottom-[10%] lg:bottom-[12%] right-[8%] md:right-[15%] lg:right-[8%] w-[60%] md:w-[45%] lg:w-[72%] aspect-[3/2] bg-[#BDD7CB] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg border-2 lg:border-4 border-white transform transition-all duration-500 hover:scale-105 lg:hover:translate-y-6 lg:hover:translate-x-6 hover:rotate-3 hover:z-40 z-20 hover:shadow-2xl">
+            <div class="absolute bottom-[5%] lg:bottom-[12%] right-[8%] lg:right-[8%] w-[60%] lg:w-[72%] aspect-[3/2] bg-[#BDD7CB] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg border-2 lg:border-4 border-white transform transition-all duration-500 hover:scale-105 lg:hover:translate-y-6 lg:hover:translate-x-6 hover:rotate-3 hover:z-40 z-20 hover:shadow-2xl">
                 <img src="images/Discuss_Stock.png" alt="" class="w-full h-full object-cover">
             </div>
         </div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('loginForm');
+            
+            const config = [
+                {
+                    input: document.getElementById('emailInput'),
+                    wrapper: document.getElementById('emailWrapper'),
+                    error: document.getElementById('emailError'),
+                    message: 'Invalid email format. Use a format like user@progrest.com'
+                },
+                {
+                    input: document.getElementById('passwordInput'),
+                    wrapper: document.getElementById('passwordWrapper'),
+                    error: document.getElementById('passwordError'),
+                    message: 'Password must be at least 8 characters and contain both letters and numbers.'
+                }
+            ];
+
+            const validate = (item) => {
+                if (!item.input.value) {
+                    item.wrapper.classList.remove('has-error');
+                    return true;
+                }
+                if (!item.input.checkValidity()) {
+                    item.wrapper.classList.add('has-error');
+                    item.error.textContent = item.message;
+                    return false;
+                }
+                item.wrapper.classList.remove('has-error');
+                return true;
+            };
+
+            config.forEach(item => {
+                item.input.addEventListener('blur', () => validate(item));
+                item.input.addEventListener('input', () => item.wrapper.classList.remove('has-error'));
+            });
+
+            form.addEventListener('submit', (e) => {
+                let isValid = true;
+                config.forEach(item => {
+                    if (!validate(item)) isValid = false;
+                });
+                if (!isValid) e.preventDefault();
+            });
+        });
+    </script>
 </body>
 </html>
