@@ -33,7 +33,7 @@
 <body class="font-inter antialiased min-h-screen lg:h-screen w-full bg-cover bg-center bg-no-repeat flex items-center justify-center p-4 py-8 md:p-8 overflow-x-hidden lg:overflow-hidden" 
       style="background-image: url('images/Checker_BG.png'); background-color: #E9F2EE;">
 
-    <div class="w-full max-w-[340px] md:max-w-2xl lg:max-w-6xl h-auto lg:h-[85vh] lg:max-h-[850px] min-h-min lg:min-h-[600px] bg-white/90 backdrop-blur-md rounded-[30px] lg:rounded-[40px] shadow-2xl flex flex-col lg:flex-row relative animate-reveal">
+    <div class="w-full max-w-7/8 md:max-w-7/8 lg:max-w-7/8 h-auto lg:h-[85vh] lg:max-h-[850px] min-h-min lg:min-h-[600px] bg-white/90 backdrop-blur-md rounded-[30px] lg:rounded-[40px] shadow-2xl flex flex-col lg:flex-row relative animate-reveal">
         
         <div class="absolute top-6 right-8 hidden lg:block z-50">
             <img src="images/progrest_logo_green.png" alt="Progrest" class="h-8 w-auto hover:scale-105 transition duration-300 cursor-pointer">
@@ -100,9 +100,9 @@
                     </button>
 
                     <div class="flex items-center my-2 opacity-70">
-                        <hr class="flex-grow border-gray-300">
+                        <hr class="grow border-gray-300">
                         <span class="px-3 text-[9px] md:text-[10px] text-gray-500 font-bold uppercase tracking-wider">OR</span>
-                        <hr class="flex-grow border-gray-300">
+                        <hr class="grow border-gray-300">
                     </div>
 
                     <a href="/google" class="w-full bg-white/80 border-2 border-[#14452F] text-[#111827] font-bold py-2.5 md:py-3 rounded-xl flex items-center justify-center gap-2 md:gap-3 hover:bg-white transition-all shadow-sm active:scale-95 text-sm md:text-base">
