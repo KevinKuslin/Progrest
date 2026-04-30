@@ -1,1 +1,2 @@
-import './landing_navbar.js';
+import './landing_navbar.js'; 
+import './themes.js'; 

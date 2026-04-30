@@ -1,25 +1,25 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CollabController;
+
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', [DashboardController::class, 'index']);
-
-Route::get('/landing', function(){
-    return view('landing'); 
+Route::get('/', function() {
+    return view('landing.index'); 
 }); 
 
-Route::get('/', function(){
-    return view('landing'); 
-});
-
-Route::get('/sign-in', function() {
-    return view('signin'); 
-})->name('signin.view'); 
-
 Route::get('/register', function() {
-    return view('register'); 
-})->name('register.view');  
+    return view('auth.register'); 
+})->name('register.view'); 
 
+Route::get('/login', [AuthController::class, 'index']); 
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('/dashboard', [DashboardController::class, 'index']); 
+Route::get('/projects', [ProjectController::class, 'index']); 
+Route::get('/collab', [CollabController::class, 'index']); 
+Route::get('/profile', [ProfileController::class, 'index']); 

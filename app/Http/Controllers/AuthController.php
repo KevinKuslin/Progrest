@@ -9,7 +9,17 @@ class AuthController extends Controller
 {
     public function index()
     {
-        return view('signin');
+        $menu = [
+            [
+                'navigations' => [
+                    ['name' => 'Dashboard', 'path' => '/dashboard'], 
+                    ['name' => 'Projects', 'path' => '/projects'], 
+                    ['name' => 'Collab', 'path' => '/collab'], 
+                    ['name' => 'Profiles', 'path' => '/profile']
+                ]
+            ]
+        ]; 
+        return view('signin', compact('menu'));
     }
 
     public function login(Request $request)
