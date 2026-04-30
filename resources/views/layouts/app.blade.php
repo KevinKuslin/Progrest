@@ -60,4 +60,5 @@
     </main>
 </div>
 </body>
+@stack('styles')
 </html>
