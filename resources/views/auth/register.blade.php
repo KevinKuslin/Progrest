@@ -42,7 +42,7 @@
 <body class="font-inter antialiased h-screen w-screen bg-cover bg-center bg-no-repeat flex items-center justify-center p-4 md:p-8 overflow-hidden" 
       style="background-image: url('images/Checker_BG.png'); background-color: #E9F2EE;">
 
-    <div class="w-full max-w-6xl h-[85vh] max-h-[850px] min-h-[600px] bg-white rounded-[40px] shadow-2xl flex flex-col lg:flex-row relative overflow-hidden opacity-95 animate-reveal">
+    <div class="w-full max-w-[340px] md:max-w-2xl lg:max-w-6xl h-auto lg:h-[85vh] lg:max-h-[850px] min-h-min lg:min-h-[600px] bg-white/90 backdrop-blur-md rounded-[30px] lg:rounded-[40px] shadow-2xl flex flex-col lg:flex-row relative animate-reveal">
         
         {{-- LOGO --}}
         <div class="absolute top-6 right-8 hidden lg:block z-50">
@@ -53,10 +53,18 @@
             >
         </div>
 
+
+
         {{-- LEFT --}}
         <div class="w-full lg:w-5/8 p-6 lg:px-12 flex flex-col justify-center relative z-10 h-full animate-reveal delay-100 opacity-0">
             
             <div class="w-full mx-auto">
+                {{--TOMBOL BACK--}}
+                 <div class="absolute left-6 md:left-12">
+                        <a href="/landing" class="w-9 h-9 md:w-10 md:h-10 bg-[#14452F] hover:bg-[#217750] text-white rounded-full flex items-center justify-center transition-colors shadow-sm cursor-pointer">
+                            <x-lucide-corner-up-left class="w-4 h-4 md:w-5 md:h-5 stroke-[2.5px]" />
+                        </a>
+                 </div>
 
                 {{-- TITLE --}}
                 <div class="relative w-max mx-auto mb-3 mt-0">
@@ -186,26 +194,26 @@
                         {{-- REGISTER BUTTON --}}
                         <button 
                             type="submit" 
-                            class="w-full bg-[#14452F] hover:bg-[#217750] text-white font-bold py-3 rounded-xl transition-all shadow-md active:scale-95"
+                            class="w-[80%] mx-auto block bg-[#14452F] hover:bg-[#217750] text-white font-bold py-3 rounded-xl transition-all shadow-md active:scale-95"
                         >
                             Register
                         </button>
 
                         {{-- OR --}}
-                        <div class="flex items-center my-2 opacity-70">
+                        <div class="flex items-center justify-center gap-3 my-2 opacity-70">
 
-                            <hr class="flex-grow border-gray-300">
+                            <hr class="w-[175px] border-gray-300">
 
-                            <span class="px-3 text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                            <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider whitespace-nowrap">
                                 OR
                             </span>
 
-                            <hr class="flex-grow border-gray-300">
+                            <hr class="w-[175px] border-gray-300">
 
                         </div>
 
                         {{-- GOOGLE --}}
-                        <a href="/google" class="w-full bg-white border-2 border-[#14452F] text-[#111827] font-bold py-3 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-50 transition-all shadow-sm active:scale-95">
+                        <a href="/google" class="w-[80%] mx-auto block bg-white border-2 border-[#14452F] text-[#111827] font-bold py-3 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-50 transition-all shadow-sm active:scale-95">
 
                             <img 
                                 src="images/Google_Icon.png" 
@@ -231,7 +239,7 @@
             {{-- SINGLE PORTRAIT IMAGE --}}
             <div class="absolute top-1/2 left-1/2 
                         -translate-x-1/2 -translate-y-1/2
-                        w-[68%] h-[82%]
+                        w-[75%] h-[75%]
                         rounded-[30px]
                         overflow-hidden
                         shadow-2xl
