@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign In - Progrest</title>
+
+    <link rel="icon" href="images/progrest_p_logo_green.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +35,7 @@
 <body class="font-inter antialiased min-h-screen lg:h-screen w-full bg-cover bg-center bg-no-repeat flex items-center justify-center p-4 py-8 md:p-8 overflow-x-hidden lg:overflow-hidden" 
       style="background-image: url('images/Checker_BG.png'); background-color: #E9F2EE;">
 
-    <div class="w-full max-w-7/8 md:max-w-7/8 lg:max-w-7/8 h-auto lg:h-[85vh] lg:max-h-[850px] min-h-min lg:min-h-[600px] bg-white/90 backdrop-blur-md rounded-[30px] lg:rounded-[40px] shadow-2xl flex flex-col lg:flex-row relative animate-reveal">
+    <div class="w-full max-w-85 md:max-w-2xl lg:max-w-6xl h-auto lg:h-[85vh] lg:max-h-[850px] min-h-min lg:min-h-[600px] bg-white/90 backdrop-blur-md rounded-[30px] lg:rounded-[40px] shadow-2xl flex flex-col lg:flex-row relative animate-reveal">
         
         <div class="absolute top-6 right-8 hidden lg:block z-50">
             <img src="images/progrest_logo_green.png" alt="Progrest" class="h-8 w-auto hover:scale-105 transition duration-300 cursor-pointer">
@@ -46,14 +48,14 @@
                 <div class="relative w-full flex items-center justify-center mb-3 mt-0">
                     
                     <div class="absolute left-0">
-                        <a href="/landing" class="w-9 h-9 md:w-10 md:h-10 bg-[#14452F] hover:bg-[#217750] text-white rounded-full flex items-center justify-center transition-colors shadow-sm cursor-pointer">
+                        <a href="{{ route('landing') }}" class="w-9 h-9 md:w-10 md:h-10 bg-primary hover:bg-[#217750] text-white rounded-full flex items-center justify-center transition-colors shadow-sm cursor-pointer">
                             <x-lucide-corner-up-left class="w-4 h-4 md:w-5 md:h-5 stroke-[2.5px]" />
                         </a>
                     </div>
 
                     <div class="relative w-max">
                         <h1 class="text-4xl md:text-[3.5rem] text-center font-bold text-[#217750] font-parkinsans tracking-wide leading-none">Sign In</h1>
-                        <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[62%] w-[115%] text-5xl md:text-[4.5rem] text-[#14452F] font-redacted opacity-90 pointer-events-none leading-none text-center">
+                        <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[62%] w-[115%] text-5xl md:text-[4.5rem] text-primary font-redacted opacity-90 pointer-events-none leading-none text-center">
                             Sign In
                         </span>
                     </div>
@@ -63,20 +65,26 @@
                     Plan your project effectively through simplified interactivity and collaboration with users around the world.
                 </p>
 
+                @if ($errors->has('login'))
+                    <div class="mb-3 text-red-600 text-sm text-center">
+                        {{ $errors->first('login') }}
+                    </div>
+                @endif
+
                 <form id="loginForm" action="/login" method="POST" class="space-y-3 lg:space-y-3.5" novalidate>
                     @csrf
                     
-                    <div id="emailWrapper" class="group">
-                        <label class="block text-xs md:text-sm font-bold text-[#111827] mb-1">Email Address</label>
+                    <div id="loginWrapper" class="group">
+                        <label class="block text-xs md:text-sm font-bold text-text-primary mb-1">Email Address or Username</label>
                         <div class="relative">
-                            <input id="emailInput" type="email" name="email" required pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$" placeholder="Enter your email" 
-                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-10 md:pr-12 py-2.5 focus:outline-none focus:border-[#14452F] focus:bg-white/80 text-xs md:text-sm transition-all text-[#111827] placeholder-gray-400 bg-white/50 group-[.has-error]:border-[#217750] group-[.has-error]:bg-white">
+                            <input id="loginInput" type="text" name="login" required placeholder="Enter your email or username" 
+                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-10 md:pr-12 py-2.5 focus:outline-none focus:border-primary focus:bg-white/80 text-xs md:text-sm transition-all text-[#111827] placeholder-gray-400 bg-white/50 group-[.has-error]:border-[#217750] group-[.has-error]:bg-white">
                             <div class="absolute right-3 md:right-4 top-1/2 -translate-y-1/2">
-                                <x-lucide-mail class="w-4 h-4 md:w-5 md:h-5 text-[#14452F]" />
+                                <x-lucide-mail class="w-4 h-4 md:w-5 md:h-5 text-primary" />
                             </div>
 
-                            <div class="absolute left-0 top-[115%] w-max max-w-[280px] p-3 bg-[#14452F] border border-[#217750] rounded-xl shadow-xl opacity-0 invisible transition-all duration-300 group-[.has-error]:opacity-100 group-[.has-error]:visible z-50 translate-y-2 group-[.has-error]:translate-y-0">
-                                <div class="absolute -top-1.5 left-5 w-3 h-3 bg-[#14452F] border-l border-t border-[#217750] rotate-45"></div>
+                            <div class="absolute left-0 top-[115%] w-max max-w-70 p-3 bg-primary border border-[#217750] rounded-xl shadow-xl opacity-0 invisible transition-all duration-300 group-[.has-error]:opacity-100 group-[.has-error]:visible z-50 translate-y-2 group-[.has-error]:translate-y-0">
+                                <div class="absolute -top-1.5 left-5 w-3 h-3 bg-primary border-l border-t border-[#217750] rotate-45"></div>
                                 <div id="emailError" class="text-xs text-white font-medium relative z-10 leading-relaxed tracking-wide"></div>
                             </div>
                         </div>
@@ -85,47 +93,45 @@
                     <div id="passwordWrapper" class="group">
                         <label class="block text-xs md:text-sm font-bold text-[#111827] mb-1">Password</label>
                         <div class="relative">
-                            <input id="passwordInput" type="password" name="password" required pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" placeholder="Enter your password" 
-                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-10 md:pr-12 py-2.5 focus:outline-none focus:border-[#14452F] focus:bg-white/80 text-xs md:text-sm transition-all text-[#111827] placeholder-gray-400 bg-white/50 group-[.has-error]:border-[#217750] group-[.has-error]:bg-white">
+                            <input id="passwordInput" type="password" name="password" required placeholder="Enter your password" 
+                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-10 md:pr-12 py-2.5 focus:outline-none focus:border-primary focus:bg-white/80 text-xs md:text-sm transition-all text-[#111827] placeholder-gray-400 bg-white/50 group-[.has-error]:border-[#217750] group-[.has-error]:bg-white">
                             <div class="absolute right-3 md:right-4 top-1/2 -translate-y-1/2">
-                                <x-lucide-lock class="w-4 h-4 md:w-5 md:h-5 text-[#14452F]" />
+                                <x-lucide-lock class="w-4 h-4 md:w-5 md:h-5 text-primary" />
                             </div>
 
-                            <div class="absolute left-0 top-[115%] w-max max-w-[280px] p-3 bg-[#14452F] border border-[#217750] rounded-xl shadow-xl opacity-0 invisible transition-all duration-300 group-[.has-error]:opacity-100 group-[.has-error]:visible z-50 translate-y-2 group-[.has-error]:translate-y-0">
-                                <div class="absolute -top-1.5 left-5 w-3 h-3 bg-[#14452F] border-l border-t border-[#217750] rotate-45"></div>
+                            <div class="absolute left-0 top-[115%] w-max max-w-[280px] p-3 bg-primary border border-[#217750] rounded-xl shadow-xl opacity-0 invisible transition-all duration-300 group-[.has-error]:opacity-100 group-[.has-error]:visible z-50 translate-y-2 group-[.has-error]:translate-y-0">
+                                <div class="absolute -top-1.5 left-5 w-3 h-3 bg-primary border-l border-t border-[#217750] rotate-45"></div>
                                 <div id="passwordError" class="text-xs text-white font-medium relative z-10 leading-relaxed tracking-wide"></div>
                             </div>
                         </div>
                     </div>
 
                     <div class="flex items-center mt-1">
-                        <input type="checkbox" id="remember" class="w-3.5 h-3.5 md:w-4 md:h-4 text-[#14452F] border-gray-300 rounded focus:ring-[#14452F] cursor-pointer bg-white">
-                        <label for="remember" class="ml-2 text-xs md:text-sm text-[#545454] cursor-pointer hover:text-[#14452F] transition-colors">Remember Me</label>
+                        <input type="checkbox" name="remember" id="remember" class="w-3.5 h-3.5 md:w-4 md:h-4 text-primary border-gray-300 rounded focus:ring-primary cursor-pointer bg-white">
+                        <label for="remember" class="ml-2 text-xs md:text-sm text-[#545454] cursor-pointer hover:text-primary transition-colors">Remember Me</label>
                     </div>
 
                     <div class="text-center text-xs md:text-sm text-[#545454] mt-5 mb-3">
-                        Don't have an account? <a href="/register" class="font-bold text-[#6B7280] hover:text-[#14452F] transition-colors underline decoration-1 underline-offset-4">Get Progrest Now</a>
+                        Don't have an account? <a href="/register" class="font-bold text-[#6B7280] hover:text-primary transition-colors underline decoration-1 underline-offset-4">Get Progrest Now</a>
                     </div>
 
-                    <button type="submit" class="w-full bg-[#14452F] hover:bg-[#217750] text-white font-bold py-2.5 md:py-3 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base">
+                    <button type="submit" class="w-full bg-primary hover:bg-[#217750] text-white font-bold py-2.5 md:py-3 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base">
                         Log In
                     </button>
 
                     <div class="flex items-center opacity-70">
-                        <hr class="flex-grow border-gray-300">
-                    <div class="flex items-center my-2 opacity-70">
                         <hr class="grow border-gray-300">
                         <span class="px-3 text-[9px] md:text-[10px] text-gray-500 font-bold uppercase tracking-wider">OR</span>
                         <hr class="grow border-gray-300">
                     </div>
 
-                    <a href="/google" class="w-full bg-white/80 border-2 border-[#14452F] text-[#111827] font-bold py-2.5 md:py-3 rounded-xl flex items-center justify-center gap-2 md:gap-3 hover:bg-white transition-all shadow-sm active:scale-95 text-sm md:text-base">
+                    <a href="/google" class="w-full bg-white/80 border-2 border-primary text-[#111827] font-bold py-2.5 md:py-3 rounded-xl flex items-center justify-center gap-2 md:gap-3 hover:bg-white transition-all shadow-sm active:scale-95 text-sm md:text-base">
                         <img src="images/Google_Icon.png" alt="" class="w-4 h-4 md:w-5 md:h-5"> 
                         Continue with Google
                     </a>
 
                     <div class="text-center mt-3">
-                        <a href="/forgot" class="text-xs md:text-sm font-bold text-[#6B7280] hover:text-[#14452F] transition-colors underline decoration-1 underline-offset-4">Forgot Your Password?</a>
+                        <a href="/forgot" class="text-xs md:text-sm font-bold text-[#6B7280] hover:text-primary transition-colors underline decoration-1 underline-offset-4">Forgot Your Password?</a>
                     </div>
                 </form>
             </div>
@@ -145,47 +151,24 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('loginForm');
-            
-            const config = [
-                {
-                    input: document.getElementById('emailInput'),
-                    wrapper: document.getElementById('emailWrapper'),
-                    error: document.getElementById('emailError'),
-                    message: 'Invalid email format. Use a format like user@progrest.com'
-                },
-                {
-                    input: document.getElementById('passwordInput'),
-                    wrapper: document.getElementById('passwordWrapper'),
-                    error: document.getElementById('passwordError'),
-                    message: 'Password must be at least 8 characters and contain both letters and numbers.'
-                }
-            ];
 
-            const validate = (item) => {
-                if (!item.input.value) {
-                    item.wrapper.classList.remove('has-error');
-                    return true;
-                }
-                if (!item.input.checkValidity()) {
-                    item.wrapper.classList.add('has-error');
-                    item.error.textContent = item.message;
-                    return false;
-                }
-                item.wrapper.classList.remove('has-error');
-                return true;
-            };
-
-            config.forEach(item => {
-                item.input.addEventListener('blur', () => validate(item));
-                item.input.addEventListener('input', () => item.wrapper.classList.remove('has-error'));
-            });
+            const login = document.getElementById('loginInput');
+            const password = document.getElementById('passwordInput');
 
             form.addEventListener('submit', (e) => {
-                let isValid = true;
-                config.forEach(item => {
-                    if (!validate(item)) isValid = false;
-                });
-                if (!isValid) e.preventDefault();
+                let valid = true;
+
+                if (login.value.length == 0) {
+                    alert('E-mail or username must be filled!');
+                    valid = false;
+                }
+
+                if (password.value.length < 8) {
+                    alert('Password must be at least 8 characters');
+                    valid = false;
+                }
+
+                if (!valid) e.preventDefault();
             });
         });
     </script>

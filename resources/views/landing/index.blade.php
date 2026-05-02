@@ -22,8 +22,8 @@
 
         <!-- Desktop -->
         <div class="hidden sm:flex gap-4 items-center">
-            <a href="{{ route('login.index') }}" class="text-gray-600">Sign In</a>
-            <a href="{{ route('register.view') }}" class="bg-[#14452F] hover:bg-[#217750] text-white px-5 py-2 rounded-lg font-semibold">
+            <a href="{{ route('login') }}" class="text-gray-600">Sign In</a>
+            <a href="{{ route('register') }}" class="bg-primary hover:bg-[#217750] text-white px-5 py-2 rounded-lg font-semibold">
                 Get Started Free
             </a>
         </div>
@@ -38,8 +38,8 @@
     <div id="mobile-menu"
         class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out flex flex-col items-center gap-4 px-10">
         
-        <a href="{{ route('login.index') }}" class="text-gray-600 py-2">Sign In</a>
-        <a href="{{ route('register.view') }}" class="bg-[#14452F] text-white px-5 py-2 rounded-lg font-semibold mb-4">
+        <a href="{{ route('login') }}" class="text-gray-600 py-2">Sign In</a>
+        <a href="{{ route('register') }}" class="bg-[#14452F] text-white px-5 py-2 rounded-lg font-semibold mb-4">
             Get Started Free
         </a>
     </div>
@@ -68,7 +68,7 @@
         </p>
 
         <div class="flex gap-4 mb-6 text-md">
-            <a href="{{ route('register.view') }}" class="bg-[#217750] hover:bg-[#14452F] transition text-center text-white px-6 py-3 rounded-lg font-semibold shadow-md">
+            <a href="{{ route('register') }}" class="bg-[#217750] hover:bg-[#14452F] transition text-center text-white px-6 py-3 rounded-lg font-semibold shadow-md">
                 Get Started Free
             </a>
 
