@@ -10,19 +10,18 @@ use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
-    // Show login page
+    // Arahin ke login page
     public function index()
     {
         return view('auth.login');
     }
 
-    // Show register page
+    // Arahin ke register page
     public function registerForm()
     {
         return view('auth.register');
     }
 
-    // Handle registration
     public function register(Request $request)
     {
         $validated = $request->validate([
@@ -61,20 +60,19 @@ class AuthController extends Controller
         return redirect()->route('dashboard');
     }
 
-    // Handle login
     public function login(Request $request)
     {
         // dd($request->all()); 
 
         $credentials = $request->validate([
-            'login' => 'required|string', // can be username OR email
+            'login' => 'required|string', // bisa username OR email
             'password' => 'required|string',
         ], [
             'login.required' => 'Username or E-mail is required', 
             'password.required' => 'Password is required'
         ]);
 
-        // Allow login via username OR email
+        // Kasih opsi login via username OR email
         $field = filter_var($credentials['login'], FILTER_VALIDATE_EMAIL) 
             ? 'email' 
             : 'username';
@@ -89,7 +87,6 @@ class AuthController extends Controller
         ])->onlyInput('login');
     }
 
-    // Handle logout
     public function logout(Request $request)
     {
         Auth::logout();

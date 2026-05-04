@@ -15,24 +15,30 @@ function applyTheme(theme) {
 function updateThemeAssets(theme) {
     const logo = document.getElementById('app-logo'); 
     const logoP = document.getElementById('app-logo-p'); 
+    const logoLanding = document.getElementById('logo-landing'); 
+    const logoFooter = document.getElementById('logo-footer'); 
+    const logoAuth = document.getElementById('logo-auth'); 
 
     const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches; 
+    const useDark = theme === 'dark' || (theme === 'system' && isDark);
 
-    if(!logo) return; 
+    const mainLogo = useDark 
+        ? 'images/progrest_logo_white.png'
+        : 'images/progrest_logo_green.png';
 
-    if(theme == 'dark'){
-        logo.src = 'images/progrest_logo_white.png'; 
-        logoP.src = 'images/progrest_p_logo_white.png'; 
-    }
-    else if(theme == 'light' || (theme == 'system' && !isDark)){
-        logo.src = 'images/progrest_logo_green.png'; 
-        logoP.src = 'images/progrest_p_logo_green.png'; 
-    }
-    else {
+    const footerLogo = useDark 
+        ? 'images/progrest_logo_green.png'
+        : 'images/progrest_logo_white.png'; 
 
-        logo.src = isDark && theme == 'system' ? 
-            'images/progrest_logo_green.png' : 'images/progrest_logo_white.png'; 
-    }
+    const pLogo = useDark 
+        ? 'images/progrest_p_logo_white.png'
+        : 'images/progrest_p_logo_green.png';
+
+    if (logo) logo.src = mainLogo;
+    if (logoLanding) logoLanding.src = mainLogo;
+    if (logoP) logoP.src = pLogo;
+    if (logoFooter) logoFooter.src = footerLogo; 
+    if (logoAuth) logoAuth.src = mainLogo; 
 }
 
 // Expose globally (so Blade can use it if needed)
@@ -50,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load saved theme
     const saved = localStorage.getItem('theme') || 'system';
     applyTheme(saved);
+    updateThemeAssets(saved); 
     updateActiveThemeUI(saved); 
 
     // Attach click listeners
