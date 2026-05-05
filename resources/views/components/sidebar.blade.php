@@ -1,7 +1,7 @@
 @props(['menu'])
 
 <aside id="sidebar"
-    class="bg-background text-black p-4 h-screen rounded-r-2xl shadow-r-xl flex flex-col gap-3 relative transition-[width] duration-300">
+    class="bg-background text-black p-4 h-screen rounded-r-2xl shadow-r-xl flex flex-col gap-3 fixed transition-[width] duration-300">
 
     <!-- Toggle Button -->
     <button id="sidebar-toggle"

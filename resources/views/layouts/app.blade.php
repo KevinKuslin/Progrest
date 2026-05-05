@@ -49,11 +49,18 @@
         .no-transition * {
             transition: none !important;
         }
+        #sidebarFiller{
+            width: 16rem;
+        }
+        .sidebar-collapsed #sidebarFiller {
+            width: 5rem;
+        }
     </style>
 </head>
 <body>
     <div class="flex min-h-screen bg-surface">
-    <x-sidebar :menu="$menu" />
+    <x-sidebar :menu="$menu"/>
+    <div id="sidebarFiller"></div>
 
     <main class="flex-1">
         @yield('content')

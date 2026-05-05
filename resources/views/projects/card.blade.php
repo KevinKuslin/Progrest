@@ -1,10 +1,10 @@
-<div class="bg-background rounded-3xl p-6 shadow-sm relative pl-9 w-full max-w-sm">
-    <div class="absolute left-4 top-6 bottom-24 w-1 rounded-full" style="background-color: {{ $accentColor ?? 'bg-primary' }};"></div>
+<div class="project-container bg-background rounded-3xl p-6 shadow-sm relative pl-9 w-full max-w-sm">
+    <div class="project-line absolute left-4 top-6 bottom-24 w-1 rounded-full" style="background-color: {{ $accentColor ?? 'bg-primary' }};"></div>
 
     <div class="flex justify-between items-start mb-4">
         <div class="pr-2">
-            <h2 class="text-text-primary text-xl font-bold font-parkinsans">{{ $title }}</h2>
-            <p class="text-text-primary text-sm mt-1 leading-snug font-montserrat">{{ $description }}</p>
+            <h2 class="text-text-primary text-xl font-semibold font-montserrat">{{ $title }}</h2>
+            <p class="text-text-primary text-sm mt-1 leading-snug font-inter">{{ $description }}</p>
         </div>
         @if ($progress < 100)
             <div class="text-[#EAB308]">
@@ -43,6 +43,6 @@
     </div>
 
     <button class="text-text-primary w-full py-2 items-center border-2 border-gray-100 shadow-sm rounded-full flex items-center justify-center gap-1 font-bold  text-sm hover:bg-surface transition-colors font-parkinsans">
-        VIEW <x-lucide-eye class="w-5 h-5" />
+        Continue <x-lucide-eye class="w-5 h-5" />
     </button>
 </div>
