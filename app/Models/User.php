@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
 
 #[Fillable(['username', 'name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
+
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
@@ -28,5 +29,9 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function projects(){
+        return $this->hasMany(Project::class); 
     }
 }

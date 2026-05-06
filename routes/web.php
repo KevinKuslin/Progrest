@@ -17,15 +17,20 @@ Route::get('/register', function() {
 })->name('register'); 
 Route::post('/register', [AuthController::class, 'register']); 
 
-Route::get('/login', [AuthController::class, 'index'])->name('login'); 
+Route::get('/login', [AuthController::class, 'index'])
+    ->name('login'); 
 Route::post('/login', [AuthController::class, 'login']); 
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth'); 
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->middleware('auth'); 
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware('auth')->name('dashboard');
+Route::middleware(['auth'])->group(function() {
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard'); 
+}); 
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard'); 
 Route::get('/projects', [ProjectController::class, 'index']); 
+Route::get('/projects/{project}', [ProjectController::class, 'show'])
+    ->middleware('auth'); 
+
 Route::get('/collab', [CollabController::class, 'index']); 
 Route::get('/profile', [ProfileController::class, 'index']); 

@@ -16,6 +16,11 @@ class DashboardController extends Controller
             ]
         ]; 
 
-        return view('dashboard.index', compact('menu')); 
+        $user = auth()->user(); 
+
+        return view('dashboard.index', [
+            'menu' => $menu, 
+            'projects' => $user->projects()->latest()->get()
+        ]); 
     }
 }
