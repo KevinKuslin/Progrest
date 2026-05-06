@@ -24,16 +24,23 @@ class ProjectController extends Controller
             ]
         ]; 
 
-        $user = auth()->user(); 
-        $projects = $user->projects()->latest()->get(); 
+        $projects = Project::where('leader_id', auth()->id())
+            ->orWhereHas('members', function ($q) {
+                $q->where('user_id', auth()->id());
+            })
+            ->latest()
+            ->get();
 
         return view('projects.index', compact('menu', 'projects')); 
     }
 
     public function show(Project $project){
-        if($project->user_id != auth()->id()){
-            abort(403); 
-        }
+        $user_id = auth()->id(); 
+
+        $isLeader = $project->leader_id === $user_id; 
+        $isMember = $project->members()->where('user_id', $user_id)->exists(); 
+
+        abort_if(!($isLeader || $isMember), 403); 
 
         return view('projects.show', compact('project')); 
     }
@@ -44,12 +51,16 @@ class ProjectController extends Controller
             'description' => 'nullable|string',
         ]);
 
+        $user_id = auth()->id(); 
+
         Project::create([
-            'user_id' => auth()->id(),
+            'leader_id' => $user_id,
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
         ]);
 
-        return redirect()->route('projects.index')->with('success', 'Project created sccessfully!');
+        $project->members()->attach($userId); 
+
+        return redirect()->route('projects.index')->with('success', 'Project created successfully!');
     }
 }

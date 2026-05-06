@@ -24,8 +24,16 @@
     <div class="flex gap-3 border-[1.5px] p-2 border-border rounded-xl shadow-sm items-center">
         <img src="images/profile.jpg" class="w-12 rounded-4xl sidebar-icon">
         <div class="flex flex-col justify-center sidebar-text">
-            <p class="font-montserrat font-bold text-text-primary">Reeders</p>
-            <p class="font-montserrat -mt-px text-s text-text-secondary">Reeders Rere</p>
+            <p class="font-montserrat font-bold text-text-primary">
+                @auth
+                    {{ auth()->user()->username }}
+                @endauth
+            </p>
+            <p class="font-montserrat -mt-px text-s text-text-secondary">
+                @auth
+                    {{ auth()->user()->name }}
+                @endauth
+            </p>
         </div>
     </div>
 

@@ -6,24 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete(); 
+            $table->foreignId('leader_id')->constrained('users')->cascadeOnDelete(); 
             $table->string('title'); 
-            $table->text('descriptipn')->nullable(); 
+            $table->text('description')->nullable(); 
 
             $table->string('status')->default('active'); 
 
             $table->unsignedTinyInteger('progress')->default(0); 
+            $table->string('accent'); 
             $table->timestamps(); 
 
-            $table->index('user_id'); 
+            $table->index('leader_id'); 
             $table->index('status'); 
         });
     }

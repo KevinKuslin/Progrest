@@ -31,7 +31,7 @@
         <h3 class="text-text-primary font-bold font-parkinsans mb-2">Collaborators</h3>
         <div class="flex items-center -space-x-2">
             @foreach ($collaborators as $avatar)
-                <img src="{{ $avatar }}" alt="Collaborator" class="w-8 h-8 rounded-full border-2 border-white object-cover relative z-0">
+                <img src="images/profile.jpg" alt="Collaborator" class="w-8 h-8 rounded-full border-2 border-white object-cover relative z-0">
             @endforeach
             
             @if ($extraCollaborators > 0)
