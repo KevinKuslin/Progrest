@@ -38,9 +38,9 @@
 </head>
 
 <body class="font-inter antialiased h-screen w-screen bg-cover bg-center bg-no-repeat flex items-center justify-center p-4 md:p-8 overflow-hidden" 
-    style="background-image: url('images/Checker_BG.png'); background-color: #E9F2EE;">
+    style="background-image: url('images/Checker_BG.png');">
 
-    <div class="w-full max-w-85 md:max-w-2xl lg:max-w-6xl h-auto lg:h-[85vh] lg:max-h-212.5 min-h-min lg:min-h-[600px] bg-white/90 backdrop-blur-md rounded-[30px] lg:rounded-[40px] shadow-2xl flex flex-col lg:flex-row relative animate-reveal">
+    <div class="w-full max-w-85 md:max-w-2xl lg:max-w-6xl h-auto lg:h-[85vh] lg:max-h-212.5 min-h-min lg:min-h-[600px] bg-background backdrop-blur-md rounded-[30px] lg:rounded-[40px] shadow-2xl flex flex-col lg:flex-row relative animate-reveal">
         
         {{-- Logo --}}
         <div class="absolute top-6 right-8 hidden lg:block z-50">
@@ -52,7 +52,7 @@
         </div>
 
         {{-- Container Kiri (Form) --}}
-        <div class="w-full lg:w-13/16 p-6 lg:px-12 flex flex-col justify-center relative z-10 h-full animate-reveal delay-100 opacity-0 bg-background">
+        <div class="w-full lg:w-13/16 p-6 lg:px-12 flex flex-col justify-center relative z-10 h-full animate-reveal delay-100">
             <div class="w-full mx-auto">
                 {{--Tombol Back ke Landing--}}
                 <div class="absolute left-6 md:left-12">

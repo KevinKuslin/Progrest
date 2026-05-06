@@ -4,6 +4,10 @@
 
 @section('content')
     @php
+        $avatars = asset('images/profile.jpg')
+    @endphp
+
+    {{-- @php
         $avatars = [
             asset('images/profile.jpg'),
             asset('images/profile.jpg'),
@@ -48,7 +52,7 @@
                 'accent' => '#D946A6',
             ],
         ];
-    @endphp
+    @endphp --}}
 
     <div class="bg-primary rounded-b-4xl p-8 flex justify-between">
         <div>
@@ -99,12 +103,12 @@
         <div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
             @foreach ($projects as $project)
                 @include('projects.card', [
-                    'title' => $project['title'],
-                    'description' => $project['description'],
-                    'progress' => $project['progress'],
-                    'collaborators' => $avatars,
+                    'title' => $project->title,
+                    'description' => $project->description,
+                    'progress' => $project->progress,
+                    'collaborators' => $project->members,
                     'extraCollaborators' => 2,
-                    'accentColor' => $project['accent']
+                    'accentColor' => $project->accent
                 ])
             @endforeach
         </div>

@@ -5,7 +5,7 @@
 
     <button id="sidebar-toggle"
         class="absolute top-4 right-5 p-2 text-text-primary rounded-lg hover:bg-surface w-10 h-10 flex items-center justify-center rotate-0 hover:rotate-90 transition duration-300 focus:outline-none z-50">
-        <x-lucide-menu class="w-6 h-6 text-text-primary" />
+        <x-lucide-menu class="w-6 h-6 text-text-primary pointer-events-none" />
     </button>
 
     <img id="app-logo"
@@ -21,8 +21,16 @@
     <div class="flex gap-3 border-[1.5px] p-2 border-border rounded-xl shadow-sm items-center bg-background">
         <img src="images/profile.jpg" class="w-12 h-12 rounded-full sidebar-icon object-cover border border-border">
         <div class="flex flex-col justify-center sidebar-text">
-            <p class="font-montserrat font-bold text-text-primary text-sm">Reeders</p>
-            <p class="font-montserrat -mt-px text-xs text-text-secondary">Reeders Rere</p>
+            <p class="font-montserrat font-bold text-text-primary">
+                @auth
+                    {{ auth()->user()->username }}
+                @endauth
+            </p>
+            <p class="font-montserrat -mt-px text-s text-text-secondary">
+                @auth
+                    {{ auth()->user()->name }}
+                @endauth
+            </p>
         </div>
     </div>
 
@@ -114,20 +122,20 @@
     </div>
 </aside>
 
+@once
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const themeBtns = document.querySelectorAll('.theme-btn');
-        const appLogo = document.getElementById('app-logo');
-        const appLogoP = document.getElementById('app-logo-p');
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        const sidebar = document.getElementById('sidebar');
+        const appLogos = document.querySelectorAll('[id="app-logo"]');
+        const appLogoPs = document.querySelectorAll('[id="app-logo-p"]');
+        const sidebarToggles = document.querySelectorAll('[id="sidebar-toggle"]');
 
-        if(sidebarToggle) {
-            sidebarToggle.addEventListener('click', () => {
+        sidebarToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
                 const isCollapsed = document.documentElement.classList.toggle('sidebar-collapsed');
                 localStorage.setItem('sidebarCollapsed', isCollapsed);
             });
-        }
+        });
 
         function applySidebarTheme(theme) {
             const html = document.documentElement;
@@ -136,13 +144,13 @@
             if (isDark) {
                 html.classList.add('dark');
                 html.setAttribute('data-theme', 'dark');
-                if(appLogo) appLogo.src = 'images/progrest_logo_white.png';
-                if(appLogoP) appLogoP.src = 'images/progrest_p_logo_white.png';
+                appLogos.forEach(logo => logo.src = 'images/progrest_logo_white.png');
+                appLogoPs.forEach(logo => logo.src = 'images/progrest_p_logo_white.png');
             } else {
                 html.classList.remove('dark');
                 html.setAttribute('data-theme', 'light');
-                if(appLogo) appLogo.src = 'images/progrest_logo_green.png';
-                if(appLogoP) appLogoP.src = 'images/progrest_p_logo_green.png';
+                appLogos.forEach(logo => logo.src = 'images/progrest_logo_green.png');
+                appLogoPs.forEach(logo => logo.src = 'images/progrest_p_logo_green.png');
             }
 
             themeBtns.forEach(btn => {
@@ -171,12 +179,12 @@
                 const mobileThemeText = document.getElementById('mobile-theme-text');
                 if(mobileThemeText) {
                     mobileThemeText.textContent = selectedTheme;
-                    document.getElementById('mobile-icon-light').classList.add('hidden');
-                    document.getElementById('mobile-icon-dark').classList.add('hidden');
-                    document.getElementById('mobile-icon-system').classList.add('hidden');
-                    if (selectedTheme === 'light') document.getElementById('mobile-icon-light').classList.remove('hidden');
-                    if (selectedTheme === 'dark') document.getElementById('mobile-icon-dark').classList.remove('hidden');
-                    if (selectedTheme === 'system') document.getElementById('mobile-icon-system').classList.remove('hidden');
+                    document.getElementById('mobile-icon-light')?.classList.add('hidden');
+                    document.getElementById('mobile-icon-dark')?.classList.add('hidden');
+                    document.getElementById('mobile-icon-system')?.classList.add('hidden');
+                    if (selectedTheme === 'light') document.getElementById('mobile-icon-light')?.classList.remove('hidden');
+                    if (selectedTheme === 'dark') document.getElementById('mobile-icon-dark')?.classList.remove('hidden');
+                    if (selectedTheme === 'system') document.getElementById('mobile-icon-system')?.classList.remove('hidden');
                 }
                 
                 const mobileLogo = document.getElementById('mobile-logo');
@@ -186,3 +194,4 @@
         });
     });
 </script>
+@endonce

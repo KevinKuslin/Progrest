@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model; 
-use Illuminate\Database\Eloquent\Attributes\Fillable; 
-
-#[Fillable(['title', 'description'])]
 
 class Project extends Model
 {
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+    use HasFactory; 
+    protected $fillable = ['leader_id', 'title', 'description', 'progress', 'accent']; 
+
+    public function leader(){
+        return $this->belongsTo(User::class, 'leader_id');
+    }
+    public function members(){
+        return $this->belongsToMany(User::class); 
     }
 }
