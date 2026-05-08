@@ -45,16 +45,16 @@
     {{-- PROJECT STATISTICS --}}
 
     <div class="grid grid-cols-2 md:grid-cols-4 gap-5 px-8 py-4">
-        <div class="rounded-lg bg-primary shadow-md h-15">
+        <div class="rounded-2xl bg-background shadow-sm h-15">
             Test
         </div>
-        <div class="rounded-lg bg-primary shadow-md h-15">
+        <div class="rounded-2xl bg-background shadow-sm h-15">
             Test
         </div>
-        <div class="rounded-lg bg-primary shadow-md h-15">
+        <div class="rounded-2xl bg-background shadow-sm h-15">
             Test
         </div>
-        <div class="rounded-lg bg-primary shadow-md h-15">
+        <div class="rounded-2xl bg-background shadow-sm h-15">
             Test
         </div>
     </div>
