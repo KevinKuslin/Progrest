@@ -1,135 +1,160 @@
 @props(['menu'])
 
 <aside id="sidebar"
-    class="bg-background text-black p-4 h-screen rounded-r-2xl shadow-r-xl flex flex-col gap-3 fixed transition-[width] duration-300 hidden md:flex">
+    class="bg-background text-text-primary p-4 h-screen rounded-r-2xl shadow-r-xl flex flex-col gap-3 fixed transition-[width] duration-300 hidden md:flex z-40">
 
-    <!-- Toggle Button -->
     <button id="sidebar-toggle"
-        class="absolute top-4 right-5 p-2 text-text-primary rounded-lg hover:bg-tertiary w-10 rotate-0 hover:rotate-90 transition duration-300">
+        class="absolute top-4 right-5 p-2 text-text-primary rounded-lg hover:bg-tertiary w-10 rotate-0 hover:rotate-90 transition duration-300 focus:outline-none">
         ☰
     </button>
 
-    <!-- Logo -->
     <img id="app-logo"
         src="images/progrest_logo_green.png"
-        class="w-30 h-auto mt-2">
+        class="w-30 h-auto mt-2 transition-all duration-300">
 
     <img id="app-logo-p"
         src="images/progrest_p_logo_green.png"
-        class="hidden w-9 h-auto mt-13 mx-auto">
+        class="hidden w-9 h-auto mt-13 mx-auto transition-all duration-300">
 
     <div class="w-full h-px bg-border rounded-xl"></div>
 
-    <!-- Profile (Dinamis sesuai login) -->
-    <div class="flex gap-3 border-[1.5px] p-2 border-border rounded-xl shadow-sm items-center">
-        <img src="images/profile.jpg" class="w-12 rounded-4xl sidebar-icon">
+    <div class="sidebar-profile flex gap-3 border-[1.5px] p-2 border-border rounded-xl shadow-sm items-center bg-background">
+        <div class="w-12 h-12 aspect-square flex-shrink-0 rounded-full border border-border">
+            <img src="images/profile.jpg" class="w-full h-full rounded-full sidebar-icon object-cover">
+        </div>
         <div class="flex flex-col justify-center sidebar-text">
-            <p class="font-montserrat font-bold text-text-primary">
-                @auth
-                    {{ auth()->user()->username }}
-                @else
-                    Reeders
-                @endauth
+            <p class="font-montserrat font-bold text-text-primary text-sm">
+                @auth {{ auth()->user()->username }} @else Username @endauth
             </p>
-            <p class="font-montserrat -mt-px text-s text-text-secondary">
-                @auth
-                    {{ auth()->user()->name }}
-                @else
-                    Reeders Rere
-                @endauth
+            <p class="font-montserrat -mt-px text-xs text-text-secondary">
+                @auth {{ auth()->user()->name }} @else Reeders Rere @endauth
             </p>
         </div>
     </div>
 
-    <!-- Menu Title -->
     <p class="pt-3 font-montserrat text-xs uppercase tracking-wide font-semibold text-text-secondary opacity-80 sidebar-text">
-        Menus
+        Menu
     </p>
 
-    <!-- Menu Items -->
     @foreach ($menu as $group)
         @foreach ($group['navigations'] as $item)
-            @php
-                $isActive = request()->is(ltrim($item['path'], '/'));
-            @endphp 
+            @php $isActive = request()->is(ltrim($item['path'], '/')); @endphp 
 
             <a href="{{ $item['path'] }}"
                class="sidebar-item group w-full h-10 
-               {{ $isActive ? 'bg-tertiary shadow-sm ring-1 ring-gray-100' : 'bg-background hover:bg-tertiary' }} 
+               {{ $isActive ? 'bg-tertiary shadow-sm ring-1 ring-border' : 'bg-background hover:bg-tertiary' }} 
                transition duration-300 rounded-xl flex items-center gap-2 justify-start px-2">
 
-                <!-- Active Indicator -->
                 <div class="h-full w-2 -ml-2.25 
                     {{ $isActive ? 'bg-primary opacity-100' : 'opacity-0 group-hover:opacity-100' }} 
                     transition duration-300 rounded-l-xl sidebar-indicator">
                 </div>
 
-                <!-- Icon -->
-                <div class="sidebar-icon p-1 rounded-md flex items-center justify-center
-                    {{ $isActive ? 'bg-secondary' : 'bg-gray-300 group-hover:bg-secondary' }}">
+                <div class="sidebar-icon p-1.5 rounded-md flex items-center justify-center transition-colors
+                    {{ $isActive ? 'bg-secondary text-primary' : 'bg-surface text-text-secondary group-hover:bg-secondary group-hover:text-primary' }}">
                     
                     @if ($loop->first)
-                        <x-lucide-layout-dashboard class="w-4 h-4 text-black group-hover:text-primary" />
+                        <x-lucide-layout-dashboard class="w-4 h-4" />
                     @elseif ($loop->index == 1)
-                        <x-lucide-folder-git-2 class="w-4 h-4 text-black group-hover:text-primary" />
+                        <x-lucide-folder-git-2 class="w-4 h-4" />
                     @elseif ($loop->index == 2)
-                        <x-lucide-users class="w-4 h-4 text-black group-hover:text-primary" />
+                        <x-lucide-users class="w-4 h-4" />
                     @else
-                        <x-lucide-user-pen class="w-4 h-4 text-black group-hover:text-primary" />
+                        <x-lucide-user-pen class="w-4 h-4" />
                     @endif 
 
                 </div>
 
-                <!-- Label -->
-                <span class="sidebar-text block py-2 font-montserrat font-semibold 
+                <span class="sidebar-text block py-2 font-montserrat font-semibold text-sm transition-colors
                     {{ $isActive ? 'text-primary' : 'text-text-primary group-hover:text-primary' }}">
                     {{ $item['name'] }}
                 </span>
-
             </a>
         @endforeach
     @endforeach
 
-    <!-- Themes Title -->
-    <p class="pt-3 font-montserrat text-xs uppercase tracking-wide font-semibold text-text-secondary opacity-80 sidebar-text">
-        Themes
+    <p class="pt-3 font-montserrat text-xs uppercase tracking-wide font-semibold text-text-secondary opacity-80 sidebar-theme-title transition-all duration-300">
+        Theme
     </p>
 
-    <!-- Theme Section -->
     <div class="sidebar-theme w-full rounded-xl bg-background border-[1.5px] p-3 border-border flex flex-col gap-3 items-center">
 
-        <div class="sidebar-text flex gap-3 items-center">
-            <x-lucide-palette class="w-6 h-6 text-primary"/>
+        <div class="sidebar-text flex gap-3 items-center w-full justify-center">
+            <x-lucide-palette class="w-5 h-5 text-primary"/>
             <div class="flex flex-col">
                 <p class="font-montserrat text-sm font-semibold text-text-primary">Select Theme</p>
-                <p class="font-montserrat text-[12px] text-text-secondary">Pick your desired theme</p>
+                <p class="font-montserrat text-[10px] text-text-secondary">Pick your desired theme</p>
             </div>
         </div>
 
-        <div class="flex flex-row gap-2">
-            <button class="theme-btn flex flex-col items-center gap-3 p-2 rounded-lg hover:bg-tertiary transition" data-theme="light">
-                <div class="w-8 h-8 rounded-2xl overflow-hidden flex">
-                    <div class="w-1/2 bg-[#FFFFFF]"></div>
-                    <div class="w-1/2 bg-[#F5F4F1]"></div>
-                </div>
-                <span class="sidebar-text font-montserrat text-sm text-text-secondary">Light</span>
+        <div class="sidebar-expanded-theme flex flex-row gap-2">
+            <button class="theme-btn flex flex-col items-center gap-2 p-2 rounded-lg hover:bg-tertiary transition focus:outline-none" data-theme="light">
+                <x-lucide-sun class="w-6 h-6 text-text-secondary" />
+                <span class="font-montserrat text-sm text-text-secondary">Light</span>
             </button>
 
-            <button class="theme-btn flex flex-col items-center gap-3 p-2 rounded-lg hover:bg-tertiary transition" data-theme="dark">
-                <div class="w-8 h-8 rounded-2xl overflow-hidden flex">
-                    <div class="w-1/2 bg-[#0F172A]"></div>
-                    <div class="w-1/2 bg-[#1E293B]"></div>
-                </div>
-                <span class="sidebar-text font-montserrat text-sm text-text-secondary">Dark</span>
+            <button class="theme-btn flex flex-col items-center gap-2 p-2 rounded-lg hover:bg-tertiary transition focus:outline-none" data-theme="dark">
+                <x-lucide-moon class="w-6 h-6 text-text-secondary" />
+                <span class="font-montserrat text-sm text-text-secondary">Dark</span>
             </button>
 
-            <button class="theme-btn flex flex-col items-center gap-3 p-2 rounded-lg hover:bg-tertiary transition" data-theme="system">
-                <div class="w-8 h-8 rounded-2xl overflow-hidden flex">
-                    <div class="w-1/2 bg-white"></div>
-                    <div class="w-1/2 bg-[#0F172A]"></div>
-                </div>
-                <span class="sidebar-text font-montserrat text-sm text-text-secondary">System</span>
+            <button class="theme-btn flex flex-col items-center gap-2 p-2 rounded-lg hover:bg-tertiary transition focus:outline-none" data-theme="system">
+                <x-lucide-monitor class="w-6 h-6 text-text-secondary" />
+                <span class="font-montserrat text-sm text-text-secondary">System</span>
             </button>
         </div>
+
+        <button id="sidebar-theme-cycle" class="sidebar-collapsed-theme hidden flex-col items-center justify-center gap-1 w-full rounded-lg hover:bg-tertiary p-2 transition focus:outline-none">
+            <x-lucide-sun id="sidebar-cycle-light" class="w-6 h-6 text-primary" />
+            <x-lucide-moon id="sidebar-cycle-dark" class="w-6 h-6 text-primary hidden" />
+            <x-lucide-monitor id="sidebar-cycle-system" class="w-6 h-6 text-primary hidden" />
+            <span id="sidebar-cycle-text" class="font-montserrat text-[10px] font-bold text-primary capitalize">Light</span>
+        </button>
+
     </div>
 </aside>
+
+@once
+<style>
+    /* --- PERBAIKAN PROFIL SAAT COLLAPSE --- */
+    .sidebar-collapsed .sidebar-profile {
+        border: none !important; 
+        padding: 0 !important; 
+        box-shadow: none !important; 
+        background-color: transparent !important; 
+    }
+    
+    .sidebar-collapsed .sidebar-profile > div:first-child {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* --- PERBAIKAN TEMA SAAT COLLAPSE --- */
+    .sidebar-collapsed .sidebar-theme-title {
+        display: none !important; /* Hilangkan teks Theme */
+    }
+    
+    .sidebar-collapsed .sidebar-theme {
+        margin-top: -0.25rem !important; /* Tarik paksa ke atas untuk merapatkan gap */
+        padding: 0 !important; /* Hilangkan padding kontainer agar tidak renggang */
+        border: none !important; 
+        background-color: transparent !important; 
+        box-shadow: none !important; 
+    }
+    
+    .sidebar-collapsed .sidebar-theme > .sidebar-text {
+        display: none !important; 
+    }
+    
+    .sidebar-collapsed .sidebar-expanded-theme {
+        display: none !important;
+    }
+    
+    .sidebar-collapsed .sidebar-collapsed-theme {
+        display: flex !important;
+        border: 1.5px solid var(--color-border); /* Border hanya muncul di tombol siklus */
+        width: 100%;
+        margin-top: 0.25rem; /* Jarak halus agar sama dengan jarak antar menu */
+    }
+</style>
+@endonce
