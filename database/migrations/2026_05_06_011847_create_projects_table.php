@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('accent'); 
             $table->timestamps(); 
 
+            $table->string('icon')->default('folder-git-2'); 
+
             $table->index('leader_id'); 
             $table->index('status'); 
         });

@@ -7,9 +7,9 @@
     <title>@yield('title')</title>
     <link rel="icon" href="images/progrest_p_logo_green.png">
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    {{-- <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400..800;1,400..800&family=Parkinsans:wght@400..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400..800;1,400..800&family=Parkinsans:wght@400..800&display=swap" rel="stylesheet"> --}}
     
     @vite(['resources/css/app.css', 'resources/js/app.js']) 
     <script>
@@ -26,6 +26,8 @@
             width: 16rem;
             overflow: hidden;
             will-change: width; 
+            z-index: 50; 
+            position: fixed; 
         }
         .sidebar-collapsed .sidebar-theme {
             margin-top: 2rem; 
@@ -66,7 +68,7 @@
 <body>
     <div class="flex h-screen bg-surface overflow-hidden">
         
-        <aside class="hidden md:flex md:flex-shrink-0">
+        <aside class="hidden md:flex md:shrink-0">
             <x-sidebar :menu="$menu"/>
             <div id="sidebarFiller"></div>
         </aside>

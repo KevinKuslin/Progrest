@@ -14,55 +14,55 @@
 
 @font-face {
     font-family: 'Montserrat';
-    src: url('/fonts/Montserrat-Regular.ttf') format('truetype');
+    src: url('http://127.0.0.1:8000/fonts/Montserrat-Regular.ttf') format('truetype');
     font-weight: 400;
 }
 
 @font-face {
     font-family: 'Montserrat';
-    src: url('/fonts/Montserrat-Medium.ttf') format('truetype');
+    src: url('http://127.0.0.1:8000/fonts/Montserrat-Medium.ttf') format('truetype');
     font-weight: 500;
 }
 
 @font-face {
     font-family: 'Montserrat';
-    src: url('/fonts/Montserrat-SemiBold.ttf') format('truetype');
+    src: url('http://127.0.0.1:8000/fonts/Montserrat-SemiBold.ttf') format('truetype');
     font-weight: 600;
 }
 
 @font-face {
     font-family: 'Montserrat';
-    src: url('/fonts/Montserrat-Bold.ttf') format('truetype');
+    src: url('http://127.0.0.1:8000/fonts/Montserrat-Bold.ttf') format('truetype');
     font-weight: 700;
 }
 
 @font-face {
     font-family: 'Parkinsans';
-    src: url('../fonts/Parkinsans-Light.ttf') format('truetype');
+    src: url('http://127.0.0.1:8000/fonts/Parkinsans-Light.ttf') format('truetype');
     font-weight: 400;
 }
 
 @font-face {
     font-family: 'Parkinsans';
-    src: url('../fonts/Parkinsans-Regular.ttf') format('truetype');
+    src: url('http://127.0.0.1:8000/fonts/Parkinsans-Regular.ttf') format('truetype');
     font-weight: 400;
 }
 
 @font-face {
     font-family: 'Parkinsans';
-    src: url('../fonts/Parkinsans-Medium.ttf') format('truetype');
+    src: url('http://127.0.0.1:8000/fonts/Parkinsans-Medium.ttf') format('truetype');
     font-weight: 500;
 }
 
 @font-face {
     font-family: 'Parkinsans';
-    src: url('../fonts/Parkinsans-SemiBold.ttf') format('truetype');
+    src: url('http://127.0.0.1:8000/fonts/Parkinsans-SemiBold.ttf') format('truetype');
     font-weight: 600;
 }
 
 @font-face {
     font-family: 'Parkinsans';
-    src: url('../fonts/Parkinsans-Bold.ttf') format('truetype');
+    src: url('http://127.0.0.1:8000/fonts/Parkinsans-Bold.ttf') format('truetype');
     font-weight: 700;
 }
 
@@ -72,6 +72,8 @@
     --color-secondary: #DCECE2;
     --color-tertiary: #F4F8F5; 
     --color-primary-hover: #1F6B47; 
+    --color-quartiary: #3D9A62; 
+    --color-quartiary-hover: #2F7D4E; 
     
     --color-background-gradient: #E9F2EE; 
     --color-background: #FFFFFF;
@@ -90,6 +92,8 @@
     --color-secondary: #4ADE80;
     --color-tertiary: #163A2A;
     --color-primary-hover: #2A7F5B; 
+    --color-quartiary: #4FC27B; 
+    --color-quartiary-hover: #67D68F; 
 
     --color-background-gradient: #223632; 
     --color-background: #0F172A;

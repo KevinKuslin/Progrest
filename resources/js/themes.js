@@ -46,6 +46,7 @@ window.setTheme = function (theme) {
     applyTheme(theme);
     updateThemeAssets(theme); 
     updateActiveThemeUI(theme); 
+    updateMobileThemeUI(theme);
     localStorage.setItem('theme', theme);
 };
 

@@ -52,6 +52,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Mobile application that focuses on sea creatures education.',
             'progress' => 30,
             'accent' => '#7C2D8E',
+            'icon' => 'fishing-hook'
         ]); 
 
         $project2 = Project::create([
@@ -59,7 +60,8 @@ class DatabaseSeeder extends Seeder
             'title' => 'MindSpace',
             'description' => 'MindSpace Mobile App for mental health and mood tracking.',
             'progress' => 50,
-            'accent' => '#0056D2'
+            'accent' => '#0056D2', 
+            'icon' => 'heart-pulse'
         ]); 
             
         $project3 = Project::create([
@@ -67,7 +69,8 @@ class DatabaseSeeder extends Seeder
             'title' => 'CookEase',
             'description' => 'CookEase Mobile App for easy recipes and meal planning.',
             'progress' => 10,
-            'accent' => '#1F5D3A'
+            'accent' => '#1F5D3A', 
+            'icon' => 'cooking-pot'
         ]); 
             
         $project4 = Project::create([
@@ -75,7 +78,8 @@ class DatabaseSeeder extends Seeder
             'title' => 'PetPal',
             'description' => 'PetPal Mobile App for smart pet care management system.',
             'progress' => 70,
-            'accent' => '#0EA5A4',
+            'accent' => '#0EA5A4', 
+            'icon' => 'cat'
         ]); 
         
         $project5 = Project::create([
@@ -83,7 +87,8 @@ class DatabaseSeeder extends Seeder
             'title' => 'TravelMate',
             'description' => 'TravelMate Mobile App for smart trip planning and itineraries.',
             'progress' => 100,
-            'accent' => '#8B5A2B'
+            'accent' => '#8B5A2B', 
+            'icon' => 'backpack'
         ]); 
         
         $project6 = Project::create([
@@ -91,7 +96,8 @@ class DatabaseSeeder extends Seeder
             'title' => 'EcoTrack',
             'description' => 'EcoTrack App for tracking and reducing daily carbon footprint.',
             'progress' => 40,
-            'accent' => '#D946A6'
+            'accent' => '#D946A6', 
+            'icon' => 'trees'
         ]); 
 
 
