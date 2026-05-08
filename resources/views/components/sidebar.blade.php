@@ -1,7 +1,7 @@
 @props(['menu'])
 
 <aside id="sidebar"
-    class="bg-background text-black p-4 h-screen rounded-r-2xl shadow-r-xl flex flex-col gap-3 fixed transition-[width] duration-300">
+    class="bg-background text-black p-4 h-screen rounded-r-2xl shadow-r-xl flex flex-col gap-3 fixed transition-[width] duration-300 hidden md:flex">
 
     <!-- Toggle Button -->
     <button id="sidebar-toggle"
@@ -20,18 +20,22 @@
 
     <div class="w-full h-px bg-border rounded-xl"></div>
 
-    <!-- Profile -->
+    <!-- Profile (Dinamis sesuai login) -->
     <div class="flex gap-3 border-[1.5px] p-2 border-border rounded-xl shadow-sm items-center">
         <img src="images/profile.jpg" class="w-12 rounded-4xl sidebar-icon">
         <div class="flex flex-col justify-center sidebar-text">
             <p class="font-montserrat font-bold text-text-primary">
                 @auth
                     {{ auth()->user()->username }}
+                @else
+                    Reeders
                 @endauth
             </p>
             <p class="font-montserrat -mt-px text-s text-text-secondary">
                 @auth
                     {{ auth()->user()->name }}
+                @else
+                    Reeders Rere
                 @endauth
             </p>
         </div>
@@ -49,7 +53,6 @@
                 $isActive = request()->is(ltrim($item['path'], '/'));
             @endphp 
 
-            <!-- ✅ FIX: <a> is now the wrapper -->
             <a href="{{ $item['path'] }}"
                class="sidebar-item group w-full h-10 
                {{ $isActive ? 'bg-tertiary shadow-sm ring-1 ring-gray-100' : 'bg-background hover:bg-tertiary' }} 
@@ -129,5 +132,4 @@
             </button>
         </div>
     </div>
-
 </aside>
