@@ -36,6 +36,36 @@
     font-weight: 700;
 }
 
+@font-face {
+    font-family: 'Parkinsans';
+    src: url('../fonts/Parkinsans-Light.ttf') format('truetype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Parkinsans';
+    src: url('../fonts/Parkinsans-Regular.ttf') format('truetype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Parkinsans';
+    src: url('../fonts/Parkinsans-Medium.ttf') format('truetype');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'Parkinsans';
+    src: url('../fonts/Parkinsans-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: 'Parkinsans';
+    src: url('../fonts/Parkinsans-Bold.ttf') format('truetype');
+    font-weight: 700;
+}
+
 @theme {
     /*  LIGHT  */
     --color-primary: #14452F;
