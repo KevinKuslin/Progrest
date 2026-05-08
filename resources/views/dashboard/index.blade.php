@@ -103,9 +103,6 @@
                         <button id="share-btn" class="focus:outline-none hover:opacity-70 transition-opacity" title="Download Statistics">
                             <x-lucide-share-2 class="w-5 h-5" />
                         </button>
-                        <button class="focus:outline-none hover:opacity-70 transition-opacity">
-                            <x-lucide-heart class="w-5 h-5 fill-white" />
-                        </button>
                     </div>
                     <span class="font-montserrat font-bold text-lg">Account Statistics</span>
                     <div class="w-14"></div>
@@ -127,18 +124,18 @@
                         <p class="text-xs text-text-secondary font-montserrat mt-0.5">Completed</p>
                     </div>
                     <div class="flex flex-col items-center justify-center pt-4 md:pt-0">
-                        <div class="flex items-center gap-1.5 text-primary font-parkinsans font-bold text-4xl">
-                            <span class="bg-primary text-white rounded-full w-7 h-7 flex items-center justify-center text-base">P</span> {{ $statistics['points']['current'] }}
-                        </div>
-                        <p class="font-montserrat font-bold text-text-primary text-sm mt-2">Points</p>
-                        <p class="text-xs text-text-secondary font-montserrat mt-0.5"><span class="font-bold text-text-primary">{{ $statistics['points']['highest'] }}</span> Highest</p>
-                    </div>
-                    <div class="flex flex-col items-center justify-center pt-4 md:pt-0">
                         <div class="flex items-center gap-2 text-primary font-parkinsans font-bold text-4xl">
                             <x-lucide-users class="w-7 h-7" /> {{ $statistics['collabs_completed'] }}
                         </div>
                         <p class="font-montserrat font-bold text-text-primary text-sm mt-2">Collabs</p>
                         <p class="text-xs text-text-secondary font-montserrat mt-0.5">Completed</p>
+                    </div>
+                    <div class="flex flex-col items-center justify-center pt-4 md:pt-0">
+                        <div class="flex items-center gap-1.5 text-primary font-parkinsans font-bold text-4xl">
+                            <span class="bg-primary text-white rounded-full w-7 h-7 flex items-center justify-center text-base">P</span> {{ $statistics['points']['current'] }}
+                        </div>
+                        <p class="font-montserrat font-bold text-text-primary text-sm mt-2">Points</p>
+                        <p class="text-xs text-text-secondary font-montserrat mt-0.5"><span class="font-bold text-text-primary">{{ $statistics['points']['highest'] }}</span> Highest</p>
                     </div>
                 </div>
             </div>
@@ -250,7 +247,7 @@
 
 </div>
 
-<x-footer />
+<!-- <x-footer /> -->
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {

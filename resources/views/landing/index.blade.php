@@ -235,7 +235,7 @@
     <div class="font-montserrat text-text-contrast border-t border-white/20 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center text-sm opacity-70">
         <p>© 2026 Progrest. All rights reserved.</p>
 
-        <p>Project Planner Platform</p>
+        <p>Project Planner Platform</p> 
     </div>
 </footer>
 
