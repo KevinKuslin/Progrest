@@ -5,26 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Progrest</title>
     <link rel="icon" href="images/progrest_p_logo_green.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400..800;1,400..800&family=Parkinsans:wght@400..800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="bg-primary">
-
-<!-- sm md lg xl  -->
 
 <!-- Navbar -->
 <nav class="fixed w-full bg-background shadow-sm z-5">
     
     <div class="flex justify-between items-center px-10 py-5">
         <!-- Logo -->
-        {{-- <div class="w-30 h-8 bg-no-repeat bg-cover"
-            style="background-image: url('images/progrest_logo_green.png')"></div>  --}}
         <img id="logo-landing" src="images/progrest_logo_green.png" alt="" class="w-30">
 
         <!-- Desktop -->
         <div class="hidden sm:flex gap-4 items-center">
-            <a href="{{ route('login') }}" class="text-text-primary">Sign In</a>
-            <a href="{{ route('register') }}" class="bg-primary hover:bg-primary-hover text-white px-5 py-2 rounded-lg font-semibold">
+            <a href="{{ route('login') }}" class="text-text-primary font-montserrat">Sign In</a>
+            <a href="{{ route('register') }}" class="bg-primary hover:bg-primary-hover text-white px-5 py-2 rounded-lg font-semibold font-montserrat">
                 Get Started Free
             </a>
         </div>
@@ -39,8 +38,8 @@
     <div id="mobile-menu"
         class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out flex flex-col items-center gap-4 px-10">
         
-        <a href="{{ route('login') }}" class="text-gray-600 py-2">Sign In</a>
-        <a href="{{ route('register') }}" class="bg-primary hover:bg-primary-hover text-white px-5 py-2 rounded-lg font-semibold mb-4">
+        <a href="{{ route('login') }}" class="text-gray-600 py-2 font-montserrat">Sign In</a>
+        <a href="{{ route('register') }}" class="bg-primary hover:bg-primary-hover text-white px-5 py-2 rounded-lg font-semibold mb-4 font-montserrat">
             Get Started Free
         </a>
     </div>
@@ -58,27 +57,27 @@
             ⚙︎ Designed for teams. Built for progress.
         </div>
 
-        <h1 class="font-montserrat text-text-primary text-5xl md:text-6xl font-bold leading-tight mb-6">
+        <h1 class="font-parkinsans text-text-primary text-5xl md:text-6xl font-bold leading-tight mb-6">
             Plan. Collaborate. <br>
             <span class="text-primary">Deliver Results.</span>
         </h1>
 
-        <p class="text-lg text-text-secondary mb-8 max-w-lg">
+        <p class="font-montserrat text-lg text-text-secondary mb-8 max-w-lg">
             Progrest helps teams plan, track, and complete projects with clarity.
             Stay aligned, meet deadlines, and achieve more—together.
         </p>
 
         <div class="flex gap-4 mb-6 text-md">
-            <a href="{{ route('register') }}" class="bg-primary hover:bg-primary-hover transition text-center text-white px-6 py-3 rounded-lg font-semibold shadow-md">
+            <a href="{{ route('register') }}" class="font-montserrat bg-primary hover:bg-primary-hover transition text-center text-white px-6 py-3 rounded-lg font-semibold shadow-md">
                 Get Started Free
             </a>
 
-            <button id="scroll-features" class="border-2 text-primary border-light-border bg-background  hover:bg-light-border-hover text-center px-6 py-3 rounded-lg font-medium shadow-md transition">
+            <button id="scroll-features" class="font-montserrat border-2 text-primary border-light-border bg-background  hover:bg-light-border-hover text-center px-6 py-3 rounded-lg font-medium shadow-md transition">
                 See How It Works
             </button>
         </div>
 
-        <div class="flex gap-6 text-sm text-text-secondary">
+        <div class="font-montserrat flex gap-6 text-sm text-text-secondary">
             <span>✔ No credit card required</span>
             <span>✔ Easy setup</span>
             <span>✔ Free plan</span>
@@ -97,7 +96,7 @@
     <div class="px-5 py-15 flex flex-col items-center bg-no-repeat bg-cover gap-7 rounded-2xl" style="background-image: url('images/background_landing.jpg')">
         <img src="images/progrest_p_logo_white.png" alt="" class="h-38 w-auto">
         <div class="px-4 py-1 rounded-md bg-white text-primary font-montserrat font-bold opacity-90">🗪 Our Slogan:</div>
-        <h1 class="font-montserrat text-4xl md:text-4xl font-semibold italic text-white w-7/8 text-center opacity-90">
+        <h1 class="font-parkinsans text-4xl md:text-4xl font-semibold italic text-white w-7/8 text-center opacity-90">
                 "Make Progress and Let Others do the Rest"
         </h1>
     </div>
@@ -105,11 +104,11 @@
 
 <!-- Fiturs -->
 <section id="features" class="px-10 py-20 bg-linear-to-r from-background to-background-gradient text-center">
-    <p class="text-secondary font-medium mb-2">
+    <p class="text-secondary font-montserrat font-medium mb-2">
         Everything you need to deliver
     </p>
 
-    <h2 class="font-montserrat text-3xl font-bold mb-12 text-text-primary">
+    <h2 class="font-parkinsans text-3xl font-bold mb-12 text-text-primary">
         Powerful features for
         <span class="underline decoration-dotted decoration-5 underline-offset-5 text-primary">modern teams</span>
     </h2>
@@ -118,30 +117,30 @@
 
         <div class="p-6 border-2 border-[#217750] rounded-xl hover:shadow-md transition">
             <div class="p-3 bg-[#BDD7CB] inline-block rounded-2xl">
-                <x-lucide-brain-cog class="w-6 h-6 text-[##217750]" />
+                <x-lucide-brain-cog class="w-6 h-6 text-[#217750]" />
             </div>
-            <h3 class="font-montserrat font-semibold text-lg mb-2 text-text-primary">Smart Task Management</h3> 
-            <p class="mt-4 text-text-secondary">
+            <h3 class="font-parkinsans font-semibold text-lg mb-2 text-text-primary">Smart Task Management</h3> 
+            <p class="mt-4 font-montserrat text-text-secondary">
                 Organize tasks, set priorities, and track progress in real time.
             </p>
         </div>
 
         <div class="p-6 border-2 border-[#217750] rounded-xl hover:shadow-md transition">
             <div class="p-3 bg-[#BDD7CB] inline-block rounded-2xl">
-                <x-lucide-handshake class="w-6 h-6 text-[##217750]" />
+                <x-lucide-handshake class="w-6 h-6 text-[#217750]" />
             </div>
-            <h3 class="font-montserrat font-semibold text-lg mb-2 text-text-primary">Team Collaboration</h3>
-            <p class="text-text-secondary mt-4">
+            <h3 class="font-parkinsans font-semibold text-lg mb-2 text-text-primary">Team Collaboration</h3>
+            <p class="font-montserrat text-text-secondary mt-4">
                 Communicate, share files, and work together seamlessly.
             </p>
         </div>
 
         <div class="p-6 border-2 border-[#217750] rounded-xl hover:shadow-md transition">
             <div class="p-3 bg-[#BDD7CB] inline-block rounded-2xl">
-                <x-lucide-file-chart-column-increasing class="w-6 h-6 text-[##217750]" />
+                <x-lucide-file-chart-column-increasing class="w-6 h-6 text-[#217750]" />
             </div>
-            <h3 class="font-montserrat font-semibold text-lg mb-2 text-text-primary">Insights & Reports</h3>
-            <p class="text-text-secondary mt-4">
+            <h3 class="font-parkinsans font-semibold text-lg mb-2 text-text-primary">Insights & Reports</h3>
+            <p class="font-montserrat text-text-secondary mt-4">
                 Get clear insights into progress, performance, and deadlines.
             </p>
         </div>
@@ -164,16 +163,16 @@
                 <x-lucide-rocket class="h-8 w-8 text-primary"/>
             </div>
             <div>
-                <h2 class="font-montserrat text-2xl font-bold mb-2 text-text-contrast">
+                <h2 class="font-parkinsans text-2xl font-bold mb-2 text-text-contrast">
                     Ready to bring clarity to your projects?
                 </h2>
-                <p class="text-text-contrast opacity-90">
+                <p class="font-montserrat text-text-contrast opacity-90">
                     Join teams already using Progrest to get things done.
                 </p>
             </div>
         </div>
 
-        <a href="/register" class="bg-background text-primary px-6 py-3 rounded-xl font-semibold hover:bg-light-border-hover transition">
+        <a href="/register" class="font-montserrat bg-background text-primary px-6 py-3 rounded-xl font-semibold hover:bg-light-border-hover transition">
             Get Started Free
         </a>
 
@@ -187,13 +186,13 @@
         <!-- brand -->
         <div class="flex flex-col gap-2 items-start">
             <img id="logo-footer" src="images/progrest_logo_white.png" alt="" class="w-40 h-auto">
-            <p class="text-sm opacity-80 text-text-contrast">
+            <p class="font-montserrat text-sm opacity-80 text-text-contrast">
                 Make progress and let others do the rest.
             </p>
 
             <!-- CTA -->
             <a href="/register" 
-                class="inline-block px-4 py-1.5 mt-2 bg-background text-primary 
+                class="font-montserrat inline-block px-4 py-1.5 mt-2 bg-background text-primary 
                         rounded-xl font-semibold hover:bg-light-border-hover
                         transition-transform duration-300">
                     Get Started
@@ -202,8 +201,8 @@
 
         <!-- Product -->
         <div>
-            <h2 class="font-semibold mb-3 text-text-contrast">Product</h2>
-            <ul class="space-y-3 text-sm opacity-80 text-text-contrast">
+            <h2 class="font-parkinsans font-semibold mb-3 text-text-contrast">Product</h2>
+            <ul class="font-montserrat space-y-3 text-sm opacity-80 text-text-contrast">
                 <li><a href="#" class="hover:opacity-100">Dashboard</a></li>
                 <li><a href="#" class="hover:opacity-100">Projects</a></li>
                 <li><a href="#" class="hover:opacity-100">Collaboration</a></li>
@@ -212,8 +211,8 @@
 
         <!-- Company -->
         <div>
-            <h2 class="font-semibold mb-3 text-text-contrast">Social Media</h2>
-            <ul class="space-y-3 text-sm opacity-80 text-text-contrast">
+            <h2 class="font-parkinsans font-semibold mb-3 text-text-contrast">Social Media</h2>
+            <ul class="font-montserrat space-y-3 text-sm opacity-80 text-text-contrast">
                 <li><a href="#" class="hover:opacity-100">Twitter</a></li>
                 <li><a href="#" class="hover:opacity-100">Facebook</a></li>
                 <li><a href="#" class="hover:opacity-100">Instagram</a></li>
@@ -222,8 +221,8 @@
 
         <!-- Resources -->
         <div>
-            <h2 class="font-semibold mb-3 text-text-contrast">Resources</h2>
-            <ul class="space-y-3 text-sm opacity-80 text-text-contrast">
+            <h2 class="font-parkinsans font-semibold mb-3 text-text-contrast">Resources</h2>
+            <ul class="font-montserrat space-y-3 text-sm opacity-80 text-text-contrast">
                 <li><a href="#" class="hover:opacity-100">Help Center</a></li>
                 <li><a href="#" class="hover:opacity-100">Privacy Policy</a></li>
                 <li><a href="#" class="hover:opacity-100">Terms of Service</a></li>
@@ -233,13 +232,12 @@
     </div>
 
     <!-- Bawah Footer -->
-    <div class="text-text-contrast border-t border-white/20 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center text-sm opacity-70">
+    <div class="font-montserrat text-text-contrast border-t border-white/20 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center text-sm opacity-70">
         <p>© 2026 Progrest. All rights reserved.</p>
 
         <p>Project Planner Platform</p>
     </div>
 </footer>
 
-{{-- <script src="resources/js/landing_navbar.js"></script> --}}
 </body>
 </html>
