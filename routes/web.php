@@ -8,6 +8,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
+
+
 Route::get('/', function() {
     return view('landing.index'); 
 })->name('landing'); 
@@ -29,8 +31,22 @@ Route::middleware(['auth'])->group(function() {
 }); 
 
 Route::get('/projects', [ProjectController::class, 'index']); 
+Route::get('/projects/tasks', function(){
+    $projects = [];
+    $menu = [
+        [
+            'navigations' => [
+                ['name' => 'Dashboard', 'path' => '/dashboard'], 
+                ['name' => 'Projects', 'path' => '/projects'], 
+                ['name' => 'Collab', 'path' => '/collab'], 
+                ['name' => 'Profiles', 'path' => '/profile']
+            ]
+        ]
+    ];
+    return view('projects.tasks.index', compact('projects', 'menu'));
+});
 Route::get('/projects/{project}', [ProjectController::class, 'show'])
     ->middleware('auth'); 
 
 Route::get('/collab', [CollabController::class, 'index']); 
-Route::get('/profile', [ProfileController::class, 'index']); 
+Route::get('/profile', [ProfileController::class, 'index']);
