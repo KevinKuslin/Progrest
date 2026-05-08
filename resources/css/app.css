@@ -67,7 +67,7 @@
 }
 
 @theme {
-    /*  LIGHT  */
+    /* LIGHT  */
     --color-primary: #14452F;
     --color-secondary: #DCECE2;
     --color-tertiary: #F4F8F5; 
@@ -97,40 +97,42 @@
 }
 
 .dark {
-    --color-primary: #22C55E;
-    --color-secondary: #4ADE80;
-    --color-tertiary: #163A2A;
-    --color-primary-hover: #2A7F5B; 
-    --color-quartiary: #4FC27B; 
-    --color-quartiary-hover: #67D68F; 
+    /* Perbaikan Palet Dark Mode: Hijau Slate/Kusam yang kalem */
+    --color-primary: #8AB697; /* Hijau Teak Kusam - Warna Primer Baru */
+    --color-primary-hover: #A7D4B6; /* Lebih Terang */
+    --color-secondary: #243C2E; /* Hijau Hutan Sangat Gelap */
+    --color-tertiary: #18291F; /* Hijau Sangat Gelap */
+    --color-quartiary: #6B9F7B;
+    --color-quartiary-hover: #56876F; 
 
-    --color-background-gradient: #223632; 
-    --color-background: #0F172A;
-    --color-surface: #1E293B;
+    --color-background-gradient: #020617; 
+    --color-background: #0F172A; /* Biru Gelap Slate */
+    --color-surface: #1E293B; /* Permukaan */
     --color-border: #334155; 
-    --color-light-border: #2E2A24; 
-    --color-light-border-hover: #1F2937; 
+    --color-light-border: #475569; 
+    --color-light-border-hover: #64748B; 
 
-    --color-text-primary: #F1F5F9;
+    --color-text-primary: #F8FAFC;
     --color-text-secondary: #94A3B8; 
     --color-text-contrast: #0F172A; 
 }
 
 @media (prefers-color-scheme: dark) {
     :root:not(.light):not(.dark) {
-        --color-primary: #22C55E;
-        --color-secondary: #4ADE80;
-        --color-tertiary: #163A2A;
-        --color-primary-hover: #2A7F5B; 
+        /* Sinkronisasi Palet Dark Mode Kusam */
+        --color-primary: #8AB697;
+        --color-primary-hover: #A7D4B6; 
+        --color-secondary: #243C2E;
+        --color-tertiary: #18291F; 
 
-        --color-background-gradient: #223632; 
+        --color-background-gradient: #020617; 
         --color-background: #0F172A;
         --color-surface: #1E293B;
         --color-border: #334155; 
-        --color-light-border: #2E2A24; 
-        --color-light-border-hover: #1F2937; 
+        --color-light-border: #475569; 
+        --color-light-border-hover: #64748B; 
 
-        --color-text-primary: #F1F5F9;
+        --color-text-primary: #F8FAFC;
         --color-text-secondary: #94A3B8; 
         --color-text-contrast: #0F172A; 
     }

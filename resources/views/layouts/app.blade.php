@@ -63,6 +63,18 @@
         .sidebar-collapsed #sidebarFiller {
             width: 5rem;
         }
+        /* --- TAMBAHAN UNTUK THEME COLLAPSE --- */
+        .sidebar-collapsed .sidebar-theme-title {
+            text-align: center;
+            font-size: 0.65rem; /* Mengecilkan teks "THEMES" agar pas di tengah */
+            margin-bottom: 0.2rem;
+        }
+        .sidebar-collapsed .sidebar-expanded-theme {
+            display: none !important; /* Sembunyikan 3 tombol saat collapse */
+        }
+        .sidebar-collapsed .sidebar-collapsed-theme {
+            display: flex !important; /* Tampilkan 1 tombol siklus saat collapse */
+        }
     </style>
 </head>
 <body>
