@@ -39,7 +39,7 @@ function updateThemeAssets(theme) {
     if (logoP) logoP.src = pLogo;
     if (logoFooter) logoFooter.src = footerLogo; 
     if (logoAuth) logoAuth.src = mainLogo; 
-    if (mobileLogo) mobileLogo.src = mainLogo; // <-- FIX: Terapkan perubahan source ke Mobile Logo
+    if (mobileLogo) mobileLogo.src = mainLogo;
 }
 
 // Expose globally (so Blade can use it if needed)
@@ -52,7 +52,6 @@ window.setTheme = function (theme) {
     localStorage.setItem('theme', theme);
 };
 
-// Update Ikon untuk tombol 1 Siklus (Sidebar Collapse)
 function updateSidebarCycleUI(theme) {
     const sLight = document.getElementById('sidebar-cycle-light');
     const sDark = document.getElementById('sidebar-cycle-dark');

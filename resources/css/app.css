@@ -88,17 +88,16 @@
 }
 
 .dark {
-    /* Perbaikan Palet Dark Mode: Hijau Slate/Kusam yang kalem */
-    --color-primary: #8AB697; /* Hijau Teak Kusam - Warna Primer Baru */
-    --color-primary-hover: #A7D4B6; /* Lebih Terang */
-    --color-secondary: #243C2E; /* Hijau Hutan Sangat Gelap */
-    --color-tertiary: #18291F; /* Hijau Sangat Gelap */
+    --color-primary: #8AB697;
+    --color-primary-hover: #A7D4B6;
+    --color-secondary: #243C2E;
+    --color-tertiary: #18291F;
     --color-quartiary: #6B9F7B;
     --color-quartiary-hover: #56876F; 
 
     --color-background-gradient: #020617; 
-    --color-background: #0F172A; /* Biru Gelap Slate */
-    --color-surface: #1E293B; /* Permukaan */
+    --color-background: #0F172A;
+    --color-surface: #1E293B;
     --color-border: #334155; 
     --color-light-border: #475569; 
     --color-light-border-hover: #64748B; 
@@ -110,7 +109,6 @@
 
 @media (prefers-color-scheme: dark) {
     :root:not(.light):not(.dark) {
-        /* Sinkronisasi Palet Dark Mode Kusam */
         --color-primary: #8AB697;
         --color-primary-hover: #A7D4B6; 
         --color-secondary: #243C2E;
