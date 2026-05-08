@@ -12,7 +12,7 @@ class ProjectController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(){
+    public function index(Request $request){
         $menu = [
             [
                 'navigations' => [
@@ -24,13 +24,37 @@ class ProjectController extends Controller
             ]
         ]; 
 
-        $projects = Project::where('leader_id', auth()->id())
-            ->orWhereHas('members', function ($q) {
-                $q->where('user_id', auth()->id());
-            })
-            ->latest()
-            ->get();
+        $sort = $request->get('sort', 'recent');
+        $search = $request->get('search'); 
+        $direction = $request->get('direction', 'desc');
 
+        $projects = Project::where(function ($query) {
+            $query->where('leader_id', auth()->id())
+                ->orWhereHas('members', function ($q) {
+                    $q->where('user_id', auth()->id());
+                });
+        });
+
+        if ($search) {
+            $projects->where(function ($query) use ($search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        match ($sort) {
+
+            'alphabetical' =>
+                $projects->orderBy('title', $direction),
+
+            'progress' =>
+                $projects->orderBy('progress', $direction),
+
+            default =>
+                $projects->orderBy('updated_at', $direction),
+        };
+
+        $projects = $projects->get(); 
         return view('projects.index', compact('menu', 'projects')); 
     }
 

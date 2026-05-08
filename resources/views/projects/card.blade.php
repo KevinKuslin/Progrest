@@ -1,8 +1,8 @@
-<div class="project-container bg-background rounded-3xl p-6 shadow-sm relative pl-9 w-full max-w-sm">
+<div class="project-container bg-background rounded-3xl p-5 shadow-sm relative pl-9 w-full max-w-sm">
     <div class="project-line absolute left-4 top-6 bottom-24 w-1 rounded-full" style="background-color: {{ $accentColor ?? 'bg-primary' }};"></div>
 
-    <div class="flex justify-between items-start mb-2">
-        <div class="pr-2 p-2 rounded-xl flex justify-center items-center" style="background-color: {{ $accentColor }}">
+    <div class="flex justify-between items-start mb-1.5">
+        <div class="p-2 rounded-xl flex justify-center items-center" style="background-color: {{ $accentColor }}">
             {{-- <x-lucide-{{ $icon }} class="w-7 text-text-contrast" /> --}}
             <x-dynamic-component 
                 :component="'lucide-' . $icon"
@@ -10,16 +10,16 @@
             />
         </div>
         @if ($progress < 100)
-            <div class="text-[#EAB308] flex flex-row gap-3">
-                <div class="bg-[#FEF2D8] px-3 rounded-lg">
-                    <span class="font-montserrat text-[#EAB308] text-[12px] font-semibold">In Progress</span>
+            <div class="text-pastel-yellow-text flex flex-row gap-3">
+                <div class="bg-pastel-yellow-background px-3 rounded-lg">
+                    <span class="font-montserrat text-pastel-yellow-text text-[12px] font-semibold">In Progress</span>
                 </div>
                 <x-lucide-clock class="w-7" />
             </div>
         @else
-            <div class="text-[#22C55E] flex flex-row gap-3">
-                <div class="bg-[#E4F7EC] px-3 rounded-lg">
-                    <span class="font-montserrat text-[#22C55E] text-[12px] font-semibold">Completed</span>
+            <div class="text-pastel-green-text flex flex-row gap-3">
+                <div class="bg-pastel-green-background px-3 rounded-lg">
+                    <span class="font-montserrat text-pastel-green-text text-[12px] font-semibold">Completed</span>
                 </div>
                 <x-lucide-circle-check-big class="w-7" />
             </div>
@@ -31,7 +31,7 @@
         <p class="text-text-primary text-sm mt-1 leading-snug">{{ $description }}</p>
     </div>
 
-    <div class="mb-4 mt-6">
+    <div class="mb-3.25 mt-4.5">
         <div class="flex justify-between items-center mb-2">
             <h3 class="text-text-primary font-semibold font-parkinsans text-sm">Progress</h3>
             <span class="text-text-primary font-semibold font-parkinsans text-sm">{{ $progress }}%</span>
@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-2.5">
         <h3 class="text-text-primary font-semibold font-parkinsans mb-2 text-sm">Collaborators</h3>
         <div class="flex items-center -space-x-2">
             @foreach ($collaborators->take(3) as $avatar)
