@@ -12,27 +12,49 @@
     <div class="bg-primary rounded-b-4xl px-8 py-5 flex justify-between">
         <div>
             <div class="flex items-center gap-3">
+                <h1 class="font-montserrat text-white text-[40px] font-bold">Projects</h1>
                 <div class="bg-surface p-1 flex items-center justify-center rounded-lg w-9 h-9">
                     <x-lucide-folder-git-2 class="w-7 text-text-primary" />
                 </div>
 
-                <h1 class="font-montserrat text-white text-[40px] font-bold">Projects</h1>
             </div>
             <h3 class="font-montserrat text-white/80">What would you work on today?</h3>
         </div>
 
         <div class="mt-1 flex flex-col justify-center">
-            <div>
+
+            {{-- Search Bar --}} 
+            <form method="GET" class="relative">
+
+                {{-- Simpan Hasil Sort Dulu --}}
+                <input type="hidden"
+                    name="sort"
+                    value="{{ request('sort', 'recent') }}"
+                >
+
+                {{-- Simpan Hasil Direction Dulu --}}
+                <input type="hidden"
+                    name="direction"
+                    value="{{ request('direction', 'desc') }}"
+                >
+                
                 <div class="absolute pl-4 mt-2">
-                    <x-lucide-search class="w-5 h-5"/>
+                    <x-lucide-search class="w-5 text-black"/>
                 </div>
+
                 <input type="text"
+                    name="search"
+                    value="{{ request('search') }}" 
                     placeholder="Search project..."
-                    class="w-90 py-1.5 rounded-full bg-white font-montserrat pl-12 focus:outline-none">
-            </div>
+                    class="w-90 py-1.5 rounded-full bg-white font-montserrat pl-12 focus:outline-none"
+                    onchange="this.form.submit()"
+                >
+                    
+            </form>
+
             <div class="flex mt-3 mr-2 justify-end">
                 <button class="bg-quartiary rounded-3xl px-4 py-1.75 shadow-sm gap-2 hover:bg-quartiary-hover flex items-center justify-center">
-                    <span class="font-montserrat text-text-contrast text-sm">Create Project</span>
+                    <span class="font-montserrat text-white text-sm">Create Project</span>
                     <div class="bg-primary rounded-full text-white p-0.5">
                         <x-lucide-plus class="w-4 h-4 stroke-[2.5px]" />
                     </div>
