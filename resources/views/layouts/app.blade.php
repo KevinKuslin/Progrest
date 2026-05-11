@@ -86,7 +86,6 @@
             
             <main class="flex-1 relative focus:outline-none">
                 @yield('content')
-
                 @include('components.footer')
             </main>
         </div>
