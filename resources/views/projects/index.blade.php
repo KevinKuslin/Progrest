@@ -1,4 +1,4 @@
-@extends('layouts.app') 
+@extends('layouts.projects-tasks') 
 
 @section('title', 'Projects')
 
@@ -52,8 +52,10 @@
                     
             </form>
 
+            {{-- CREATE PROJECT PANEL --}}
+
             <div class="flex mt-3 mr-2 justify-end">
-                <button class="bg-quartiary rounded-3xl px-4 py-1.75 shadow-sm gap-2 hover:bg-quartiary-hover flex items-center justify-center">
+                <button onclick="openPanel()" class="bg-quartiary rounded-3xl px-4 py-1.75 shadow-sm gap-2 hover:bg-quartiary-hover flex items-center justify-center">
                     <span class="font-montserrat text-white text-sm">Create Project</span>
                     <div class="bg-primary rounded-full text-white p-0.5">
                         <x-lucide-plus class="w-4 h-4 stroke-[2.5px]" />

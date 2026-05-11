@@ -6,3 +6,6 @@ php artisan make:migration add_name_to_users_table --table=users
 
 Creating model: 
 php artisan make:model Project -m
+
+Alpine.js installation: 
+npm install alpinejs

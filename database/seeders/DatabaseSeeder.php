@@ -96,7 +96,7 @@ class DatabaseSeeder extends Seeder
             'title' => 'EcoTrack',
             'description' => 'EcoTrack App for tracking and reducing daily carbon footprint.',
             'progress' => 40,
-            'accent' => '#D946A6', 
+            'accent' => '#F35C75', 
             'icon' => 'trees'
         ]); 
 

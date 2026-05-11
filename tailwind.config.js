@@ -19,6 +19,9 @@ export default {
                 textPrimary: 'var(--color-text-primary)',
                 textSecondary: 'var(--color-text-secondary)',
             },
+            screens: {
+                xs: '480px',
+            }
         },
     },
     plugins: [],

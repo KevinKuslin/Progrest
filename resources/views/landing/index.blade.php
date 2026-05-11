@@ -67,7 +67,7 @@
             Stay aligned, meet deadlines, and achieve more—together.
         </p>
 
-        <div class="flex gap-4 mb-6 text-md">
+        <div class="flex gap-4 mb-6 text-md items-center">
             <a href="{{ route('register') }}" class="font-montserrat bg-primary hover:bg-primary-hover transition text-center text-white px-6 py-3 rounded-lg font-semibold shadow-md">
                 Get Started Free
             </a>
