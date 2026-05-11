@@ -102,12 +102,12 @@
                             </p>
         
                             <!-- CTA -->
-                            <a href="/register" 
+                            <!-- <a href="/register" 
                                 class="font-montserrat inline-block px-4 py-1.5 mt-2 bg-background text-primary 
                                         rounded-xl font-semibold hover:bg-light-border-hover
                                         transition-transform duration-300">
                                     Get Started
-                            </a>
+                            </a> -->
                         </div>
         
                         <!-- Product -->
@@ -116,7 +116,7 @@
                             <ul class="font-montserrat space-y-3 text-sm opacity-80 text-text-contrast">
                                 <li><a href="/dashboard" class="hover:opacity-100">Dashboard</a></li>
                                 <li><a href="/projects" class="hover:opacity-100">Projects</a></li>
-                                <li><a href="/collab" class="hover:opacity-100">Collaboration</a></li>
+                                <li><a href="/collab" class="hover:opacity-100">Collab</a></li>
                             </ul>
                         </div>
         
