@@ -71,6 +71,10 @@
         .sidebar-collapsed .sidebar-collapsed-theme {
             display: flex !important; /* Tampilkan 1 tombol siklus saat collapse */
         }
+        .date-input::-webkit-calendar-picker-indicator {
+            opacity: 0;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -103,6 +107,25 @@
     <div id="panel" class="fixed flex flex-col top-0 right-0 z-50 h-full w-full max-w-lg
         translate-x-full bg-background shadow-2xl
         transition-transform duration-300 p-4 rounded-l-2xl">
+
+            {{-- Aksen Hijau I  --}}
+            <div class="absolute -top-24 left-1/2
+                h-64 w-64 -translate-x-1/2
+                rounded-full bg-emerald-300/20
+                blur-3xl">
+            </div>
+
+            <!-- Aksen Hijau II -->
+            <div class="absolute top-10 right-10
+                        h-40 w-40 rounded-full
+                        bg-green-200/20 blur-3xl">
+            </div>
+
+            <!-- Akses Dot Hijau -->
+            <div class="absolute top-20 right-32 h-2 w-2
+                        rounded-full bg-emerald-300/50">
+            </div>
+
             <div class="flex flex-col items-end justify-between pb-4 mb-3">
                 <button onclick="closePanel()" class="text-xl font-semibold hover:rotate-90 rotate-0 transition duration-300 text-text-primary">
                     ✕
@@ -168,7 +191,7 @@
 
                             {{-- HIDDEN INPUT --}}
 
-                            <input type="hidden" name="theme" id="selectedTheme" value="green">
+                            <input type="hidden" name="theme" id="selectedTheme" value="cyan">
 
                             {{-- COLOR OPTIONS --}}
 
@@ -176,65 +199,93 @@
                                 <button
                                     type="button"
                                     onclick="selectTheme('cyan', this)"
-                                    class="theme-option w-7 h-7 rounded-full bg-cyan ring-4 ring-cyan/20"
-                                ></button>
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-cyan ring-4 ring-offset-2 ring-cyan/20"
+                                >
+                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast"/>
+                                </button>
                                 <button
                                     type="button"
                                     onclick="selectTheme('brown', this)"
-                                    class="theme-option w-7 h-7 rounded-full bg-brown ring-brown/20"
-                                ></button>
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-brown ring-brown/20"
+                                >
+                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
+                                </button>
                                 <button
                                     type="button"
                                     onclick="selectTheme('purple', this)"
-                                    class="theme-option w-7 h-7 rounded-full bg-purple ring-purple/20"
-                                ></button>
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-purple ring-purple/20"
+                                >
+                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
+                                </button>
                                 <button
                                     type="button"
                                     onclick="selectTheme('blue', this)"
-                                    class="theme-option w-7 h-7 rounded-full bg-blue ring-blue/20"
-                                ></button>
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-blue ring-blue/20"
+                                >
+                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
+                                </button>
                                 <button
                                     type="button"
                                     onclick="selectTheme('pink', this)"
-                                    class="theme-option w-7 h-7 rounded-full bg-pink ring-pink/20"
-                                ></button>
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-pink ring-pink/20"
+                                >
+                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
+                                </button>
                                 <button
                                     type="button"
                                     onclick="selectTheme('green', this)"
-                                    class="theme-option w-7 h-7 rounded-full bg-green ring-green/20"
-                                ></button>
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-green ring-green/20"
+                                >
+                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
+                                </button>
                                 <button
                                     type="button"
                                     onclick="selectTheme('orange', this)"
-                                    class="theme-option w-7 h-7 rounded-full bg-orange ring-orange/20"
-                                ></button>
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-orange ring-orange/20"
+                                >
+                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
+                                </button>
                                 <button
                                     type="button"
                                     onclick="selectTheme('yellow', this)"
-                                    class="theme-option w-7 h-7 rounded-full bg-yellow ring-yellow/20"
-                                ></button>
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-yellow ring-yellow/20"
+                                >
+                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
+                                </button>
                                 <button
                                     type="button"
                                     onclick="selectTheme('pink', this)"
-                                    class="theme-option w-7 h-7 rounded-full bg-steel ring-steel/20"
-                                ></button>
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-steel ring-steel/20"
+                                >
+                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
+                                </button>
                                 <button
                                     type="button"
                                     onclick="selectTheme('green', this)"
-                                    class="theme-option w-7 h-7 rounded-full bg-teal ring-teal/20"
-                                ></button>
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-teal ring-teal/20"
+                                >
+                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
+                                </button>
                                 <button
                                     type="button"
                                     onclick="selectTheme('orange', this)"
-                                    class="theme-option w-7 h-7 rounded-full bg-lime ring-lime/20"
-                                ></button>
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-lime ring-lime/20"
+                                >
+                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
+                                </button>
                                 <button
                                     type="button"
                                     onclick="selectTheme('yellow', this)"
-                                    class="theme-option w-7 h-7 rounded-full bg-rose ring-rose/20"
-                                ></button>
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-rose ring-rose/20"
+                                >
+                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
+                                </button>
                             </div>
                         </div>
+
+                        {{-- HIDDEN INPUT KHUSUS ICON --}}
+
+                        <input type="hidden" name="icon" id="selectedIcon" value="folder">
 
                         {{-- ICONS SELECTION INPUT --}}
 
@@ -256,66 +307,133 @@
                                 {{-- DEFAULT ICONS --}}
                                 <div class="grid grid-cols-2 min-[360px]:grid-cols-3 min-[480px]:grid-cols-4 place-items-center gap-y-4">
 
-                                    <button type="button"
-                                        class="p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-folder class="w-4 h-4 text-text-secondary"/>
+                                    <button type="button" 
+                                        onclick="selectIcon('folder', this)"
+                                        class="icon-option bg-quartiary/80 p-2 rounded-lg border border-border hover:bg-secondary transition">
+                                        <x-lucide-folder class="icon-icon w-4 h-4 text-text-contrast"/>
                                     </button>
 
                                     <button type="button"
-                                        class="p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-clock class="w-4 h-4 text-text-secondary"/>
+                                        onclick="selectIcon('clock', this)"
+                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition">
+                                        <x-lucide-clock class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
                                     <button type="button"
-                                        class="p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-book-open class="w-4 h-4 text-text-secondary"/>
+                                    onclick="selectIcon('book-open', this)"
+                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition">
+                                        <x-lucide-book-open class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
                                     <button type="button"
-                                        class="p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-chart-column class="w-4 h-4 text-text-secondary"/>
+                                        onclick="selectIcon('chart-column', this)"
+                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition">
+                                        <x-lucide-chart-column class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
-                                    <button class="p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-trees class="w-4 h-4"/>
+                                    <button type="button"
+                                        onclick="selectIcon('trees', this)"
+                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition">
+                                        <x-lucide-trees class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
-                                    <button class="p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-calendar class="w-4 h-4"/>
+                                    <button type="button"
+                                        onclick="selectIcon('calendar', this)"
+                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition">
+                                        <x-lucide-calendar class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
-                                    <button class="p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-backpack class="w-4 h-4"/>
+                                    <button type="button"
+                                        onclick="selectIcon('backpack', this)"
+                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition">
+                                        <x-lucide-backpack class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
-                                    <button class="p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-camera class="w-4 h-4"/>
+                                    <button type="button"
+                                        onclick="selectIcon('camera', this)"
+                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition">
+                                        <x-lucide-camera class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
-                                    <button class="p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-shopping-cart class="w-4 h-4"/>
+                                    <button type="button"
+                                        onclick="selectIcon('shopping-cart', this)"
+                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition">
+                                        <x-lucide-shopping-cart class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
-                                    <button class="p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-gamepad-2 class="w-4 h-4"/>
+                                    <button type="button"
+                                        onclick="selectIcon('gamepad-2', this)"
+                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition">
+                                        <x-lucide-gamepad-2 class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
-                                    <button class="p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-cat class="w-4 h-4"/>
+                                    <button type="button"
+                                        onclick="selectIcon('cat', this)"
+                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition">
+                                        <x-lucide-cat class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
-                                    <button class="p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-cooking-pot class="w-4 h-4"/>
+                                    <button type="button"
+                                        onclick="selectIcon('cooking-pot', this)"
+                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition">
+                                        <x-lucide-cooking-pot class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    {{-- PROJECT TIMELINE INPUT --}}
+
+                    <div class="space-y-4 p-4 flex flex-col border-[1.5px] rounded-xl border-border">
+                        <div class="flex flex-row gap-2 items-center">
+                            <div class="shadow-2xl shadow-pastel-green-background">
+                                <x-lucide-calendar-clock class="w-5 text-pastel-green-text"/>
+                            </div>
+                            <p class="font-montserrat font-semibold text-[14px] text-text-primary">Timeline</p>
+                        </div>
+
+                        <div class="flex flex-col gap-1">
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">Due date (Optional)</p>
+
+                            <div class="relative">
+
+                                {{-- CUSTOM ICON --}}
+                                <x-lucide-calendar
+                                    class="absolute right-4 top-1/2 -translate-y-1/2
+                                        w-4.5 h-4.5 text-text-primary pointer-events-none"
+                                />
+
+                                <input
+                                    type="date"
+                                    name="due-date"
+                                    class="date-input w-full rounded-lg
+                                        border-[1.5px] border-text-primary/50
+                                        bg-background
+                                        px-3 py-2.5
+                                        text-sm placeholder:text-sm
+                                        text-text-primary"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- TEAM MEMBERS --}}
+
+                    <div class="space-y-4 p-4 flex flex-col border-[1.5px] rounded-xl border-border">
+                        <div class="flex flex-row gap-2 items-center">
+                            <div class="shadow-2xl shadow-pastel-green-background">
+                                <x-lucide-calendar-clock class="w-5 text-pastel-green-text"/>
+                            </div>
+                            <p class="font-montserrat font-semibold text-[14px] text-text-primary">Team Members</p>
+                        </div>
+                    </div>
+
                     <button
-                        class="w-full rounded-lg bg-black py-3 text-white"
+                        class="flex items-center justify-center w-full rounded-2xl bg-primary  hover:bg-primary-hover gap-3 py-3 text-text-contrast font-montserrat text-sm"
                     >
-                        Create
+                        <x-lucide-rocket class="w-5 text-text-contrast"/>
+                        Create Project
                     </button>
 
                 </form>
