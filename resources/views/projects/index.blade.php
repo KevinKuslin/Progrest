@@ -200,7 +200,8 @@
                     'progress' => $project->progress,
                     'collaborators' => $project->members,
                     'accentColor' => $project->accent, 
-                    'icon' => $project->icon
+                    'icon' => $project->icon, 
+                    'days_remaining' => $project->days_remaining
                 ])
             @endforeach
         </div>

@@ -110,20 +110,15 @@
 
             {{-- Aksen Hijau I  --}}
             <div class="absolute -top-24 left-1/2
-                h-64 w-64 -translate-x-1/2
-                rounded-full bg-emerald-300/20
+                h-64 w-86 -translate-x-1/2
+                rounded-full bg-emerald-300/15
                 blur-3xl">
             </div>
 
             <!-- Aksen Hijau II -->
             <div class="absolute top-10 right-10
-                        h-40 w-40 rounded-full
-                        bg-green-200/20 blur-3xl">
-            </div>
-
-            <!-- Akses Dot Hijau -->
-            <div class="absolute top-20 right-32 h-2 w-2
-                        rounded-full bg-emerald-300/50">
+                        h-40 w-66 rounded-full
+                        bg-green-200/15 blur-3xl">
             </div>
 
             <div class="flex flex-col items-end justify-between pb-4 mb-3">
@@ -142,8 +137,8 @@
             </div>
 
             <div class="flex-1 overflow-y-auto">
-                <form class="flex flex-col gap-4">
-
+                <form method="POST" action="{{ route('projects.store') }}" class="flex flex-col gap-4">
+                    @csrf
                     <div class="space-y-4 p-4 flex flex-col border-[1.5px] rounded-xl border-border">
                         <div class="flex flex-row gap-2 items-center">
                             <div class="shadow-2xl shadow-pastel-green-background">
@@ -158,7 +153,7 @@
                             {{-- PROJECT TITLE INPUT --}}
 
                             <input
-                                name="project-title"
+                                name="title"
                                 type="text"
                                 placeholder="e.g. AquaVerse"
                                 class="w-full rounded-lg border-[1.5px] border-text-primary/50 px-3 py-2 text-sm text-text-primary placeholder:text-placeholder"
@@ -171,6 +166,7 @@
                             {{-- PROJECT DESCRIPTION INPUT --}}
 
                             <textarea
+                                name="description"
                                 placeholder="Describe your project goals, purpose, and plans..."
                                 class="w-full rounded-lg border-[1.5px] border-text-primary/50 px-3 py-2 text-sm text-text-primary placeholder:text-placeholder"
                             ></textarea>
@@ -191,91 +187,91 @@
 
                             {{-- HIDDEN INPUT --}}
 
-                            <input type="hidden" name="theme" id="selectedTheme" value="cyan">
+                            <input type="hidden" name="accent" id="selectedTheme" value="#0EA5A4">
 
                             {{-- COLOR OPTIONS --}}
 
                             <div class="grid grid-cols-2 min-[360px]:grid-cols-3 min-[480px]:grid-cols-4 place-items-center gap-y-4">
                                 <button
                                     type="button"
-                                    onclick="selectTheme('cyan', this)"
+                                    onclick="selectTheme('#0EA5A4', this)" 
                                     class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-cyan ring-4 ring-offset-2 ring-cyan/20"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast"/>
                                 </button>
                                 <button
                                     type="button"
-                                    onclick="selectTheme('brown', this)"
+                                    onclick="selectTheme('#8B5A2B', this)"
                                     class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-brown ring-brown/20"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
                                 <button
                                     type="button"
-                                    onclick="selectTheme('purple', this)"
+                                    onclick="selectTheme('#7C2D8E', this)"
                                     class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-purple ring-purple/20"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
                                 <button
                                     type="button"
-                                    onclick="selectTheme('blue', this)"
+                                    onclick="selectTheme('#0056D2', this)"
                                     class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-blue ring-blue/20"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
                                 <button
                                     type="button"
-                                    onclick="selectTheme('pink', this)"
+                                    onclick="selectTheme('#F35C75', this)"
                                     class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-pink ring-pink/20"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
                                 <button
                                     type="button"
-                                    onclick="selectTheme('green', this)"
+                                    onclick="selectTheme('#1F5D3A', this)"
                                     class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-green ring-green/20"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
                                 <button
                                     type="button"
-                                    onclick="selectTheme('orange', this)"
+                                    onclick="selectTheme('#F38D08', this)"
                                     class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-orange ring-orange/20"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
                                 <button
                                     type="button"
-                                    onclick="selectTheme('yellow', this)"
+                                    onclick="selectTheme('#FFEB99', this)"
                                     class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-yellow ring-yellow/20"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
                                 <button
                                     type="button"
-                                    onclick="selectTheme('pink', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-steel ring-steel/20"
+                                    onclick="selectTheme('#000000', this)"
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-black ring-black/20"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
                                 <button
                                     type="button"
-                                    onclick="selectTheme('green', this)"
+                                    onclick="selectTheme('#0F766E', this)"
                                     class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-teal ring-teal/20"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
                                 <button
                                     type="button"
-                                    onclick="selectTheme('orange', this)"
+                                    onclick="selectTheme('#84CC16', this)"
                                     class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-lime ring-lime/20"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
                                 <button
                                     type="button"
-                                    onclick="selectTheme('yellow', this)"
+                                    onclick="selectTheme('#E11D48', this)"
                                     class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-rose ring-rose/20"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
@@ -406,7 +402,7 @@
 
                                 <input
                                     type="date"
-                                    name="due-date"
+                                    name="deadline"
                                     class="date-input w-full rounded-lg
                                         border-[1.5px] border-text-primary/50
                                         bg-background
@@ -418,19 +414,11 @@
                         </div>
                     </div>
 
-                    {{-- TEAM MEMBERS --}}
-
-                    <div class="space-y-4 p-4 flex flex-col border-[1.5px] rounded-xl border-border">
-                        <div class="flex flex-row gap-2 items-center">
-                            <div class="shadow-2xl shadow-pastel-green-background">
-                                <x-lucide-calendar-clock class="w-5 text-pastel-green-text"/>
-                            </div>
-                            <p class="font-montserrat font-semibold text-[14px] text-text-primary">Team Members</p>
-                        </div>
-                    </div>
-
                     <button
-                        class="flex items-center justify-center w-full rounded-2xl bg-primary  hover:bg-primary-hover gap-3 py-3 text-text-contrast font-montserrat text-sm"
+                        type="submit"
+                        class="flex items-center justify-center w-full rounded-2xl bg-primary  
+                        hover:bg-primary-hover gap-3 py-3 text-text-contrast font-montserrat 
+                        text-sm mb-1.5"
                     >
                         <x-lucide-rocket class="w-5 text-text-contrast"/>
                         Create Project

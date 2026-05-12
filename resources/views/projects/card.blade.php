@@ -63,7 +63,7 @@
     <div class="flex flex-row items-center justify-between mb-3">
         <div class="flex flox-row gap-1.5">
             <x-lucide-calendar class="w-3 text-text-secondary"/> 
-            <p class="text-text-secondary text-sm">Due in 10 days</p>
+            <p class="text-text-secondary text-sm">Due in {{ $days_remaining }} days</p>
         </div>
         <div class="flex flox-row gap-1.5">
             <x-lucide-message-circle class="w-3 text-text-secondary"/> 
