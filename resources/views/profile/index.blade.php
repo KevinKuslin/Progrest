@@ -51,6 +51,7 @@
             >
             <!-- EDIT -->
             <button
+                onclick="document.getElementById('editProfileModal').classList.remove('hidden')"
                 class="absolute top-5 right-5 bg-primary hover:bg-primary-hover text-white px-5 py-2 rounded-full font-montserrat font-semibold flex items-center gap-2 shadow-md"
             >
                 <x-lucide-pencil class="w-4 h-4" />
@@ -164,13 +165,18 @@
 
             <div>
 
-                <h2 class="font-parkinsans text-2xl font-semibold text-text-primary mb-5">
-                    About
-                </h2>
+                <div class="flex justify-between items-center mb-5">
+                    <h2 class="font-parkinsans text-2xl font-semibold text-text-primary">
+                        More About Me
+                    </h2>
+                    <x-lucide-lightbulb class="w-6 h-6 text-primary"/>
+                </div>
 
-                <p class="font-montserrat text-text-secondary leading-relaxed text-[15px]">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                <p class="font-montserrat text-text-secondary leading-relaxed text-sm">
+                    Undergraduate programmer who actively collaborate to develop full stack applications. 
+                    Highly experienced in designing and building mobile applications and desktop websites 
+                    with structured architecture, efficient workflow design, and polished User Interface. 
+                    Craving to learn about database schema integration and more. 
                 </p>
 
             </div>
@@ -186,10 +192,10 @@
                 </div>
 
                 <div class="flex items-center gap-3 text-text-secondary">
-                    <x-lucide-building-2 class="w-5 h-5 text-primary" />
+                    <x-lucide-phone-call class="w-5 h-5 text-primary" />
 
                     <span class="font-montserrat text-sm">
-                        Task Progressor
+                        <strong>+62</strong> 81234567890
                     </span>
                 </div>
 
@@ -249,7 +255,7 @@
             <div class="flex items-center justify-between mb-5">
 
                 <h2 class="font-parkinsans text-2xl font-semibold text-text-primary">
-                    Task Created
+                    Tasks Created
                 </h2>
 
                 <div class="bg-primary text-white px-3 py-1 rounded-lg font-parkinsans font-bold text-2xl leading-none">
@@ -262,32 +268,251 @@
 
                 @foreach($taskCreated as $task)
 
-                    <div 
-                        class="rounded-[1.4rem] p-5 text-white relative overflow-hidden"
+                    <div
+                        class="relative overflow-hidden rounded-3xl p-3 shadow-sm text-white"
                         style="background-color: {{ $task['color'] }}"
                     >
 
-                        <div class="absolute top-4 right-4 w-8 h-8 bg-white rounded-full flex items-center justify-center text-sm font-bold text-black">
-                            {{ $task['point'] }}
+                        <!-- Top Section -->
+                        <div class="flex gap-3 mb-4 row justify-between items-center">
+                            <div class="flex row gap-3 items-center">
+                                <div class="w-8 h-8 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center">
+                                    <x-lucide-list-todo class="w-4 h-4" />
+                                </div>
+                                <h3 class="font-parkinsans text-xl font-bold leading-tight">
+                                    {{ $task['project'] }}
+                                </h3>
+                            </div>
+                            <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                                <span class="font-montserrat font-semibold text-sm">
+                                    {{ $task['point'] }}
+                                </span>
+                            </div>
                         </div>
 
-                        <h3 class="font-parkinsans text-2xl font-bold leading-none">
-                            {{ $task['project'] }}
-                        </h3>
+                        <!-- Divider -->
+                        <div class="w-full h-px bg-white/35 rounded-lg mb-4"></div>
 
-                        <p class="font-montserrat text-sm mt-2">
+                        <!-- Task Description -->
+                        <p class="font-montserrat text-sm leading-relaxed text-white/90">
                             {{ $task['task'] }}
                         </p>
 
-                        <p class="font-montserrat text-sm mt-1">
-                            {{ $task['date'] }}
-                        </p>
+                        <!-- Footer -->
+                        <div class="flex items-center justify-between mt-4">
+                            
+                            <div class="flex items-center gap-2 text-white/80">
+                                <x-lucide-calendar class="w-4 h-4" />
+                                <span class="text-sm font-montserrat">
+                                    {{ $task['date'] }}
+                                </span>
+                            </div>
 
+                            <div class="px-3 py-1 rounded-full bg-white/15 border border-white/10 flex items-center">
+                                <span class="text-xs font-semibold font-montserrat">
+                                    Pending
+                                </span>
+                            </div>
+
+                        </div>
                     </div>
 
                 @endforeach
 
             </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- EDIT PROFILE MODAL -->
+<div
+    id="editProfileModal"
+    class="fixed inset-0 z-[999] hidden bg-black/40 backdrop-blur-sm"
+>
+
+    <!-- CENTER -->
+    <div class="min-h-screen flex items-center justify-center p-4">
+
+        <!-- MODAL -->
+        <div
+            class="w-full max-w-[850px] bg-background rounded-[32px] overflow-hidden shadow-2xl"
+        >
+
+            <!-- HEADER -->
+            <div class="bg-primary h-[70px] px-8 flex items-center justify-between">
+
+                <div class="flex items-center gap-3 text-white">
+                    <x-lucide-pencil class="w-6 h-6" />
+
+                    <h2 class="font-parkinsans text-2xl font-bold">
+                        Edit Profile
+                    </h2>
+                </div>
+
+                <button
+                    type="button"
+                    onclick="document.getElementById('editProfileModal').classList.add('hidden')"
+                    class="text-white"
+                >
+                    <x-lucide-x class="w-8 h-8" />
+                </button>
+
+            </div>
+
+            <!-- BANNER -->
+            <div class="relative h-[100px]">
+
+                <img
+                    src="{{ asset('images/Checker_BG.png') }}"
+                    alt=""
+                    class="w-full h-full object-cover"
+                >
+
+                <div class="absolute inset-0 flex items-center justify-between px-6">
+
+                    <!-- LEFT -->
+                    <div class="flex items-center gap-4">
+
+                        <img
+                            src="{{ asset('images/profile.jpg') }}"
+                            alt=""
+                            class="w-[65px] h-[65px] rounded-full border-4 border-background object-cover"
+                        >
+
+                        <div
+                            class="bg-background rounded-full px-5 py-2 flex items-center gap-3 shadow"
+                        >
+                            <div class="w-7 h-7 bg-border rounded"></div>
+                            <div class="w-7 h-7 bg-border rounded"></div>
+                            <div class="w-7 h-7 bg-border rounded"></div>
+
+                            <x-lucide-chevron-down class="w-4 h-4" />
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT -->
+                    <div class="flex gap-3">
+
+                        <button
+                            type="button"
+                            class="bg-primary text-white px-5 py-2 rounded-full flex items-center gap-2 font-montserrat text-sm font-semibold"
+                        >
+                            <x-lucide-upload class="w-4 h-4" />
+                            Upload Icon
+                        </button>
+
+                        <button
+                            type="button"
+                            class="bg-primary text-white px-5 py-2 rounded-full flex items-center gap-2 font-montserrat text-sm font-semibold"
+                        >
+                            <x-lucide-upload class="w-4 h-4" />
+                            Upload Banner
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- FORM -->
+            <form class="p-6">
+
+                <!-- ROW -->
+                <div class="grid grid-cols-2 gap-6">
+
+                    <div>
+                        <label class="block mb-2 font-montserrat font-bold text-base">
+                            Username
+                        </label>
+
+                        <input
+                            type="text"
+                            value="progressor"
+                            class="w-full h-12 border-2 border-border rounded-xl px-4"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block mb-2 font-montserrat font-bold text-base">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            value="Kevin Jio"
+                            class="w-full h-12 border-2 border-border rounded-xl px-4"
+                        >
+                    </div>
+
+                </div>
+
+                <!-- ABOUT -->
+                <div class="mt-5">
+
+                    <label class="block mb-2 font-montserrat font-bold text-base">
+                        About
+                    </label>
+
+                    <textarea
+                        rows="3"
+                        class="w-full border-2 border-border rounded-xl p-4 resize-none"
+                    >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</textarea>
+
+                </div>
+
+                <!-- FOOTER -->
+                <div class="mt-5 flex justify-between items-end">
+
+                    <div class="w-[45%]">
+
+                        <label class="block mb-2 font-montserrat font-bold text-base">
+                            LinkedIn
+                            <span class="font-normal text-text-secondary">
+                                (optional)
+                            </span>
+                        </label>
+
+                        <input
+                            type="text"
+                            value="Task Progressor"
+                            class="w-full h-12 border-2 border-border rounded-xl px-4"
+                        >
+
+                    </div>
+
+                    <div class="flex items-center gap-6">
+
+                        <label class="flex items-center gap-2">
+
+                            <input
+                                type="checkbox"
+                                class="w-5 h-5"
+                            >
+
+                            <span class="font-montserrat text-base">
+                                Hide E-mail Address
+                            </span>
+
+                        </label>
+
+                        <button
+                            type="submit"
+                            class="bg-primary text-white px-8 py-3 rounded-full flex items-center gap-2 font-parkinsans text-xl font-bold"
+                        >
+                            <x-lucide-save class="w-5 h-5" />
+                            Save
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
 
         </div>
 
