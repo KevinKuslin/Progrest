@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title')</title>
-<<<<<<< HEAD
     <link rel="icon" href="/images/progrest_p_logo_green.png">
-=======
-    <link rel="icon" href="{{ asset('images/progrest_p_logo_green.png') }}">
->>>>>>> afc3da66d760ef3348281ce2e1c08eef4eef0c83
     
     @vite(['resources/css/app.css', 'resources/js/app.js']) 
     <script>
@@ -468,7 +464,7 @@
                     {{-- Member Selection --}}
 
                     <div
-                        x-data="memberSearch({{ $project->id }})"
+                        x-data="memberSearch()"
                         class="space-y-4 rounded-xl border-[1.5px] border-border p-4 flex flex-col relative"
                     >
 
@@ -498,13 +494,21 @@
                                     class="pointer-events-none absolute left-4 top-1/2 h-4.5 w-4.5 -translate-y-1/2 text-text-primary"
                                 />
 
-                                <input
+                                {{-- <input
                                     type="text"
                                     placeholder="Search by username or email..."
                                     x-model.debounce.300ms="query"
                                     @input="search()"
                                     class="w-full rounded-lg border-[1.5px] border-text-primary/50 bg-background py-2.5 pl-11 pr-3 text-sm text-text-primary"
-                                >
+                                > --}}
+
+                                <input
+                                    type="text"
+                                    placeholder="Search by username or email..."
+                                    x-model="query"
+                                    @input="search()"
+                                    class="w-full rounded-lg border-[1.5px] border-text-primary/50 bg-background py-2.5 pl-11 pr-3 text-sm text-text-primary"
+                                />
 
                                 {{-- Dropdown --}}
                                 <div
@@ -700,5 +704,36 @@
             </div>
 
     </div>
+    <script>
+        function memberSearch() {
+            return {
+                query: '',
+                users: [],
+                selectedUsers: [],
+                loading: false,
+
+                async search() {
+                    if (this.query.length < 2) {
+                        this.users = [];
+                        return;
+                    }
+                    this.loading = true;
+                    const response = await fetch(
+                        `/users/search?q=${encodeURIComponent(this.query)}`
+                    );
+                    this.users = await response.json();
+                    this.loading = false;
+                },
+
+                selectUser(user) {
+
+                },
+
+                removeUser(id) {
+
+                }
+            }
+        }
+    </script>
 </body>
 </html>

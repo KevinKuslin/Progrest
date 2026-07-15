@@ -56,6 +56,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
+    Route::get('/users/search', [UserController::class, 'search'])
+        ->name('users.search');
+
     Route::get('/projects', [ProjectController::class, 'index'])
         ->name('projects.index');
 
