@@ -4,72 +4,256 @@
 
 @section('content')
 
-    {{-- HEADER --}}
-    <div class="bg-primary rounded-b-4xl px-8 py-6 flex flex-1 flex-col gap-4 justify-between shadow-md">
-        <div class="flex flex-col lg:flex-row w-full justify-between items-center">
-            <div class="flex flex-col lg:flex-row items-center gap-4 mb-4 lg:mb-0">
-                <h1 class="font-montserrat text-white text-4xl font-bold">{{$project->title}}</h1>
-                
-                {{-- Collaborators Stack --}}
-                <div class="flex items-center -space-x-2">
-                    @foreach (array_slice($teamMembers, 0, $displayLimit) as $memberAvatar)
-                        <img src="{{ $memberAvatar }}" alt="Collaborator" class="w-8 h-8 rounded-full border-2 border-white object-cover relative z-0">
-                    @endforeach
-                    
-                    @if ($extraMembers > 0)
-                        <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-xs font-semibold relative z-10 shadow-sm">
-                            +{{ $extraMembers }}
+    {{-- PROJECT HEADER --}}
+    <div class="bg-primary rounded-b-[2.5rem] shadow-lg overflow-hidden">
+        <div class="px-7 py-8">
+
+            {{-- Bagian atas --}}
+            <div class="flex flex-col lg:flex-row justify-center items-center gap-8">
+
+                {{-- Kiri --}}
+                <div class="flex gap-6 flex-1">
+
+                    {{-- Project Icon --}}
+                    <div class="w-12 h-12 rounded-2xl bg-white/20 border border-white/10 flex items-center justify-center shrink-0">
+                        <div class="w-10 h-10 rounded-2xl flex items-center justify-center">
+
+                            <x-dynamic-component
+                                :component="'lucide-' . $project->icon"
+                                class="w-8 h-8 text-white"
+                            />
                         </div>
-                    @endif
+                    </div>
+
+                    {{-- Project Info --}}
+                    <div class="flex flex-col justify-center">
+                        <h1 class="font-montserrat text-3xl font-bold text-white leading-none">
+                            {{ $project->title }}
+                        </h1>
+                        <p class="mt-2 max-w-xl text-white/70 font-montserrat text-md leading-relaxed">
+                            {{ $project->description }}
+                        </p>
+                    </div>
+                </div>
+
+                {{-- Bagian kanan --}}
+                <div class="flex flex-col sm:flex-row gap-4 items-start">
+
+                    {{-- Search --}}
+                    <form method="GET" class="relative">
+                        <input
+                            type="hidden"
+                            name="sort"
+                            value="{{ request('sort','recent') }}"
+                        >
+                        <input
+                            type="hidden"
+                            name="direction"
+                            value="{{ request('direction','desc') }}"
+                        >
+                        <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none z-10">
+                            <x-lucide-search class="w-5 h-5 text-white"/>
+                        </div>
+                        <input
+                            name="search"
+                            value="{{ request('search') }}"
+                            placeholder="Search task..."
+                            onchange="this.form.submit()"
+                            class="w-80
+                                rounded-xl
+                                bg-white/10
+                                border border-white/10
+                                backdrop-blur-md
+                                text-white
+                                placeholder:text-white/60
+                                py-2.5
+                                pl-12
+                                pr-2
+                                outline-none
+                                font-montserrat"
+                        >
+                    </form>
+
+                    {{-- Button --}}
+                    <button
+                        onclick="openPanel()"
+                        @click="showCreateModal = true"
+                        class="flex items-center gap-3
+                            bg-quartiary
+                            hover:bg-quartiary-hover
+                            rounded-2xl
+                            px-4
+                            py-2.5
+                            text-white
+                            font-semibold
+                            cursor-pointer
+                            transition">
+
+                        <div
+                            class="w-6 h-6 rounded-full
+                                bg-primary
+                                flex items-center justify-center">
+
+                            <x-lucide-plus class="w-5"/>
+                        </div>
+                        Create Task
+                    </button>
                 </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row gap-4 justify-end items-start">
+            {{-- Divider --}}
+            <div class="border-t border-white/20 mt-4 pt-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
 
-                {{-- Search Bar --}} 
-                <form method="GET" class="relative">
+                    {{-- Project LEader --}}
+                    <div class="relative">
+                        <p class="text-white/80 uppercase tracking-wider font-montserrat text-xs">
+                            Project Leader
+                        </p>
+                        <div class="flex items-center mt-4">
+                            <div
+                                class="w-12 h-12 rounded-full
+                                    bg-yellow-400/20
+                                    flex items-center justify-center
+                                    mr-4 absolute">
+                                <x-lucide-crown
+                                    class="w-6 text-yellow-300"/>
+                            </div>
 
-                    {{-- Simpan Hasil Sort Dulu --}}
-                    <input type="hidden"
-                        name="sort"
-                        value="{{ request('sort', 'recent') }}"
-                    >
+                            <img
+                                src="{{ $project->leader->avatar ? $project->leader->avatar : '/images/profile.jpg' }}"
+                                class="ml-9 w-10 h-10 rounded-full object-cover border-2 border-white"
+                            >
 
-                    {{-- Simpan Hasil Direction Dulu --}}
-                    <input type="hidden"
-                        name="direction"
-                        value="{{ request('direction', 'desc') }}"
-                    >
-                    
-                    <div class="absolute pl-4 mt-2.5">
-                        <x-lucide-search class="w-5 text-black"/>
+                            <div class="ml-4">
+                                <h4 class="text-white font-semibold">
+                                    {{ $project->leader->name }}
+                                </h4>
+                                <span class="text-white/60 text-sm">
+                                    Project Leader
+                                </span>
+                            </div>
+                        </div>
                     </div>
 
-                    <input type="text"
-                        name="search"
-                        value="{{ request('search') }}" 
-                        placeholder="Search task..."
-                        class="w-75 md:w-83 py-2 rounded-full text-md bg-white font-montserrat pl-12 focus:outline-none transition-all duration-300"
-                        onchange="this.form.submit()"
-                    >
-                        
-                </form>
+                    {{-- MEMBERS --}}
+                    <div>
+                        <p class="text-white/80 uppercase tracking-wider text-xs font-montserrat">
+                            Members
+                        </p>
+                        <div class="flex items-center mt-4">
+                            <div class="flex -space-x-4">
+                                @foreach(array_slice($teamMembers,0,$displayLimit) as $avatar)
+                                    <img
+                                        src="{{ $avatar }}"
+                                        class="w-10 h-10 rounded-full border-2 border-primary object-cover">
+                                @endforeach
 
-                {{-- CREATE TASK PANEL --}}
-                <button onclick="openPanel()" @click="showCreateModal = true" class="bg-quartiary rounded-full px-6 py-2 h-fit flex items-center shadow-sm gap-2 hover:bg-quartiary-hover active:scale-95 text-sm md:text-base whitespace-nowrap">
-                    <span class="font-montserrat text-white text-md">Create Task</span>
-                    <div class="bg-primary rounded-full text-white p-0.5 flex items-center justify-center shrink-0">
-                        <x-lucide-plus class="w-5 stroke-[2.5px]" />
+                                @if($extraMembers)
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-white
+                                            flex items-center justify-center
+                                            font-bold">
+                                        +{{ $extraMembers }}
+                                    </div>
+                                @endif
+                            </div>
+
+                            <span class="ml-4 text-white/50 text-sm">
+                                {{ count($teamMembers) }} Members
+                            </span>
+                        </div>
                     </div>
-                </button>
+
+                    {{-- PROGRESS --}}
+                    <div>
+                        <p class="text-white/80 uppercase tracking-wider text-xs font-montserrat">
+                            Progress
+                        </p>
+                        <div class="flex items-center mt-4">
+
+                            {{-- Circular progress indicator completed tasks --}}
+                            <div
+                                class="w-14 h-14 rounded-full flex items-center justify-center"
+                                style="
+                                    background:
+                                    conic-gradient(
+                                        #4ADE80 {{ $progress }}%,
+                                        rgba(255,255,255,.2) 0
+                                    );
+                                "
+                            >
+                                <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+                                    <span class="text-xs text-white">
+                                        {{ round($progress) }}%
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="ml-5">
+                                <h4 class="text-white text-2xl font-bold font-montserrat">
+                                    {{ $completedTasks }}
+                                    /
+                                    {{ $totalTasks }}
+                                </h4>
+                                <p class="text-white/60 text-sm">
+                                    Tasks Completed
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- DEADLINE --}}
+                    <div>
+                        <p class="text-white/80 uppercase tracking-wider text-xs font-montserrat">
+                            Due Date
+                        </p>
+                        <div class="flex items-center mt-4">
+                            <div
+                                class="w-10 h-10 rounded-xl
+                                    bg-white/10
+                                    flex items-center justify-center">
+
+                                <x-lucide-calendar
+                                    class="w-5 text-green-300"/>
+                            </div>
+                            <div class="ml-4">
+                                @if (!is_null($project->deadline))
+                                    <h4 class="text-white text-lg font-semibold font-montserrat">
+                                        {{ $project->deadline->format('d M Y') }}
+                                    </h4>
+                                @else
+                                    <h4 class="text-white text-lg font-semibold font-montserrat">
+                                        Deadline Not Set
+                                    </h4>
+                                @endif
+                                @if (!is_null($project->deadline))
+                                    @if ($project->days_remaining < 0)
+                                        <p class="text-red-accent font-semibold font-montserrat text-sm">
+                                            {{ $project->days_remaining * -1 }}
+                                            days overdue
+                                        </p>
+                                    @elseif ($project->days_remaining > 0)
+                                        <p class="text-white/80 font-montserrat text-sm">
+                                            {{ $project->days_remaining }}
+                                            days remaining
+                                        </p>
+                                    @else
+                                        <p class="text-yellow-300 font-montserrat text-sm">
+                                            Due Today
+                                        </p>
+                                    @endif
+                                @else
+                                    <p class="text-white/80 font-montserrat text-sm">
+                                        {{ $project->days_remaining }}
+                                        ---
+                                    </p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="flex items-center justify-center lg:justify-start">
-            <x-lucide-notebook-pen class="w-6 h-6 p-1 text-white bg-primary-hover rounded-md"/> 
-            <h3 class="font-montserrat text-md text-text-contrast/80 ml-3">{{$project->description}}</h3>
-        </div>
-        
     </div>
 
     {{-- PRIORITY TASKS --}}

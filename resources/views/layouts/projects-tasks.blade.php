@@ -96,6 +96,14 @@
         </div>
     </div>
 
+    @if ($errors->any())
+        <div class="bg-red-100 p-4 rounded">
+            @foreach ($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
+
     {{-- OPENED PANEL OVERLAY --}}
 
     <div id="overlay" class="fixed inset-0 hidden bg-black/50 z-40"></div>
@@ -104,11 +112,11 @@
 
     <div id="panel" 
         x-data="{
-            title: '', 
-            description: '', 
+            title: @js(old('title', '')), 
+            description: @js(old('description', '')), 
             accentColor: '#0EA5A4', 
             icon: 'folder', 
-            deadline: '',
+            deadline: @js(old('deadline', '')),
             
             get remainingDays() {
                 if (!this.deadline) return null;
@@ -142,7 +150,7 @@
             </div>
 
             <div class="flex flex-col items-end justify-between pb-4 mb-3">
-                <button onclick="closePanel()" class="text-xl font-semibold hover:rotate-90 rotate-0 transition duration-300 text-text-primary">
+                <button onclick="closePanel()" class="text-xl font-semibold hover:rotate-90 rotate-0 transition duration-300 text-text-primary cursor-pointer">
                     ✕
                 </button>
                 <div class="flex gap-5 items-center w-full -mt-1">
@@ -179,6 +187,12 @@
                                 placeholder="e.g. AquaVerse"
                                 class="w-full rounded-lg border-[1.5px] border-text-primary/50 px-3 py-2 text-sm text-text-primary placeholder:text-placeholder"
                             >
+
+                            @error('title')
+                                <p class="mt-1 text-xs text-red-500 font-montserrat">
+                                    {{ $message }}
+                                </p>
+                            @enderror
                         </div>
 
                         <div class="flex flex-col gap-1">
@@ -189,9 +203,19 @@
                             <textarea
                                 x-model="description"
                                 name="description"
+                                rows="3"
+                                @input="
+                                    description = description.replace(/(\S{30})/g, '$1 ');
+                                "
                                 placeholder="Describe your project goals, purpose, and plans..."
-                                class="w-full rounded-lg border-[1.5px] border-text-primary/50 px-3 py-2 text-sm text-text-primary placeholder:text-placeholder"
+                                class="w-full resize-none rounded-lg border-[1.5px] border-text-primary/50 px-3 py-2 text-sm text-text-primary placeholder:text-placeholder [overflow-wrap:anywhere]"
                             ></textarea>
+
+                            @error('description')
+                                <p class="mt-1 text-xs text-red-500 font-montserrat">
+                                    {{ $message }}
+                                </p>
+                            @enderror
                         </div>
                     </div>
 
@@ -218,7 +242,7 @@
                                     type="button"
                                     @click="accentColor = '#0EA5A4'"
                                     onclick="selectTheme('#0EA5A4', this)" 
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-cyan ring-4 ring-offset-2 ring-cyan/20"
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-cyan ring-4 ring-offset-2 ring-cyan/20 cursor-pointer"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast"/>
                                 </button>
@@ -226,7 +250,7 @@
                                     type="button"
                                     @click="accentColor = '#8B5A2B'"
                                     onclick="selectTheme('#8B5A2B', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-brown ring-brown/20"
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-brown ring-brown/20 cursor-pointer"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
@@ -234,7 +258,7 @@
                                     type="button"
                                     @click="accentColor = '#7C2D8E'"
                                     onclick="selectTheme('#7C2D8E', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-purple ring-purple/20"
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-purple ring-purple/20 cursor-pointer"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
@@ -242,7 +266,7 @@
                                     type="button"
                                     @click="accentColor = '#0056D2'"
                                     onclick="selectTheme('#0056D2', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-blue ring-blue/20"
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-blue ring-blue/20 cursor-pointer"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
@@ -250,7 +274,7 @@
                                     type="button"
                                     @click="accentColor = '#F35C75'"
                                     onclick="selectTheme('#F35C75', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-pink ring-pink/20"
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-pink ring-pink/20 cursor-pointer"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
@@ -258,7 +282,7 @@
                                     type="button"
                                     @click="accentColor = '#1F5D3A'"
                                     onclick="selectTheme('#1F5D3A', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-green ring-green/20"
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-green ring-green/20 cursor-pointer"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
@@ -266,7 +290,7 @@
                                     type="button"
                                     @click="accentColor = '#F38D08'"
                                     onclick="selectTheme('#F38D08', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-orange ring-orange/20"
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-orange ring-orange/20 cursor-pointer"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
@@ -274,7 +298,7 @@
                                     type="button"
                                     @click="accentColor = '#FFEB99'"
                                     onclick="selectTheme('#FFEB99', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-yellow ring-yellow/20"
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-yellow ring-yellow/20 cursor-pointer"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
@@ -282,7 +306,7 @@
                                     type="button"
                                     @click="accentColor = '#000000'"
                                     onclick="selectTheme('#000000', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-black ring-black/20"
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-black ring-black/20 cursor-pointer"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
@@ -290,7 +314,7 @@
                                     type="button"
                                     @click="accentColor = '#0F766E'"
                                     onclick="selectTheme('#0F766E', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-teal ring-teal/20"
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-teal ring-teal/20 cursor-pointer"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
@@ -298,7 +322,7 @@
                                     type="button"
                                     @click="accentColor = '#84CC16'"
                                     onclick="selectTheme('#84CC16', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-lime ring-lime/20"
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-lime ring-lime/20 cursor-pointer"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
@@ -306,7 +330,7 @@
                                     type="button"
                                     @click="accentColor = '#E11D48'"
                                     onclick="selectTheme('#E11D48', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-rose ring-rose/20"
+                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-rose ring-rose/20 cursor-pointer"
                                 >
                                     <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
                                 </button>
@@ -340,84 +364,84 @@
                                     <button type="button" 
                                         @click="icon = 'folder'"
                                         onclick="selectIcon('folder', this)"
-                                        class="icon-option bg-quartiary/80 p-2 rounded-lg border border-border hover:bg-secondary transition">
+                                        class="icon-option bg-quartiary/80 p-2 rounded-lg border border-border hover:bg-secondary transition cursor-pointer">
                                         <x-lucide-folder class="icon-icon w-4 h-4 text-text-contrast"/>
                                     </button>
 
                                     <button type="button"
                                         @click="icon = 'clock'"
                                         onclick="selectIcon('clock', this)"
-                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition">
+                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition cursor-pointer">
                                         <x-lucide-clock class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
                                     <button type="button"
                                         @click="icon = 'book-open'"
                                         onclick="selectIcon('book-open', this)"
-                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition">
+                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition cursor-pointer">
                                         <x-lucide-book-open class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
                                     <button type="button"
                                         @click="icon = 'chart-column'"
                                         onclick="selectIcon('chart-column', this)"
-                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition">
+                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition cursor-pointer">
                                         <x-lucide-chart-column class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
                                     <button type="button"
                                         @click="icon = 'trees'"
                                         onclick="selectIcon('trees', this)"
-                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition">
+                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition cursor-pointer">
                                         <x-lucide-trees class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
                                     <button type="button"
                                         @click="icon = 'calendar'"
                                         onclick="selectIcon('calendar', this)"
-                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition">
+                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition cursor-pointer">
                                         <x-lucide-calendar class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
                                     <button type="button"
                                         @click="icon = 'backpack'"
                                         onclick="selectIcon('backpack', this)"
-                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition">
+                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition cursor-pointer">
                                         <x-lucide-backpack class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
                                     <button type="button"
                                         @click="icon = 'camera'"
                                         onclick="selectIcon('camera', this)"
-                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition">
+                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition cursor-pointer">
                                         <x-lucide-camera class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
                                     <button type="button"
                                         @click="icon = 'shopping-cart'"
                                         onclick="selectIcon('shopping-cart', this)"
-                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition">
+                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition cursor-pointer">
                                         <x-lucide-shopping-cart class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
                                     <button type="button"
                                         @click="icon = 'gamepad-2'"
                                         onclick="selectIcon('gamepad-2', this)"
-                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition">
+                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition cursor-pointer">
                                         <x-lucide-gamepad-2 class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
                                     <button type="button"
                                         @click="icon = 'cat'"
                                         onclick="selectIcon('cat', this)"
-                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition">
+                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition cursor-pointer">
                                         <x-lucide-cat class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
 
                                     <button type="button"
                                         @click="icon = 'cooking-pot'"
                                         onclick="selectIcon('cooking-pot', this)"
-                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition">
+                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition cursor-pointer">
                                         <x-lucide-cooking-pot class="icon-icon w-4 h-4 text-text-secondary"/>
                                     </button>
                                 </div>
@@ -479,6 +503,8 @@
                                 Members
                             </p>
 
+
+
                         </div>
 
                         {{-- Search --}}
@@ -494,14 +520,6 @@
                                     class="pointer-events-none absolute left-4 top-1/2 h-4.5 w-4.5 -translate-y-1/2 text-text-primary"
                                 />
 
-                                {{-- <input
-                                    type="text"
-                                    placeholder="Search by username or email..."
-                                    x-model.debounce.300ms="query"
-                                    @input="search()"
-                                    class="w-full rounded-lg border-[1.5px] border-text-primary/50 bg-background py-2.5 pl-11 pr-3 text-sm text-text-primary"
-                                > --}}
-
                                 <input
                                     type="text"
                                     placeholder="Search by username or email..."
@@ -509,6 +527,18 @@
                                     @input="search()"
                                     class="w-full rounded-lg border-[1.5px] border-text-primary/50 bg-background py-2.5 pl-11 pr-3 text-sm text-text-primary"
                                 />
+
+                                <button
+                                    x-show="query.length > 0 || users.length > 0"
+                                    type="button"
+                                    @click="
+                                        query = '';
+                                        users = [];
+                                    "
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 hover:bg-gray-100"
+                                >
+                                    <x-lucide-x class="h-4 w-4 text-gray-500"/>
+                                </button>
 
                                 {{-- Dropdown --}}
                                 <div
@@ -525,18 +555,22 @@
                                             class="flex w-full items-center justify-between px-4 py-3 transition hover:bg-gray-100"
                                         >
 
-                                            <div class="flex flex-col items-start">
-
-                                                <span
-                                                    class="font-montserrat font-semibold text-sm text-text-primary"
-                                                    x-text="user.name"
-                                                ></span>
-
-                                                <span
-                                                    class="font-montserrat text-xs text-text-secondary"
-                                                    x-text="user.email"
-                                                ></span>
-
+                                            <div class="flex justify-center">
+                                                <img
+                                                    :src="user.avatar || '/images/profile.jpg'"
+                                                    :alt="user.name"
+                                                    class="h-8 w-8 rounded-full object-cover mr-3"
+                                                >
+                                                <div class="flex flex-col items-start">
+                                                    <span
+                                                        class="font-montserrat font-semibold text-sm text-text-primary"
+                                                        x-text="user.name"
+                                                    ></span>
+                                                    <span
+                                                        class="font-montserrat text-xs text-text-secondary"
+                                                        x-text="user.email"
+                                                    ></span>
+                                                </div>
                                             </div>
 
                                         </button>
@@ -552,8 +586,7 @@
                         {{-- Selected members --}}
                         <div
                             x-show="selectedUsers.length"
-                            class="flex flex-wrap gap-2"
-                        >
+                            class="flex flex-wrap gap-2">
 
                             <template
                                 x-for="user in selectedUsers"
@@ -571,11 +604,8 @@
 
                                     <button
                                         type="button"
-                                        @click="removeUser(user.id)"
-                                    >
-
+                                        @click="removeUser(user.id)">
                                         <x-lucide-x class="h-4 w-4 text-primary"/>
-
                                     </button>
 
                                 </div>
@@ -584,7 +614,16 @@
 
                         </div>
 
+                        <template x-for="user in selectedUsers" :key="user.id">
+                            <input
+                                type="hidden"
+                                name="members[]"
+                                :value="user.id"
+                            >
+                        </template>
+
                     </div>
+
 
                     <div class="rounded-2xl border border-border py-6 px-10 space-y-4 bg-background relative">
 
@@ -726,14 +765,47 @@
                 },
 
                 selectUser(user) {
+                    // Prevent duplicates
+                    if (this.selectedUsers.some(u => u.id === user.id)) {
+                        return;
+                    }
 
+                    this.selectedUsers.push(user);
+                    this.users = this.users.filter(u => u.id !== user.id);
+                    this.query = '';
                 },
 
                 removeUser(id) {
-
+                    this.selectedUsers = this.selectedUsers.filter(user => user.id !== id);
                 }
             }
         }
+
+        function openPanel() {
+            const panel = document.getElementById('panel');
+            const overlay = document.getElementById('overlay');
+
+            panel.classList.remove('translate-x-full');
+            overlay.classList.remove('hidden');
+        }
+
+        function closePanel() {
+            const panel = document.getElementById('panel');
+            const overlay = document.getElementById('overlay');
+
+            panel.classList.add('translate-x-full');
+            overlay.classList.add('hidden');
+        }
     </script>
+
+    {{-- Buka panel lagi kalau ada validasi yg gagal --}}
+    @if ($errors->any())
+        <script>
+            window.addEventListener('load', () => {
+                openPanel();
+            });
+        </script>
+    @endif
+
 </body>
 </html>

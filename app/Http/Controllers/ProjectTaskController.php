@@ -65,9 +65,17 @@ class ProjectTaskController extends Controller
             $avatarPath
         ];
         $displayLimit = 3;
-        $extraMembers = count($teamMembers) - $displayLimit;
+        $extraMembers = count($teamMembers) - $displayLimit; 
+
+        $completedTasks = $project->tasks->where('is_completed', true)->count(); 
+        $totalTasks = $project->tasks->count(); 
+
+        $progress = $totalTasks > 0
+            ? ($completedTasks / $totalTasks) * 100
+            : 0;
 
         return view('projects.tasks.index', compact('project', 'menu', 'priorityTasks', 'allTasks', 
-            'avatarPath', 'teamMembers', 'displayLimit', 'extraMembers'));
+            'avatarPath', 'teamMembers', 'displayLimit', 'extraMembers', 'completedTasks', 
+            'totalTasks', 'progress'));
     }
 }

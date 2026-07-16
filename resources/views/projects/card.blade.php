@@ -25,9 +25,9 @@
         @endif
     </div>
 
-    <div class="pr-2 flex flex-col flex-grow">
+    <div class="pr-2 flex flex-col grow">
         <h2 class="text-text-primary text-xl font-semibold font-montserrat">{{ $title }}</h2>
-        <p class="text-text-primary text-sm mt-1 leading-snug font-montserrat">{{ $description }}</p>
+        <p class="text-text-primary text-sm mt-1 leading-snug font-montserrat line-clamp-2">{{ $description }}</p>
     </div>
 
     <div class="mb-4 mt-4 shrink-0">
@@ -43,8 +43,8 @@
     <div class="mb-4 shrink-0">
         <h3 class="text-text-primary font-semibold font-montserrat mb-2 text-sm">Collaborators</h3>
         <div class="flex items-center -space-x-2">
-            @foreach ($collaborators->take(3) as $avatar)
-                <img src="images/profile.jpg" alt="Collaborator" class="w-8 h-8 rounded-full border-2 border-white object-cover relative z-0">
+            @foreach ($collaborators->take(3) as $user)
+                <img src="{{$user->avatar ? $user->avatar : '/images/profile.jpg'}}" alt="Collaborator" class="w-8 h-8 rounded-full border-2 border-white object-cover relative z-0">
             @endforeach
             
             @php
@@ -62,15 +62,17 @@
     <div class="flex flex-row items-center justify-between mb-3 shrink-0">
         <div class="flex flex-row gap-1.5 items-center">
             <x-lucide-calendar class="w-3.5 h-3.5 text-text-secondary"/> 
-            @if ($days_remaining > 0)
-                <p class="font-montserrat text-text-secondary text-sm">Due in {{ $days_remaining }} days</p>
+            @if (is_null($days_remaining))
+                <p class="font-montserrat text-text-secondary text-sm">No Due Date Set</p>
             @elseif ($days_remaining < 0)
                 @php
                     $days_overdue = $days_remaining * -1
                 @endphp
                 <p class="font-montserrat text-text-secondary text-sm">Overdue after {{ $days_overdue }} days</p>
-            @else
+            @elseif ($days_remaining == 0)
                 <p class="font-montserrat text-text-secondary text-sm">Due Today</p>
+            @else
+                <p class="font-montserrat text-text-secondary text-sm">Due in {{ $days_remaining }} days</p>
             @endif
         </div>
         <div class="flex flex-row gap-1.5 items-center">

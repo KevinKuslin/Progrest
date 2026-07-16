@@ -4,8 +4,8 @@
         $priorityLower = strtolower($task->priority);
 
         $accentClass = match($priorityLower) {
-            'high' => 'bg-red-500',
-            'medium' => 'bg-yellow-500',
+            'high' => 'bg-red-accent',
+            'medium' => 'bg-yellow-accent',
             'low' => 'bg-quartiary'
         };
 
@@ -70,9 +70,8 @@
     <div class="mb-4 shrink-0">
         <h3 class="text-text-primary font-semibold font-montserrat mb-2 text-sm">Collaborator</h3>
         <div class="flex items-center gap-2.5">
-            <img src="{{ $avatar }}" class="w-8 h-8 rounded-full border-2 border-white object-cover shadow-2xs">
-            @foreach ($task->users() as $user)
-                <span class="font-montserrat text-sm font-medium text-text-primary">{{ $user }}</span>
+            @foreach ($task->users as $user)
+                <img src="{{ $user->avatar ? $user->avatar : '/images/profile.jpg' }}" class="w-8 h-8 rounded-full border-2 border-white object-cover shadow-2xs">
             @endforeach
         </div>
     </div>

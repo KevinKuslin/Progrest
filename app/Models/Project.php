@@ -27,7 +27,9 @@ class Project extends Model
             return null;
         }
 
-        return (int) now()->diffInDays($this->deadline, false);
+        return now()
+            ->startOfDay()
+            ->diffInDays($this->deadline->copy()->startOfDay(), false);
     }
 
     public function tasks(){

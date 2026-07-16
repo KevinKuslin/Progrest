@@ -116,6 +116,10 @@
     --color-emerald: #059669;
     --color-sky: #0284C7;
     --color-steel: #3B82A0;
+
+    --color-red-accent: #EF4444; 
+    --color-yellow-accent: #EAB308; 
+    --color-orange-accent: #F97316; 
 }
 
 .dark {
@@ -143,6 +147,9 @@
     --color-pastel-yellow-text: #F5A117;
     --color-pastel-purple-background: #F3EEFB;
     --color-pastel-purple-text: #815BBC;
+    --color-red-accent: #B00020; 
+    --color-yellow-accent: #CA8A04; 
+    --color-orange-accent: #C2410C; 
 }
 
 @media (prefers-color-scheme: dark) {
@@ -160,6 +167,9 @@
         --color-text-primary: #CDD9E5;
         --color-text-secondary: #8A96A3;
         --color-text-contrast: #161B22;
+        --color-red-accent: #B00020; 
+        --color-yellow-accent: #CA8A04; 
+        --color-orange-accent: #C2410C; 
     }
 }
 

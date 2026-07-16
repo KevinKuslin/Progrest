@@ -43,18 +43,20 @@ class ProjectController extends Controller
         }
 
         match ($sort) {
-
             'alphabetical' =>
                 $projects->orderBy('title', $direction),
-
-            'progress' =>
-                $projects->orderBy('progress', $direction),
-
             default =>
-                $projects->orderBy('updated_at', $direction),
+                $projects->orderBy('deadline', $direction),
         };
 
-        $projects = $projects->get(); 
+        $projects = $projects->get();
+
+        if ($sort === 'progress') {
+            $projects = $direction === 'asc'
+                ? $projects->sortBy('progress')
+                : $projects->sortByDesc('progress');
+        }
+
         return view('projects.index', compact('menu', 'projects')); 
     }
 
@@ -62,12 +64,24 @@ class ProjectController extends Controller
         $user_id = auth()->id(); 
 
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'title' => 'required|string|max:15',
+            'description' => 'required|string|max:255',
             'accent' => 'required|string', 
             'icon' => 'required|string', 
-            'deadline' => 'nullable|date'
-        ]);
+            'deadline' => 'nullable|date', 
+            'members' => 'nullable|array', 
+            'members.*' => 'exists:users,id',
+        ], 
+        [
+            'title.required' => 'Project title is required.',
+            'title.max' => 'Project title cannot exceed 15 characters.',
+            'description.required' => 'Project description is required.', 
+            'description.max' => 'Description cannot exceed 255 characters.',
+            'deadline.date' => 'Please choose a valid date.',
+            'members.array' => 'Invalid member list.',
+            'members.*.exists' => 'One or more selected users do not exist.',
+        ]
+        );
 
         $project = Project::create([
             'leader_id' => $user_id,
@@ -79,7 +93,13 @@ class ProjectController extends Controller
             'progress' => 0
         ]);
 
-        $project->users()->syncWithoutDetaching([$user_id]); // add member + supaya enggak ada duplicated member juga 
+        $memberIds = $validated['members'] ?? [];
+
+        // Tambain project leader
+        $memberIds[] = $user_id;
+        $memberIds = array_unique($memberIds);
+
+        $project->users()->syncWithoutDetaching($memberIds);
 
         return redirect()->route('projects.index')->with('success', 'Project created successfully!');
     }
