@@ -115,7 +115,7 @@
         <div class="flex justify-between items-center">
             <h1 class="font-montserrat text-text-primary text-2xl font-bold">All Projects</h1>
             
-            <div class="flex gap-4">
+            <div class="relative gap-4">
 
                 {{-- SORT BUTTON --}}
 
@@ -133,7 +133,7 @@
                         name="direction"
                         value="{{ request('direction') === 'asc' ? 'desc' : 'asc' }}"
                         onclick="document.getElementById('directionInput').disabled = true"
-                        class="bg-background rounded-2xl p-2 shadow-sm hover:bg-surface transition-colors"
+                        class="bg-background rounded-2xl p-2 shadow-sm hover:bg-surface transition-colors cursor-pointer"
                     >
                         <x-lucide-arrow-up-down class="w-5 h-5 text-text-primary"/>
                     </button>
@@ -142,8 +142,9 @@
                     <select
                         name="sort"
                         onchange="this.form.submit()"
-                        class="bg-background rounded-3xl px-3 shadow-sm font-montserrat text-sm text-text-primary hover:bg-surface transition-colors focus:outline-none"
+                        class="bg-background rounded-3xl px-3 shadow-sm font-montserrat text-sm text-text-primary hover:bg-surface transition-colors focus:outline-none cursor-pointer appearance-none"
                     >
+                        
                         <option value="deadline" class="outline-none"
                             {{ request('sort') === 'deadline' ? 'selected' : '' }}>
                             Due Date
@@ -159,6 +160,8 @@
                             Progress
                         </option>
                     </select>
+
+                    <x-lucide-chevron-down class="w-3.5 h-3.5 absolute right-2 top-1/2 -translate-y-1/2 text-text-primary"/>
 
                 </form>
             </div>
