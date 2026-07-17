@@ -100,8 +100,14 @@
             title: @js($task->title),
             description: @js($task->description),
             priority: @js($task->priority),
-            completed: {{ $task->is_completed ? 'true' : 'false' }},
+            status: @js($task->status),
             deadline: @js(optional($task->deadline)?->format('d M Y')),
+            members: @js($task->users->map(fn ($member) => [
+                'id' => $member->id,
+                'name' => $member->name,
+                'avatar' => $member->avatar
+            ])),
+            leader_id: {{ $project->leader->id }}
         })"
         class="text-text-primary w-full py-1.5 border-2 border-gray-100 shadow-sm rounded-full flex items-center justify-center gap-2 font-semibold text-sm hover:bg-surface transition-colors font-montserrat shrink-0 cursor-pointer">
             View

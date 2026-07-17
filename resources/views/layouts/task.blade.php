@@ -566,21 +566,22 @@
     </div>
 
     <script>
-    function taskModal() {
-        return {
-            show: false,
-            task: {},
-
-            open(task) {
-                this.task = task;
-                this.show = true;
-            },
-
-            close() {
-                this.show = false;
+        function taskModal() {
+            return {
+                show: false,
+                task: {
+                    members: []
+                },
+                open(task) {
+                    console.log(task);
+                    this.task = task;
+                    this.show = true;
+                },
+                close() {
+                    this.show = false;
+                }
             }
         }
-    }
     </script>
 </body>
 </html>

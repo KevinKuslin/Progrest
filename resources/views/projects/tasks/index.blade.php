@@ -349,194 +349,275 @@
                 x-show="show"
                 x-cloak
                 x-transition.opacity
-                class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-6"
+                class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 shadow-2xl backdrop-blur-sm p-6"
             >
+
+                {{-- Aksen Hijau  --}}
+                <div class="absolute -top-24 left-3/4
+                    h-64 w-86 -translate-x-1/2
+                    rounded-full bg-emerald-300/15
+                    blur-3xl">
+                </div>
 
                 <div
                     @click.outside="close()"
-                    class="bg-background rounded-3xl shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden"
+                    class="bg-background rounded-3xl shadow-xl w-full max-w-xl max-h-[90vh] flex flex-col overflow-hidden"
                 >
 
                     {{-- HEADER --}}
-                    <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100 shrink-0">
-
+                    <div class="flex items-center justify-between px-6 py-5 border-b-2 border-border shrink-0">
                         <div class="flex items-center gap-3">
-
-                            <div class="w-12 h-12 rounded-2xl bg-surface flex items-center justify-center">
-                                <x-lucide-clipboard-list class="w-6 h-6 text-primary"/>
+                            <div class="flex justify-center items-center w-10 h-10 border-pastel-green-text bg-pastel-green-background border-2 p-2 rounded-2xl shadow-3xl shadow-[0_10px_30px_rgba(0,0,0,0.12)]">
+                                <x-lucide-folder-bookmark class="w-6 text-pastel-green-text"/>
                             </div>
-
                             <div>
-
                                 <h1 class="font-montserrat text-2xl font-bold text-text-primary">
                                     Task Details
                                 </h1>
-
                                 <p class="text-text-secondary text-sm">
                                     View task information
                                 </p>
-
                             </div>
-
                         </div>
 
                         <button
                             @click="close()"
-                            class="w-10 h-10 rounded-full hover:bg-surface transition flex items-center justify-center"
+                            class="w-12 h-12 rounded-full hover:bg-surface flex items-center justify-center hover:rotate-90 rotate-0 transition duration-300 cursor-pointer"
                         >
-                            <x-lucide-x class="w-5 h-5"/>
+                            <x-lucide-x class="w-5 h-5 text-text-primary"/>
                         </button>
-
                     </div>
 
                     {{-- BODY --}}
                     <div class="flex-1 overflow-y-auto px-6 py-5 space-y-5">
-
                         {{-- Title --}}
                         <div>
-
-                            <p class="text-sm font-semibold mb-2">
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">
                                 Task Title
                             </p>
-
-                            <div class="bg-surface rounded-2xl px-5 py-3">
-
-                                <p
-                                    class="font-montserrat text-lg"
+                            <div class="bg-surface rounded-xl px-5 py-2 mt-1">
+                                <p class="font-montserrat text-sm text-text-primary"
                                     x-text="task.title"
                                 ></p>
-
                             </div>
-
                         </div>
 
                         {{-- Description --}}
                         <div>
-
-                            <p class="text-sm font-semibold mb-2">
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">
                                 Description
                             </p>
-
-                            <div class="bg-surface rounded-2xl px-5 py-4">
-
+                            <div class="bg-surface rounded-xl px-5 py-3 mt-1">
                                 <p
-                                    class="text-text-secondary whitespace-pre-line leading-7"
+                                    class="font-montserrat text-sm text-text-primary whitespace-pre-line leading-7"
                                     x-text="task.description"
                                 ></p>
-
                             </div>
-
                         </div>
 
                         {{-- GRID --}}
-                        <div class="grid grid-cols-2 gap-5">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
 
                             {{-- Collaborator --}}
-                            <div>
+                                <div>
+                                    <p class="font-montserrat font-semibold text-[12px] text-text-primary">
+                                        Collaborators
+                                    </p>
 
-                                <p class="text-sm font-semibold mb-2">
-                                    Collaborator
-                                </p>
-
-                                <div class="bg-surface rounded-2xl px-4 py-3 flex items-center gap-3">
-
-                                    <img
-                                        src="/images/profile.jpg"
-                                        class="w-10 h-10 rounded-full"
+                                    <div
+                                        class="mt-1 bg-surface rounded-2xl px-4 py-3"
+                                        x-data="{ showMembers: false }"
                                     >
 
-                                    <span class="font-medium">
-                                        Kevin
-                                    </span>
+                                        {{-- Top Row --}}
+                                        <div class="flex items-center justify-between pl-2">
 
+                                            {{-- Tumpukan avatar --}}
+                                            <div class="flex items-center">
+
+                                                {{-- Mobile --}}
+                                                <div class="flex lg:hidden">
+                                                    <template x-for="member in task.members.slice(0, 3)" :key="member.id">
+                                                        <img
+                                                            :src="member.avatar ? member.avatar : '/images/profile.jpg'"
+                                                            class="w-8 h-8 shrink-0 min-w-8 rounded-full object-cover border-2 border-surface first:ml-1 -ml-2.5"
+                                                        >
+                                                    </template>
+
+                                                    <template x-if="task.members.length > 3">
+                                                        <div
+                                                            class="w-8 h-8 rounded-full bg-background border-2 border-surface flex items-center justify-center text-xs font-semibold -ml-2.5"
+                                                        >
+                                                            <span x-text="'+' + (task.members.length - 3)"></span>
+                                                        </div>
+                                                    </template>
+                                                </div>
+
+                                                {{-- Desktop --}}
+                                                <div class="hidden lg:flex">
+                                                    <template x-for="member in task.members.slice(0, 5)" :key="member.id">
+                                                        <img
+                                                            :src="member.avatar ? member.avatar : '/images/profile.jpg'"
+                                                            class="w-8 h-8 min-w-8 shrink-0 rounded-full object-cover border-2 border-surface first:ml-0 -ml-2.5"
+                                                        >
+                                                    </template>
+
+                                                    <template x-if="task.members.length > 5">
+                                                        <div
+                                                            class="w-8 h-8 rounded-full bg-background border-2 border-surface flex items-center justify-center text-xs font-semibold -ml-2.5"
+                                                        >
+                                                            <span x-text="'+' + (task.members.length - 5)"></span>
+                                                        </div>
+                                                    </template>
+                                                </div>
+
+                                            </div>
+
+                                            {{-- Expand Button --}}
+                                            <button
+                                                @click="showMembers = !showMembers"
+                                                class="flex items-center gap-1 text-hyperlink hover:opacity-80 transition text-sm font-medium"
+                                            >
+                                                <span
+                                                    class="cursor-pointer"
+                                                    x-text="showMembers
+                                                        ? 'Hide'
+                                                        : `View all (${task.members.length})`">
+                                                </span>
+
+                                                <x-lucide-chevron-down
+                                                    class="w-4 h-4 transition-transform duration-200"
+                                                    ::class="{ 'rotate-180': showMembers }"
+                                                />
+                                            </button>
+
+                                        </div>
+
+                                        {{-- Expandable members (view all members) --}}
+                                        <div
+                                            x-show="showMembers"
+                                            x-collapse
+                                            class="mt-4 border-t-2 border-border pt-3"
+                                        >
+                                            <div class="max-h-56 overflow-y-auto space-y-2 pr-1"
+                                            >
+                                                <template
+                                                    x-for="member in task.members"
+                                                    :key="member.id"
+                                                >
+                                                    <div class="flex items-center justify-between rounded-xl px-3 py-2 hover:bg-background transition"
+                                                    >
+                                                        <div class="flex items-center gap-3">
+                                                            <img
+                                                                :src="member.avatar ? member.avatar : '/images/profile.jpg'"
+                                                                class="w-6 h-6 min-w-6 shrink-0 rounded-full object-cover"
+                                                            >
+                                                            <div>
+                                                                <p
+                                                                    class="font-montserrat text-sm font-semibold text-text-primary"
+                                                                    x-text="member.name"
+                                                                ></p>
+
+                                                                <p
+                                                                    x-show="member.id == task.leader_id"
+                                                                    class="text-xs text-emerald-600"
+                                                                >
+                                                                    Project Leader
+                                                                </p>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        <x-lucide-crown
+                                                            x-show="member.id == task.leader_id"
+                                                            class="w-4 h-4 text-yellow-500"
+                                                        />
+
+                                                    </div>
+
+                                                </template>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
                                 </div>
-
-                            </div>
 
                             {{-- Status --}}
                             <div>
-
-                                <p class="text-sm font-semibold mb-2">
+                                <p class="font-montserrat font-semibold text-[12px] text-text-primary">
                                     Status
                                 </p>
-
-                                <div class="bg-surface rounded-2xl px-4 py-3">
-
+                                <div class="bg-surface rounded-2xl px-4 py-3 mt-1">
                                     <span
                                         class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pastel-yellow-background text-pastel-yellow-text font-semibold text-sm"
                                     >
-
                                         <div class="w-2 h-2 rounded-full bg-pastel-yellow-text"></div>
-
                                         <span
-                                            x-text="task.completed ? 'Completed' : 'In Progress'"
+                                            x-text="task.status === 'completed' ? 'Completed' : (task.status === 'in_progress' ? 'In Progress' : (task.status === 'pending' ? 'Pending' : 'Cancelled'))"
                                         ></span>
-
                                     </span>
-
                                 </div>
-
                             </div>
 
                             {{-- Deadline --}}
                             <div>
-
-                                <p class="text-sm font-semibold mb-2">
+                                <p class="font-montserrat font-semibold text-[12px] text-text-primary">
                                     Deadline
                                 </p>
-
-                                <div class="bg-surface rounded-2xl px-4 py-3 flex items-center gap-3">
-
-                                    <x-lucide-calendar class="w-5 h-5 text-text-secondary"/>
-
-                                    <span x-text="task.deadline"></span>
-
+                                <div class="bg-surface rounded-2xl px-4 py-3 flex items-center gap-3 mt-1">
+                                    <x-lucide-calendar class="w-4.5 h-4.5 text-text-secondary"/>
+                                    <span x-text="task.deadline" class="text-sm text-text-primary"></span>
                                 </div>
-
                             </div>
 
                             {{-- Priority --}}
                             <div>
-
-                                <p class="text-sm font-semibold mb-2">
+                                <p class="font-montserrat font-semibold text-[12px] text-text-primary">
                                     Priority
                                 </p>
-
-                                <div class="bg-surface rounded-2xl px-4 py-3">
-
+                                <div class="bg-surface rounded-2xl px-4 py-3 mt-1">
                                     <span
-                                        class="px-3 py-1 rounded-full text-white font-semibold"
+                                        class="px-3 py-1 rounded-full text-white text-sm font-semibold"
                                         :class="{
                                             'bg-red-accent': task.priority == 'high',
                                             'bg-yellow-accent': task.priority == 'medium',
                                             'bg-quartiary': task.priority == 'low'
                                         }"
-                                        x-text="task.priority"
+                                        x-text="task.priority === 'high' ? 'High' : (task.priority === 'medium' ? 'Medium' : 'Low')"
                                     ></span>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
 
                     {{-- FOOTER --}}
-                    <div class="border-t border-gray-100 px-6 py-4 flex justify-end gap-3 shrink-0">
+                    <div class="border-t-2 border-border px-6 py-4 flex justify-between gap-3 shrink-0">
+                        
+                        <div>
+                            <button
+                                class="bg-quartiary text-white px-5 py-2.5 rounded-2xl hover:bg-quartiary-hover transition cursor-pointer"
+                            >
+                                Edit Task
+                            </button>
+                        </div>
 
-                        <button
-                            class="bg-primary text-white px-5 py-2.5 rounded-2xl hover:bg-primary-hover transition"
-                        >
-                            Go to Collaboration
-                        </button>
+                        <div>
+                            <button
+                                class="bg-primary text-white px-5 py-2.5 rounded-2xl hover:bg-primary-hover transition cursor-pointer"
+                            >
+                                Go to Collaboration
+                            </button>
 
-                        <button
-                            @click="close()"
-                            class="border border-gray-200 px-5 py-2.5 rounded-2xl hover:bg-surface transition"
-                        >
-                            Close
-                        </button>
+                            <button
+                                @click="close()"
+                                class="border border-gray-200 px-5 py-2.5 rounded-2xl hover:bg-surface transition text-text-primary cursor-pointer ml-2"
+                            >
+                                Close
+                            </button>
+                        </div>
 
                     </div>
 
