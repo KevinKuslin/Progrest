@@ -8,9 +8,6 @@
             'medium' => 'bg-yellow-accent',
             'low' => 'bg-quartiary'
         };
-
-        $avatar = "/images/profile.jpg"; 
-        $image = "/images/profile.jpg"; 
     @endphp
 
     {{-- Floating Left Accent Line --}}
@@ -27,19 +24,33 @@
         </div>
 
         {{-- Top Right: Status --}}
-        @if (!$task->is_completed)
+        @if ($task->status === 'in_progress')
             <div class="text-pastel-yellow-text flex flex-row gap-2.5 items-center">
                 <div class="bg-pastel-yellow-background px-3 py-1 rounded-lg flex items-center justify-center">
-                    <span class="font-montserrat text-pastel-yellow-text text-[12px] font-semibold leading-none">In Progress</span>
+                    <span class="font-montserrat text-[12px] font-semibold leading-none">In Progress</span>
                 </div>
                 <x-lucide-clock class="w-6 h-6" />
             </div>
-        @else
+        @elseif ($task->status === 'pending')
+            <div class="text-pastel-blue-text flex flex-row gap-2.5 items-center">
+                <div class="bg-pastel-blue-background px-3 py-1 rounded-lg flex items-center justify-center">
+                    <span class="font-montserrat text-[12px] font-semibold leading-none">Pending</span>
+                </div>
+                <x-lucide-hourglass class="w-6 h-6" />
+            </div>
+        @elseif ($task->status === 'completed')
             <div class="text-pastel-green-text flex flex-row gap-2.5 items-center">
                 <div class="bg-pastel-green-background px-3 py-1 rounded-lg flex items-center justify-center">
-                    <span class="font-montserrat text-pastel-green-text text-[12px] font-semibold leading-none">Completed</span>
+                    <span class="font-montserrat text-[12px] font-semibold leading-none">Completed</span>
                 </div>
                 <x-lucide-circle-check-big class="w-6 h-6" />
+            </div>
+        @else
+            <div class="text-pastel-red-text flex flex-row gap-2.5 items-center">
+                <div class="bg-pastel-red-background px-3 py-1 rounded-lg flex items-center justify-center">
+                    <span class="font-montserrat text-[12px] font-semibold leading-none">Cancelled</span>
+                </div>
+                <x-lucide-circle-x class="w-6 h-6" />
             </div>
         @endif
 
@@ -54,16 +65,10 @@
 
     {{-- IMAGE PREVIEW --}}
     <div class="my-3 shrink-0">
-        @if($image)
-            <img
-                src="{{ $image }}"
-                class="rounded-2xl w-full h-32 object-cover shadow-2xs"
-            >
-        @else
-            <div class="h-32 rounded-2xl bg-surface/50 border border-gray-100 flex items-center justify-center text-text-secondary font-montserrat text-xs">
-                No preview attached
-            </div>
-        @endif
+        <img
+            src="{{ $task->image }}"
+            class="rounded-2xl w-full h-32 object-cover shadow-2xs"
+        >
     </div>
 
     {{-- collaborator --}}

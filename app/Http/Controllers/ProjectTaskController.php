@@ -67,7 +67,14 @@ class ProjectTaskController extends Controller
         $direction = $request->get('direction', 'desc'); 
 
         $query = $project->tasks()
-            ->orderBy('is_completed'); 
+            ->orderByRaw("
+                CASE status
+                    WHEN 'in_progress' THEN 1
+                    WHEN 'pending' THEN 2
+                    WHEN 'completed' THEN 3
+                    WHEN 'cancelled' THEN 4
+                END
+            ");
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -129,7 +136,7 @@ class ProjectTaskController extends Controller
             'members' => ['array'],
             'members.*' => ['exists:users,id'],
 
-            'go_collab_enabled' => ['boolean'],
+            'go_collab_enabled' => ['required', 'boolean'],
             'go_collab_description' => ['nullable', 'string'],
             'go_collab_limit' => ['nullable', 'integer', 'min:1'],
             'go_collab_reward' => ['nullable', 'integer', 'min:0'],
@@ -145,7 +152,9 @@ class ProjectTaskController extends Controller
             'status' => $validated['status'],
             'deadline' => $validated['deadline'] ?? null,
 
-            'go_collab_enabled' => $request->boolean('go_collab_enabled'),
+            'is_completed' => $validated['status'] === 'completed',
+
+            'go_collab_enabled' => $validated['go_collab_enabled'],
             'go_collab_description' => $validated['go_collab_description'] ?? null,
             'go_collab_limit' => $validated['go_collab_limit'] ?? null,
             'go_collab_reward' => $validated['go_collab_reward'] ?? 0,
@@ -159,18 +168,34 @@ class ProjectTaskController extends Controller
 
         // Cek member collaborator 
 
-        $task->collaborators()->detach();
+        $pivot = []; 
+        $enabled = $validated['go_collab_enabled'];
 
-        if (!empty($validated['collaborators'])) {
+        if ($enabled) {
             $pivot = [];
-            foreach ($validated['collaborators'] as $user) {
-                $pivot[$user['id']] = [
-                    'status' => 'pending',
-                    'reward_earned' => 0,
-                    'joined_at' => now(),
-                ];
+            foreach ($validated['collaborators'] ?? [] as $user) {
+                $existing = $task->collaborators()
+                    ->where('user_id', $user['id'])
+                    ->first();
+                if ($existing) {
+                    $pivot[$user['id']] = [
+                        'status' => $existing->pivot->status,
+                        'reward_earned' => $existing->pivot->reward_earned,
+                        'joined_at' => $existing->pivot->joined_at,
+                        'completed_at' => $existing->pivot->completed_at,
+                    ];
+                } else {
+                    $pivot[$user['id']] = [
+                        'status' => 'pending',
+                        'reward_earned' => 0,
+                        'joined_at' => now(),
+                        'completed_at' => null,
+                    ];
+                }
             }
-            $task->collaborators()->attach($pivot);
+            $task->collaborators()->sync($pivot);
+        } else {
+            $task->collaborators()->detach();
         }
 
         return response()->json([

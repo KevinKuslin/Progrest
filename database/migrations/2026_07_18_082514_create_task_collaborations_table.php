@@ -29,7 +29,7 @@ return new class extends Migration
                 'declined',
                 'in_progress',
                 'completed'
-            ])->default('pending');
+            ])->default('in_progress');
 
             // Reward actually earned
             $table->unsignedInteger('reward_earned')->default(0);

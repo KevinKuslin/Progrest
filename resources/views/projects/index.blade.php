@@ -67,7 +67,7 @@
                 <div class="w-10 h-10 rounded-3xl bg-pastel-green-background flex justify-center items-center">
                     <x-lucide-folder-open class="w-5 text-pastel-green-text"/> 
                 </div>
-                <p class="text-text-primary text-3xl font-montserrat font-semibold">{{ count($projects) }}</p>
+                <p class="text-text-primary text-3xl font-montserrat font-semibold">{{ $activeProjects }}</p>
             </div>
             <p class="text-text-primary text-sm font-montserrat">Active Projects</p>
         </div>
@@ -79,7 +79,7 @@
                 <div class="w-10 h-10 rounded-3xl bg-pastel-blue-background flex justify-center items-center">
                     <x-lucide-folder-check class="w-5 text-pastel-blue-text"/> 
                 </div>
-                <p class="text-text-primary text-3xl font-montserrat font-semibold">5</p>
+                <p class="text-text-primary text-3xl font-montserrat font-semibold">{{ $projectsDone }}</p>
             </div>
             <p class="text-text-primary text-sm font-montserrat">Projects Done</p>
         </div>
@@ -91,7 +91,7 @@
                 <div class="w-10 h-10 rounded-3xl bg-pastel-yellow-background flex justify-center items-center">
                     <x-lucide-user-star class="w-5 text-pastel-yellow-text"/> 
                 </div>
-                <p class="text-text-primary text-3xl font-montserrat font-semibold">5</p>
+                <p class="text-text-primary text-3xl font-montserrat font-semibold">{{ $projectsLed }}</p>
             </div>
             <p class="text-text-primary text-sm font-montserrat">Projects Led</p>
         </div>
@@ -103,7 +103,7 @@
                 <div class="w-10 h-10 rounded-3xl bg-pastel-purple-background flex justify-center items-center">
                     <x-lucide-users class="w-5 text-pastel-purple-text"/> 
                 </div>
-                <p class="text-text-primary text-3xl font-montserrat font-semibold">5</p>
+                <p class="text-text-primary text-3xl font-montserrat font-semibold">{{ $teamMembers }}</p>
             </div>
             <p class="text-text-primary text-sm font-montserrat">Team Members</p>
         </div>
