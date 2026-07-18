@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
     <link rel="icon" href="/images/progrest_p_logo_green.png">
     
@@ -120,7 +121,7 @@
             </div>
 
             <div class="flex flex-col items-end justify-between pb-4 mb-3">
-                <button onclick="closePanel()" class="text-xl font-semibold hover:rotate-90 rotate-0 transition duration-300 text-text-primary">
+                <button onclick="closePanel()" class="text-xl font-semibold hover:rotate-90 rotate-0 transition duration-300 text-text-primary cursor-pointer">
                     ✕
                 </button>
                 <div class="flex gap-5 items-center w-full -mt-1">
@@ -574,18 +575,27 @@
                 selectedMembers: [],
                 selectedCollaborators: [], 
                 memberQuery: '',
+                showDisableCollabWarning: false, 
+                showCollab: false, 
                 searchResults: [],
 
                 open(task) {
-                    // console.log(task);
+                    this.task = structuredClone(task);
 
-                    this.task = structuredClone(task); 
-                    this.selectedMembers = [...this.task.members];
+                    this.task.go_collab_enabled =
+                        Number(this.task.go_collab_enabled) === 1;
+
+                    this.showCollab = this.task.go_collab_enabled;
+
+                    this.selectedMembers = [...(this.task.members ?? [])];
+                    this.selectedCollaborators = [...(this.task.collaborators ?? [])];
+
                     this.memberQuery = '';
                     this.searchResults = [];
-                    this.selectedCollaborators = [...(this.task.collaborators ?? [])];
+
                     this.show = true;
                     this.editing = false;
+                    this.showDisableCollabWarning = false;
                 },
 
                 addMember(user) {
@@ -630,7 +640,7 @@
                                 status: this.task.status,
                                 deadline: this.task.deadline,
                                 members: this.selectedMembers.map(m => m.id),
-                                go_collab_enabled: this.task.go_collab_enabled,
+                                go_collab_enabled: !!this.task.go_collab_enabled,
                                 go_collab_description: this.task.go_collab_description,
                                 go_collab_limit: this.task.go_collab_limit,
                                 go_collab_reward: this.task.go_collab_reward,
