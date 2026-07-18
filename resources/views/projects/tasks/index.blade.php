@@ -371,11 +371,11 @@
                                 <x-lucide-folder-bookmark class="w-6 text-pastel-green-text"/>
                             </div>
                             <div>
-                                <h1 class="font-montserrat text-2xl font-bold text-text-primary">
-                                    Task Details
+                                <h1 class="font-montserrat text-2xl font-bold text-text-primary"
+                                    x-text="editing ? 'Edit Task' : 'Task Detail'">
                                 </h1>
-                                <p class="text-text-secondary text-sm">
-                                    View task information
+                                <p class="text-text-secondary text-sm"
+                                    x-text="editing ? 'Update task information' : 'View task information'">
                                 </p>
                             </div>
                         </div>
@@ -396,9 +396,16 @@
                                 Task Title
                             </p>
                             <div class="bg-surface rounded-xl px-5 py-2 mt-1">
-                                <p class="font-montserrat text-sm text-text-primary"
-                                    x-text="task.title"
-                                ></p>
+                                <template x-if="!editing">
+                                    <p class="font-montserrat text-sm text-text-primary"
+                                        x-text="task.title"
+                                    ></p>
+                                </template>
+                                <template x-if="editing">
+                                    <input type="text" x-model="task.title"
+                                        class="w-full bg-transparent outline-none text-sm font-montserrat text-text-primary"
+                                    >
+                                </template>
                             </div>
                         </div>
 
@@ -408,10 +415,26 @@
                                 Description
                             </p>
                             <div class="bg-surface rounded-xl px-5 py-3 mt-1">
-                                <p
-                                    class="font-montserrat text-sm text-text-primary whitespace-pre-line leading-7"
-                                    x-text="task.description"
-                                ></p>
+                                <template x-if="!editing"> 
+                                    <p
+                                        class="font-montserrat text-sm text-text-primary whitespace-pre-line leading-7"
+                                        x-text="task.description"
+                                    ></p>
+                                </template>
+                                <template x-if="editing"> 
+                                    <textarea
+                                        x-model="task.description"
+                                        x-init="$nextTick(() => {
+                                            $el.style.height = '0px';
+                                            $el.style.height = $el.scrollHeight + 'px';
+                                        })"
+                                        @input="
+                                            $el.style.height = '0px';
+                                            $el.style.height = $el.scrollHeight + 'px';
+                                        "
+                                        class="w-full bg-transparent resize-none overflow-hidden outline-none text-sm font-montserrat text-text-primary"
+                                    ></textarea>
+                                </template>
                             </div>
                         </div>
 
@@ -551,14 +574,63 @@
                                     Status
                                 </p>
                                 <div class="bg-surface rounded-2xl px-4 py-3 mt-1">
-                                    <span
-                                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pastel-yellow-background text-pastel-yellow-text font-semibold text-sm"
-                                    >
-                                        <div class="w-2 h-2 rounded-full bg-pastel-yellow-text"></div>
+                                    <!-- View -->
+                                    <template x-if="!editing">
                                         <span
-                                            x-text="task.status === 'completed' ? 'Completed' : (task.status === 'in_progress' ? 'In Progress' : (task.status === 'pending' ? 'Pending' : 'Cancelled'))"
-                                        ></span>
-                                    </span>
+                                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pastel-yellow-background text-pastel-yellow-text font-semibold text-sm"
+                                        >
+                                            <div class="w-2 h-2 rounded-full bg-pastel-yellow-text"></div>
+                                            <span
+                                                x-text="task.status === 'completed'
+                                                    ? 'Completed'
+                                                    : (task.status === 'in_progress'
+                                                        ? 'In Progress'
+                                                        : (task.status === 'pending'
+                                                            ? 'Pending'
+                                                            : 'Cancelled'))"
+                                            ></span>
+                                        </span>
+                                    </template>
+
+                                    <!-- Edit -->
+                                    <div x-show="editing" class="grid grid-cols-2 gap-2 mt-1">
+                                        <button
+                                            @click="task.status='pending'"
+                                            :class="task.status == 'pending'
+                                                ? 'bg-blue-accent text-white'
+                                                : 'bg-surface text-text-primary border-2 border-border'"
+                                            class="rounded-xl py-2 transition font-montserrat text-[12px] cursor-pointer"
+                                        >
+                                            Pending
+                                        </button>
+                                        <button
+                                            @click="task.status='in_progress'"
+                                            :class="task.status == 'in_progress'
+                                                ? 'bg-yellow-accent text-white'
+                                                : 'bg-surface text-text-primary border-2 border-border'"
+                                            class="rounded-xl py-2 transition font-montserrat text-[12px] cursor-pointer"
+                                        >
+                                            In Progress
+                                        </button>
+                                        <button
+                                            @click="task.status='completed'"
+                                            :class="task.status == 'completed'
+                                                ? 'bg-quartiary text-white'
+                                                : 'bg-surface text-text-primary border-2 border-border'"
+                                            class="rounded-xl py-2 transition font-montserrat text-[12px] cursor-pointer"
+                                        >
+                                            Completed
+                                        </button>
+                                        <button
+                                            @click="task.status='cancelled'"
+                                            :class="task.status == 'cancelled'
+                                                ? 'bg-red-accent text-white'
+                                                : 'bg-surface text-text-primary border-2 border-border'"
+                                            class="rounded-xl py-2 transition font-montserrat text-[12px] cursor-pointer"
+                                        >
+                                            Cancelled
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -567,10 +639,38 @@
                                 <p class="font-montserrat font-semibold text-[12px] text-text-primary">
                                     Deadline
                                 </p>
-                                <div class="bg-surface rounded-2xl px-4 py-3 flex items-center gap-3 mt-1">
-                                    <x-lucide-calendar class="w-4.5 h-4.5 text-text-secondary"/>
-                                    <span x-text="task.deadline" class="text-sm text-text-primary"></span>
-                                </div>
+                                <template x-if="!editing">
+                                    <div class="bg-surface rounded-2xl px-4 py-3 mt-1">
+                                        <div class="flex items-center gap-3">
+                                            <x-lucide-calendar class="w-4.5 h-4.5 text-text-secondary"/>
+                                            <span
+                                                class="text-sm text-text-primary font-montserrat"
+                                                x-text="task.deadline"
+                                            ></span>
+                                        </div>
+                                    </div>
+                                </template>
+                                <template x-if="editing">
+                                    <div class="relative">
+                                        {{-- Custom icon --}}
+                                        <x-lucide-calendar
+                                            class="absolute right-4 top-1/2 -translate-y-1/2
+                                                w-4.5 h-4.5 text-text-secondary pointer-events-none z-10"
+                                        />
+                                        <input
+                                            type="date"
+                                            x-model="task.deadline"
+                                            class="date-input w-full rounded-xl
+                                                border-2 border-border
+                                                bg-background
+                                                px-4 py-2 pr-12
+                                                text-sm text-text-primary
+                                                outline-none
+                                                focus:ring-2 focus:ring-primary
+                                                focus:border-primary z-0"
+                                        >
+                                    </div>
+                                </template>
                             </div>
 
                             {{-- Priority --}}
@@ -578,39 +678,76 @@
                                 <p class="font-montserrat font-semibold text-[12px] text-text-primary">
                                     Priority
                                 </p>
-                                <div class="bg-surface rounded-2xl px-4 py-3 mt-1">
-                                    <span
-                                        class="px-3 py-1 rounded-full text-white text-sm font-semibold"
-                                        :class="{
-                                            'bg-red-accent': task.priority == 'high',
-                                            'bg-yellow-accent': task.priority == 'medium',
-                                            'bg-quartiary': task.priority == 'low'
-                                        }"
-                                        x-text="task.priority === 'high' ? 'High' : (task.priority === 'medium' ? 'Medium' : 'Low')"
-                                    ></span>
-                                </div>
+                                <template x-if="!editing">
+                                    <div class="bg-surface rounded-2xl px-4 py-3 mt-1">
+                                        <span
+                                            class="px-3 py-1 rounded-full text-white text-sm font-semibold"
+                                            :class="{
+                                                'bg-red-accent': task.priority == 'high',
+                                                'bg-yellow-accent': task.priority == 'medium',
+                                                'bg-quartiary': task.priority == 'low'
+                                            }"
+                                            x-text="task.priority === 'high' ? 'High' : (task.priority === 'medium' ? 'Medium' : 'Low')"
+                                        ></span>
+                                    </div>
+                                </template>
+                                <template x-if="editing">
+                                    <div class="grid grid-cols-3 gap-2 mt-1">
+
+                                        <button
+                                            type="button"
+                                            @click="task.priority = 'high'"
+                                            :class="task.priority === 'high'
+                                                ? 'bg-red-accent text-white border-red-accent'
+                                                : 'bg-background border-border text-text-primary'"
+                                            class="rounded-xl border-2 py-1.75 text-[12px] transition cursor-pointer"
+                                        >
+                                            High
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            @click="task.priority = 'medium'"
+                                            :class="task.priority === 'medium'
+                                                ? 'bg-yellow-accent text-white border-yellow-accent'
+                                                : 'bg-background border-border text-text-primary'"
+                                            class="rounded-xl border-2 py-1.75 text-[12px] transition cursor-pointer"
+                                        >
+                                            Medium
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            @click="task.priority = 'low'"
+                                            :class="task.priority === 'low'
+                                                ? 'bg-quartiary text-white border-quartiary'
+                                                : 'bg-background border-border text-text-primary'"
+                                            class="rounded-xl border-2 py-1.75 text-[12px] transition cursor-pointer"
+                                        >
+                                            Low
+                                        </button>
+                                    </div>
+                                </template>
                             </div>
                         </div>
                     </div>
 
                     {{-- FOOTER --}}
                     <div class="border-t-2 border-border px-6 py-4 flex justify-between gap-3 shrink-0">
-                        
                         <div>
                             <button
                                 class="bg-quartiary text-white px-5 py-2.5 rounded-2xl hover:bg-quartiary-hover transition cursor-pointer"
+                                @click="editing = true"
                             >
                                 Edit Task
                             </button>
                         </div>
-
                         <div>
                             <button
                                 class="bg-primary text-white px-5 py-2.5 rounded-2xl hover:bg-primary-hover transition cursor-pointer"
                             >
                                 Go to Collaboration
                             </button>
-
                             <button
                                 @click="close()"
                                 class="border border-gray-200 px-5 py-2.5 rounded-2xl hover:bg-surface transition text-text-primary cursor-pointer ml-2"
@@ -618,11 +755,8 @@
                                 Close
                             </button>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
         </div>
     @endif

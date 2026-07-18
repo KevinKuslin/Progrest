@@ -569,16 +569,61 @@
         function taskModal() {
             return {
                 show: false,
-                task: {
-                    members: []
-                },
+                editing: false,
+                task: {},
+                selectedMembers: [],
+                memberQuery: '',
+                searchResults: [],
+
                 open(task) {
-                    console.log(task);
-                    this.task = task;
+                    this.task = structuredClone(task); 
+                    this.selectedMembers = [...this.task.members];
+                    this.memberQuery = '';
+                    this.searchResults = [];
                     this.show = true;
+                    this.editing = false;
                 },
+
+                addMember(user) {
+                    if (this.selectedMembers.some(m => m.id === user.id)) return;
+                    this.selectedMembers.push(user);
+                    this.task.members = [...this.selectedMembers];
+                    this.memberQuery = '';
+                    this.searchResults = [];
+                },
+
+                async searchUsers() {
+                    if (this.memberQuery.length < 2) {
+                        this.searchResults = [];
+                        return;
+                    }
+                    try {
+                        const response = await fetch(
+                            `/users/search?q=${encodeURIComponent(this.memberQuery)}`
+                        );
+                        this.searchResults = await response.json();
+                    } catch (error) {
+                        console.error(error);
+                        this.searchResults = [];
+                    }
+                },
+
+                removeMember(id) {
+                    this.selectedMembers =
+                        this.selectedMembers.filter(m => m.id !== id);
+                    this.task.members = [...this.selectedMembers];
+                },
+
+                edit() {
+                    this.editing = true;
+                },
+
                 close() {
                     this.show = false;
+                    this.editing = false;
+                    this.memberQuery = '';
+                    this.searchResults = [];
+                    this.selectedMembers = [];
                 }
             }
         }
