@@ -763,9 +763,22 @@
                                     <!-- View -->
                                     <template x-if="!editing">
                                         <span
-                                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pastel-yellow-background text-pastel-yellow-text font-semibold text-sm"
+                                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full font-semibold text-sm"
+                                            :class="{
+                                                'bg-blue-100 text-blue-700': task.status === 'pending',
+                                                'bg-orange-100 text-orange-700': task.status === 'in_progress',
+                                                'bg-green-100 text-green-700': task.status === 'completed',
+                                                'bg-red-100 text-red-700': task.status === 'cancelled'
+                                            }"
                                         >
-                                            <div class="w-2 h-2 rounded-full bg-pastel-yellow-text"></div>
+                                            <div class="w-2 h-2 rounded-full"
+                                                :class="{
+                                                    'bg-blue-700': task.status === 'pending',
+                                                    'bg-orange-700': task.status === 'in_progress',
+                                                    'bg-green-700': task.status === 'completed',
+                                                    'bg-red-700': task.status === 'cancelled'
+                                                }"    
+                                            ></div>
                                             <span
                                                 x-text="task.status === 'completed'
                                                     ? 'Completed'
@@ -962,18 +975,98 @@
                                     </div>
 
                                     {{-- Expand --}}
-                                    <button
-                                        @click="showCollab = !showCollab"
-                                        class="flex items-center gap-1 text-hyperlink text-sm font-medium hover:opacity-80 transition font-montserrat cursor-pointer"
-                                    >
-                                        <span
-                                            x-text="showCollab ? 'Hide' : 'View Details'"
-                                        ></span>
-                                        <x-lucide-chevron-down
-                                            class="w-4 h-4 transition-transform duration-200 cursor-pointer"
-                                            ::class="{ 'rotate-180': showCollab }"
-                                        />
-                                    </button>
+                                    <div class="flex items-center justify-between font-montserrat">
+
+                                        <!-- Viewing -->
+                                        <template x-if="!editing && task.go_collab_enabled">
+                                            <button
+                                                @click="showCollab = !showCollab"
+                                                class="flex items-center gap-1 text-hyperlink text-sm font-medium cursor-pointer"
+                                            >
+                                                <span x-text="showCollab ? 'Hide' : 'View Details'"></span>
+
+                                                <x-lucide-chevron-down
+                                                    class="w-4 h-4 transition-transform"
+                                                    ::class="{ 'rotate-180': showCollab }"
+                                                />
+                                            </button>
+                                        </template>
+
+                                        <!-- Editing -->
+                                        <template x-if="editing">
+                                            <div>
+                                                <button
+                                                    type="button"
+                                                    @click="
+                                                        if (Boolean(task.go_collab_enabled)) {
+                                                            showDisableCollabWarning = true;
+                                                        } else {
+                                                            task.go_collab_enabled = true;
+                                                            showCollab = true;
+                                                        }
+                                                    "
+                                                    class="relative inline-flex h-7 w-12 items-center rounded-full transition-colors cursor-pointer"
+                                                    :class="task.go_collab_enabled
+                                                        ? 'bg-primary'
+                                                        : 'bg-gray-300 dark:bg-gray-600'"
+                                                >
+                                                    <span
+                                                        class="inline-block h-5 w-5 rounded-full bg-white transition-transform"
+                                                        :class="task.go_collab_enabled
+                                                            ? 'translate-x-6'
+                                                            : 'translate-x-1'"
+                                                    ></span>
+                                                </button>
+                                            </div>
+                                        </template>
+
+
+                                        {{-- Disable Warning Modal --}}
+                                        <div
+                                            x-show="showDisableCollabWarning"
+                                            x-cloak
+                                            class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 backdrop-blur-sm"
+                                        >
+                                            <div
+                                                class="bg-background rounded-2xl p-6 max-w-md w-full shadow-xl"
+                                                @click.away="showDisableCollabWarning = false"
+                                            >
+
+                                                <h3 class="text-lg font-semibold text-text-primary font-montserrat">
+                                                    Disable Go Collaboration?
+                                                </h3>
+
+                                                <p class="mt-3 text-sm text-text-secondary leading-6 font-montserrat">
+                                                    Disabling Go Collaboration will remove this task from public collaboration.
+                                                    Existing collaborators may lose access, and pending requests may be cancelled.
+                                                </p>
+
+                                                <div class="flex justify-end gap-3 mt-6">
+
+                                                    <button
+                                                        type="button"
+                                                        @click="showDisableCollabWarning = false"
+                                                        class="px-4 py-2 rounded-xl bg-background border-2 border-border text-sm text-text-primary font-montserrat hover:bg-surface cursor-pointer"
+                                                    >
+                                                        Cancel
+                                                    </button>
+
+                                                    <button
+                                                        type="button"
+                                                        @click="
+                                                            task.go_collab_enabled = false;
+                                                            showCollab = false;
+                                                            showDisableCollabWarning = false;
+                                                        "
+                                                        class="px-4 py-2 rounded-xl bg-red-500 text-white text-sm font-montserrat hover:bg-red-accent cursor-pointer"
+                                                    >
+                                                        Disable
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 {{-- DETAILS --}}
@@ -1175,7 +1268,7 @@
                             <template x-if="editing">
                                 <div class="flex gap-2">
                                     <button
-                                        @click="saveTask()"
+                                        @click="save()"
                                         class="bg-quartiary text-white px-5 py-2 rounded-2xl hover:bg-quartiary-hover transition cursor-pointer"
                                     >
                                         Save Changes

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\TaskImageHelper;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
@@ -34,10 +35,10 @@ class TaskSeeder extends Seeder
         $task1 = Task::create([
             'title' => 'Design Landing Page',
             'description' => 'Create the landing page UI for AquaVerse.',
-            'accent' => '#7C2D8E',
-            'icon' => 'palette',
             'priority' => 'high',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
 
             'go_collab_enabled' => false,
             'go_collab_description' => null,
@@ -53,10 +54,10 @@ class TaskSeeder extends Seeder
         $task2 = Task::create([
             'title' => 'User Authentication',
             'description' => 'Implement login and registration.',
-            'accent' => '#7C2D8E',
-            'icon' => 'shield-lock',
             'priority' => 'medium',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
 
             'go_collab_enabled' => true,
             'go_collab_description' => 'Work together to implement authentication flows and security validation.',
@@ -72,10 +73,10 @@ class TaskSeeder extends Seeder
         $task3 = Task::create([
             'title' => 'Marine Species Database',
             'description' => 'Populate the database with marine species.',
-            'accent' => '#7C2D8E',
-            'icon' => 'database',
             'priority' => 'high',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
 
             'go_collab_enabled' => true,
             'go_collab_description' => 'Research and enter verified marine species collaboratively.',
@@ -91,10 +92,10 @@ class TaskSeeder extends Seeder
         $task4 = Task::create([
             'title' => 'Interactive Ocean Map',
             'description' => 'Build an interactive habitat map.',
-            'accent' => '#7C2D8E',
-            'icon' => 'map',
             'priority' => 'medium',
             'status' => 'cancelled',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
 
             'go_collab_enabled' => false,
             'go_collab_description' => null,
@@ -110,10 +111,10 @@ class TaskSeeder extends Seeder
         $task5 = Task::create([
             'title' => 'Quiz Module',
             'description' => 'Develop educational quizzes.',
-            'accent' => '#7C2D8E',
-            'icon' => 'brain',
             'priority' => 'medium',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
 
             'go_collab_enabled' => true,
             'go_collab_description' => 'Create quiz questions and verify scientific accuracy together.',
@@ -129,10 +130,10 @@ class TaskSeeder extends Seeder
         $task6 = Task::create([
             'title' => 'Application Testing',
             'description' => 'Perform functional testing.',
-            'accent' => '#7C2D8E',
-            'icon' => 'bug',
             'priority' => 'low',
             'status' => 'pending',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
 
             'go_collab_enabled' => false,
             'go_collab_description' => null,
@@ -150,10 +151,10 @@ class TaskSeeder extends Seeder
         $task7 = Task::create([
             'title' => 'Mood Tracker UI',
             'description' => 'Design the mood tracking interface.',
-            'accent' => '#0056D2',
-            'icon' => 'smile',
             'priority' => 'medium',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
 
             'go_collab_enabled' => false,
             'go_collab_description' => null,
@@ -169,10 +170,10 @@ class TaskSeeder extends Seeder
         $task8 = Task::create([
             'title' => 'Journal Feature',
             'description' => 'Allow users to write daily journals.',
-            'accent' => '#0056D2',
-            'icon' => 'book-open',
             'priority' => 'high',
             'status' => 'in_progress',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
 
             'go_collab_enabled' => true,
             'go_collab_description' => 'Collaborate on journal templates, formatting, and autosave functionality.',
@@ -188,10 +189,10 @@ class TaskSeeder extends Seeder
         $task9 = Task::create([
             'title' => 'Reminder Notifications',
             'description' => 'Implement daily reminder notifications.',
-            'accent' => '#0056D2',
-            'icon' => 'bell',
             'priority' => 'medium',
             'status' => 'in_progress',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
 
             'go_collab_enabled' => false,
             'go_collab_description' => null,
@@ -207,10 +208,10 @@ class TaskSeeder extends Seeder
         $task10 = Task::create([
             'title' => 'Meditation Audio',
             'description' => 'Integrate guided meditation sessions.',
-            'accent' => '#0056D2',
-            'icon' => 'headphones',
             'priority' => 'high',
             'status' => 'in_progress',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
 
             'go_collab_enabled' => true,
             'go_collab_description' => 'Gather audio resources and integrate playback collaboratively.',
@@ -226,10 +227,10 @@ class TaskSeeder extends Seeder
         $task11 = Task::create([
             'title' => 'Analytics Dashboard',
             'description' => 'Display mood trends.',
-            'accent' => '#0056D2',
-            'icon' => 'chart-column',
             'priority' => 'high',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
 
             'go_collab_enabled' => true,
             'go_collab_description' => 'Visualize analytics and verify reporting accuracy together.',
@@ -245,10 +246,10 @@ class TaskSeeder extends Seeder
         $task12 = Task::create([
             'title' => 'User Feedback System',
             'description' => 'Allow users to submit feedback.',
-            'accent' => '#0056D2',
-            'icon' => 'message-circle',
             'priority' => 'low',
             'status' => 'pending',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
 
             'go_collab_enabled' => false,
             'go_collab_description' => null,
@@ -267,10 +268,11 @@ class TaskSeeder extends Seeder
         $task13 = Task::create([
             'title' => 'Recipe Categories',
             'description' => 'Create recipe category management.',
-            'accent' => '#1F5D3A',
-            'icon' => 'utensils',
             'priority' => 'medium',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+            
             'go_collab_enabled' => false,
             'go_collab_description' => null,
             'go_collab_limit' => null,
@@ -284,10 +286,10 @@ class TaskSeeder extends Seeder
         $task14 = Task::create([
             'title' => 'Meal Planner',
             'description' => 'Develop the weekly meal planner.',
-            'accent' => '#1F5D3A',
-            'icon' => 'calendar-days',
             'priority' => 'high',
             'status' => 'cancelled',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
             'go_collab_enabled' => true,
             'go_collab_description' => 'Need contributors to design weekly meal scheduling workflows.',
             'go_collab_limit' => 3,
@@ -301,10 +303,10 @@ class TaskSeeder extends Seeder
         $task15 = Task::create([
             'title' => 'Shopping List Generator',
             'description' => 'Generate grocery lists automatically.',
-            'accent' => '#1F5D3A',
-            'icon' => 'shopping-cart',
             'priority' => 'high',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
             'go_collab_enabled' => true,
             'go_collab_description' => 'Looking for developers to improve shopping list generation accuracy.',
             'go_collab_limit' => 2,
@@ -318,10 +320,10 @@ class TaskSeeder extends Seeder
         $task16 = Task::create([
             'title' => 'Nutrition Information',
             'description' => 'Display nutritional facts.',
-            'accent' => '#1F5D3A',
-            'icon' => 'apple',
             'priority' => 'medium',
             'status' => 'in_progress',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
             'go_collab_enabled' => false,
             'go_collab_description' => null,
             'go_collab_limit' => null,
@@ -335,10 +337,10 @@ class TaskSeeder extends Seeder
         $task17 = Task::create([
             'title' => 'Recipe Search',
             'description' => 'Implement search and filtering.',
-            'accent' => '#1F5D3A',
-            'icon' => 'search',
             'priority' => 'high',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
             'go_collab_enabled' => true,
             'go_collab_description' => 'Collaborate on search ranking and filtering improvements.',
             'go_collab_limit' => 4,
@@ -352,10 +354,11 @@ class TaskSeeder extends Seeder
         $task18 = Task::create([
             'title' => 'Application Testing',
             'description' => 'Test all application modules.',
-            'accent' => '#1F5D3A',
-            'icon' => 'bug',
             'priority' => 'low',
             'status' => 'pending',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => true,
             'go_collab_description' => 'Help perform cross-device QA testing.',
             'go_collab_limit' => 5,
@@ -372,10 +375,11 @@ class TaskSeeder extends Seeder
         $task19 = Task::create([
             'title' => 'Pet Profile Management',
             'description' => 'Allow users to create and manage pet profiles.',
-            'accent' => '#0EA5A4',
-            'icon' => 'paw-print',
             'priority' => 'medium',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => false,
             'go_collab_description' => null,
             'go_collab_limit' => null,
@@ -389,10 +393,11 @@ class TaskSeeder extends Seeder
         $task20 = Task::create([
             'title' => 'Vaccination Reminder',
             'description' => 'Notify users about upcoming vaccinations.',
-            'accent' => '#0EA5A4',
-            'icon' => 'syringe',
             'priority' => 'high',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => true,
             'go_collab_description' => 'Assist with reminder scheduling and notification testing.',
             'go_collab_limit' => 3,
@@ -406,10 +411,11 @@ class TaskSeeder extends Seeder
         $task21 = Task::create([
             'title' => 'Pet Health Records',
             'description' => 'Store and manage medical history for pets.',
-            'accent' => '#0EA5A4',
-            'icon' => 'file-heart',
             'priority' => 'high',
             'status' => 'in_progress',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => true,
             'go_collab_description' => 'Need collaborators to organize medical record categories.',
             'go_collab_limit' => 4,
@@ -423,10 +429,11 @@ class TaskSeeder extends Seeder
         $task22 = Task::create([
             'title' => 'Appointment Scheduler',
             'description' => 'Schedule veterinary appointments.',
-            'accent' => '#0EA5A4',
-            'icon' => 'calendar-check',
             'priority' => 'medium',
             'status' => 'cancelled',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => false,
             'go_collab_description' => null,
             'go_collab_limit' => null,
@@ -440,10 +447,11 @@ class TaskSeeder extends Seeder
         $task23 = Task::create([
             'title' => 'Pet Growth Tracker',
             'description' => 'Track pet weight and growth history.',
-            'accent' => '#0EA5A4',
-            'icon' => 'chart-line',
             'priority' => 'medium',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => true,
             'go_collab_description' => 'Collect and validate pet growth tracking data.',
             'go_collab_limit' => 2,
@@ -457,10 +465,11 @@ class TaskSeeder extends Seeder
         $task24 = Task::create([
             'title' => 'Application QA Testing',
             'description' => 'Perform complete quality assurance testing.',
-            'accent' => '#0EA5A4',
-            'icon' => 'bug',
             'priority' => 'low',
             'status' => 'pending',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => true,
             'go_collab_description' => 'Open for community testing across multiple devices.',
             'go_collab_limit' => 5,
@@ -477,10 +486,11 @@ class TaskSeeder extends Seeder
         $task25 = Task::create([
             'title' => 'Trip Budget Calculator',
             'description' => 'Estimate travel expenses for users.',
-            'accent' => '#8B5A2B',
-            'icon' => 'wallet',
             'priority' => 'medium',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => false,
             'go_collab_description' => null,
             'go_collab_limit' => null,
@@ -494,10 +504,11 @@ class TaskSeeder extends Seeder
         $task26 = Task::create([
             'title' => 'Hotel Recommendation',
             'description' => 'Recommend hotels based on user preferences.',
-            'accent' => '#8B5A2B',
-            'icon' => 'hotel',
             'priority' => 'high',
             'status' => 'in_progress',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => true,
             'go_collab_description' => 'Looking for contributors to improve hotel recommendation quality and ranking algorithms.',
             'go_collab_limit' => 3,
@@ -511,10 +522,11 @@ class TaskSeeder extends Seeder
         $task27 = Task::create([
             'title' => 'Flight Search Integration',
             'description' => 'Integrate third-party flight search API.',
-            'accent' => '#8B5A2B',
-            'icon' => 'plane',
             'priority' => 'high',
             'status' => 'pending',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => true,
             'go_collab_description' => 'Need developers familiar with REST APIs and flight booking integrations.',
             'go_collab_limit' => 2,
@@ -528,10 +540,11 @@ class TaskSeeder extends Seeder
         $task28 = Task::create([
             'title' => 'Travel Itinerary Planner',
             'description' => 'Generate customizable travel itineraries.',
-            'accent' => '#8B5A2B',
-            'icon' => 'map',
             'priority' => 'high',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => true,
             'go_collab_description' => 'Collaborate on itinerary templates and destination recommendations.',
             'go_collab_limit' => 4,
@@ -545,10 +558,11 @@ class TaskSeeder extends Seeder
         $task29 = Task::create([
             'title' => 'Offline Map Support',
             'description' => 'Allow users to access maps without internet.',
-            'accent' => '#8B5A2B',
-            'icon' => 'map-pinned',
             'priority' => 'medium',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => false,
             'go_collab_description' => null,
             'go_collab_limit' => null,
@@ -562,10 +576,11 @@ class TaskSeeder extends Seeder
         $task30 = Task::create([
             'title' => 'Application Release',
             'description' => 'Prepare and publish the first stable release.',
-            'accent' => '#8B5A2B',
-            'icon' => 'rocket',
             'priority' => 'high',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => true,
             'go_collab_description' => 'Seeking testers to validate the final release candidate before deployment.',
             'go_collab_limit' => 5,
@@ -588,10 +603,11 @@ class TaskSeeder extends Seeder
         $task31 = Task::create([
             'title' => 'Carbon Footprint Calculator',
             'description' => 'Calculate users\' daily carbon emissions.',
-            'accent' => '#F35C75',
-            'icon' => 'leaf',
             'priority' => 'high',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => true,
             'go_collab_description' => 'Contribute by validating emission calculation formulas and datasets.',
             'go_collab_limit' => 2,
@@ -605,10 +621,11 @@ class TaskSeeder extends Seeder
         $task32 = Task::create([
             'title' => 'Transportation Tracker',
             'description' => 'Track transportation habits and emissions.',
-            'accent' => '#F35C75',
-            'icon' => 'car',
             'priority' => 'high',
             'status' => 'in_progress',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => true,
             'go_collab_description' => 'Collect transportation datasets and improve activity tracking accuracy.',
             'go_collab_limit' => 4,
@@ -622,10 +639,11 @@ class TaskSeeder extends Seeder
         $task33 = Task::create([
             'title' => 'Energy Consumption Monitor',
             'description' => 'Record household energy usage.',
-            'accent' => '#F35C75',
-            'icon' => 'bolt',
             'priority' => 'medium',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => false,
             'go_collab_description' => null,
             'go_collab_limit' => null,
@@ -639,10 +657,11 @@ class TaskSeeder extends Seeder
         $task34 = Task::create([
             'title' => 'Weekly Sustainability Report',
             'description' => 'Generate personalized sustainability reports.',
-            'accent' => '#F35C75',
-            'icon' => 'chart-column',
             'priority' => 'medium',
             'status' => 'in_progress',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => true,
             'go_collab_description' => 'Help design insightful weekly environmental reports and visualizations.',
             'go_collab_limit' => 3,
@@ -656,10 +675,11 @@ class TaskSeeder extends Seeder
         $task35 = Task::create([
             'title' => 'Achievement Badge System',
             'description' => 'Reward users for eco-friendly habits.',
-            'accent' => '#F35C75',
-            'icon' => 'award',
             'priority' => 'low',
             'status' => 'completed',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => false,
             'go_collab_description' => null,
             'go_collab_limit' => null,
@@ -673,10 +693,11 @@ class TaskSeeder extends Seeder
         $task36 = Task::create([
             'title' => 'Final Application Testing',
             'description' => 'Conduct end-to-end testing before deployment.',
-            'accent' => '#F35C75',
-            'icon' => 'bug',
             'priority' => 'high',
             'status' => 'pending',
+
+            'image' => TaskImageHelper::randomPlaceholder(),
+
             'go_collab_enabled' => true,
             'go_collab_description' => 'Recruit testers to verify every module before public launch.',
             'go_collab_limit' => 5,

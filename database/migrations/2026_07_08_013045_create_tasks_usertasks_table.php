@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('title'); 
             $table->text('description')->nullable(); 
-            $table->string('accent'); 
-            $table->string('icon'); 
             $table->enum('priority', [
                 'low',
                 'medium',
@@ -27,7 +25,7 @@ return new class extends Migration
                 'in_progress',
                 'completed',
                 'cancelled'
-            ])->default('pending');
+            ])->default('in_progress');
 
             $table->boolean('go_collab_enabled')
                 ->default(false); 
@@ -41,7 +39,7 @@ return new class extends Migration
             $table->unsignedInteger('go_collab_reward')
                 ->default(0); 
 
-            $table->string('image')->default('/images/default-task-image.png');
+            $table->string('image')->nullable();
             $table->date('deadline')->nullable(); 
             $table->foreignId('project_id')->constrained('projects')->cascadeOnDelete()->cascadeOnUpdate(); 
             $table->boolean('is_completed')->default(false); 

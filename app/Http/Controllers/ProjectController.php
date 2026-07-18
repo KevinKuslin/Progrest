@@ -24,10 +24,13 @@ class ProjectController extends Controller
             ]
         ]; 
 
+        $user = auth()->user(); 
+
         $sort = $request->get('sort', 'recent'); 
         $search = $request->get('search'); 
         $direction = $request->get('direction', 'desc'); 
 
+        // Versi query/eloquent builder 
         $projects = Project::where(function ($query) {
             $query->where('leader_id', auth()->id())
                 ->orWhereHas('users', function ($q) {
@@ -57,7 +60,30 @@ class ProjectController extends Controller
                 : $projects->sortByDesc('progress');
         }
 
-        return view('projects.index', compact('menu', 'projects')); 
+        // Versi Collection 
+
+        $projectsCol = Project::where(function ($query) use ($user) {
+            $query->where('leader_id', $user->id)
+                ->orWhereHas('users', function ($q) use ($user) {
+                    $q->where('user_id', $user->id);
+                });
+        })
+        ->with(['users', 'leader'])
+        ->get();
+
+        $activeProjects = $projectsCol->count(); 
+        $projectsDone = $projectsCol->where('is_completed', true)->count(); 
+        $projectsLed = $projectsCol->where('leader_id', $user->id)->count(); 
+        $teamMembers = $projectsCol
+            ->flatMap(function ($project) {
+                return $project->users->push($project->leader);
+            })
+            ->pluck('id')
+            ->reject(fn ($id) => $id === $user->id)
+            ->unique()
+            ->count();
+
+        return view('projects.index', compact('menu', 'projects', 'activeProjects', 'projectsDone', 'projectsLed', 'teamMembers')); 
     }
 
     public function store(Request $request){

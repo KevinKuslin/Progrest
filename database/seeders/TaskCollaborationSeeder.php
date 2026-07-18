@@ -39,7 +39,7 @@ class TaskCollaborationSeeder extends Seeder
             [
                 'task_id' => 6,
                 'user_id' => 1,
-                'status' => 'accepted',
+                'status' => 'declined',
                 'reward_earned' => 0,
                 'joined_at' => Carbon::parse('2026-07-18'),
                 'completed_at' => null,
@@ -59,8 +59,8 @@ class TaskCollaborationSeeder extends Seeder
             [
                 'task_id' => 10,
                 'user_id' => 5,
-                'status' => 'accepted',
-                'reward_earned' => 0,
+                'status' => 'completed',
+                'reward_earned' => 18,
                 'joined_at' => Carbon::parse('2026-08-01'),
                 'completed_at' => null,
             ],
@@ -70,7 +70,7 @@ class TaskCollaborationSeeder extends Seeder
             [
                 'task_id' => 14,
                 'user_id' => 2,
-                'status' => 'pending',
+                'status' => 'in_progress',
                 'reward_earned' => 0,
                 'joined_at' => null,
                 'completed_at' => null,
@@ -88,7 +88,7 @@ class TaskCollaborationSeeder extends Seeder
             [
                 'task_id' => 17,
                 'user_id' => 1,
-                'status' => 'accepted',
+                'status' => 'declined',
                 'reward_earned' => 0,
                 'joined_at' => Carbon::parse('2026-06-10'),
                 'completed_at' => null,
@@ -97,7 +97,7 @@ class TaskCollaborationSeeder extends Seeder
             [
                 'task_id' => 18,
                 'user_id' => 4,
-                'status' => 'pending',
+                'status' => 'in_progress',
                 'reward_earned' => 0,
                 'joined_at' => null,
                 'completed_at' => null,
@@ -117,7 +117,7 @@ class TaskCollaborationSeeder extends Seeder
             [
                 'task_id' => 21,
                 'user_id' => 2,
-                'status' => 'accepted',
+                'status' => 'in_progress',
                 'reward_earned' => 0,
                 'joined_at' => Carbon::parse('2026-07-29'),
                 'completed_at' => null,
@@ -135,7 +135,7 @@ class TaskCollaborationSeeder extends Seeder
             [
                 'task_id' => 24,
                 'user_id' => 5,
-                'status' => 'pending',
+                'status' => 'in_progress',
                 'reward_earned' => 0,
                 'joined_at' => null,
                 'completed_at' => null,
@@ -146,7 +146,7 @@ class TaskCollaborationSeeder extends Seeder
             [
                 'task_id' => 26,
                 'user_id' => 2,
-                'status' => 'accepted',
+                'status' => 'in_progress',
                 'reward_earned' => 0,
                 'joined_at' => Carbon::parse('2026-08-10'),
                 'completed_at' => null,
@@ -155,7 +155,7 @@ class TaskCollaborationSeeder extends Seeder
             [
                 'task_id' => 27,
                 'user_id' => 5,
-                'status' => 'pending',
+                'status' => 'in_progress',
                 'reward_earned' => 0,
                 'joined_at' => null,
                 'completed_at' => null,
@@ -193,7 +193,7 @@ class TaskCollaborationSeeder extends Seeder
             [
                 'task_id' => 32,
                 'user_id' => 2,
-                'status' => 'accepted',
+                'status' => 'declined',
                 'reward_earned' => 0,
                 'joined_at' => Carbon::parse('2026-08-15'),
                 'completed_at' => null,
@@ -211,7 +211,7 @@ class TaskCollaborationSeeder extends Seeder
             [
                 'task_id' => 36,
                 'user_id' => 2,
-                'status' => 'pending',
+                'status' => 'in_progress',
                 'reward_earned' => 0,
                 'joined_at' => null,
                 'completed_at' => null,
