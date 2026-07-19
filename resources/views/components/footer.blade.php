@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
 
         <div class="flex flex-col gap-2 items-start">
-            <img id="logo-footer" src="images/progrest_logo_white.png" alt="" class="w-40 h-auto">
+            <img id="logo-footer" src="/images/progrest_logo_white.png" alt="" class="w-40 h-auto">
             <p class="font-montserrat text-sm opacity-80 text-text-contrast">
                 Make progress and let others do the rest.
             </p>

@@ -21,3 +21,9 @@ setx SSL_CERT_FILE "C:\php-8.5.5\extras\ssl\cacert.pem"
 
 Untuk akses image di storage (jaga-jaga). Jalanin: 
 php artisan storage:link
+
+Notifications: 
+php artisan notifications:table
+php artisan migrate
+
+php artisan make:notification ActivityNotification

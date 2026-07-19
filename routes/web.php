@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CollabController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectMemberController;
@@ -82,8 +83,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/projects/{project}/tasks', [ProjectTaskController::class, 'store'])
         ->name('projects.tasks.store'); 
 
+    Route::delete('/tasks/{task}', [TaskController::class, 'delete'])
+        ->name('tasks.delete');
+
     Route::put('/tasks/{task}', [ProjectTaskController::class, 'update'])
         ->name('tasks.update');
+
+    Route::post('/notifications/read', [NotificationController::class, 'markAllAsRead'])
+        ->middleware('auth')
+        ->name('notifications.read');
     
     Route::get('/collab', [CollabController::class, 'index']);
 });

@@ -153,7 +153,7 @@
                             {{-- Task TITLE INPUT --}}
 
                             <input
-                                x-model="title"
+                                x-model="task.title"
                                 name="title"
                                 type="text"
                                 placeholder="e.g. User Interface Refinement"
@@ -167,7 +167,7 @@
                             {{-- Task DESCRIPTION INPUT --}}
 
                             <textarea
-                                x-model="description"
+                                x-model="task.description"
                                 name="description"
                                 placeholder="Describe the overview and purpose of the task..."
                                 class="w-full h-30 rounded-lg border-[1.5px] border-text-primary/50 px-3 py-2 text-sm text-text-primary placeholder:text-placeholder"
@@ -396,7 +396,7 @@
 
                                 <input
                                     type="date"
-                                    x-model="deadline"
+                                    x-model="task.deadline"
                                     name="deadline"
                                     class="date-input w-full rounded-lg
                                         border-[1.5px] border-text-primary/50
@@ -590,7 +590,21 @@
             return {
                 show: false,
                 editing: false,
-                task: {},
+                task: {
+                    id: null,
+                    title: '',
+                    description: '',
+                    image: '',
+                    image_preview: '',
+                    status: 'pending',
+                    priority: 'medium',
+                    deadline: '',
+                    members: [],
+                    leader_id: null,
+                    go_collab_enabled: false,
+                    go_collab_reward: 0,
+                    go_collab_limit: 0
+                },
 
                 // (Internal project member)
                 assignedMembers: [],
@@ -608,6 +622,8 @@
                 originalTask: {},
 
                 open(task) {
+                    // console.trace("open() called");
+
                     this.task = structuredClone(task);
                     this.originalTask = JSON.stringify(task);
 
@@ -769,16 +785,50 @@
                     this.editing = true;
                 },
 
+                deleteTask() {
+                    if (!confirm('Are you sure you want to delete this task?')) {
+                        return;
+                    }
+
+                    fetch(`/tasks/${this.task.id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to delete task');
+                        }
+
+                        return response.json();
+                    })
+                    .then(() => {
+                        this.close();
+
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        alert('Failed to delete task.');
+                    });
+                },
+
                 close() {
                     this.show = false;
                     this.editing = false;
-                    this.task = {}; 
+
+                    this.showCollab = false;
+                    this.showDisableCollabWarning = false;
 
                     this.assignedMemberQuery = '';
                     this.assignedSearchResults = [];
                     this.assignedMembers = [];
 
                     this.taskMembers = [];
+
+                    this.newImage = null;
                 }
             }
         }

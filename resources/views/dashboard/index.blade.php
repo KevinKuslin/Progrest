@@ -24,9 +24,36 @@
             <div id="notif-dropdown" class="hidden absolute right-0 mt-3 w-72 bg-background border border-border shadow-lg rounded-2xl p-5 z-50 font-montserrat">
                 <div class="flex justify-between items-center mb-3 border-b border-border pb-2">
                     <p class="font-bold text-sm text-text-primary">Notifications</p>
-                    <span class="text-xs bg-primary text-white px-2 py-0.5 rounded-full">0 New</span>
+                    @if($unreadNotifications > 0)
+                        <span
+                            id="notification-badge"
+                            class="text-xs bg-primary text-white px-2 py-0.5 rounded-full"
+                        >
+                            {{ $unreadNotifications }} New
+                        </span>
+                    @endif
                 </div>
-                <p class="text-xs text-text-secondary text-center py-4">You have no new notifications.</p>
+                @if($notifications->isEmpty())
+                    <p class="text-xs text-text-secondary text-center py-4">
+                        You have no notifications.
+                    </p>
+                @else
+                    <div class="max-h-80 overflow-y-auto">
+                        @foreach($notifications as $notification)
+                            <div class="py-3 border-b border-border last:border-none">
+                                <p class="font-semibold text-sm text-text-primary">
+                                    {{ $notification->data['title'] }}
+                                </p>
+                                <p class="text-xs text-text-secondary mt-1">
+                                    {{ $notification->data['message'] }}
+                                </p>
+                                <p class="text-[11px] text-text-secondary mt-2">
+                                    {{ $notification->created_at->diffForHumans() }}
+                                </p>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -280,7 +307,29 @@ document.addEventListener('DOMContentLoaded', () => {
     
     notifBtn?.addEventListener('click', (e) => {
         e.stopPropagation();
+
+        const opening = notifDropdown.classList.contains('hidden');
         notifDropdown.classList.toggle('hidden');
+
+        if (opening) {
+            fetch('/notifications/read', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document
+                        .querySelector('meta[name="csrf-token"]')
+                        .content,
+                    'Accept': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(() => {
+                const badge = document.getElementById('notification-badge');
+                if (badge) {
+                    badge.remove();
+                }
+            })
+            .catch(error => console.error(error));
+        }
     });
     
     document.addEventListener('click', (e) => {

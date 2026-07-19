@@ -68,7 +68,7 @@
         <img
             src="{{ str_starts_with($task->image, '/images/')
                 ? $task->image
-                : asset('storage/'.$task->image) }}"
+                : asset('/storage/'.$task->image) }}"
             class="rounded-2xl w-full h-32 object-cover shadow-2xs"
         >
     </div>
@@ -90,7 +90,11 @@
     <div class="flex flex-row items-center justify-between mb-3 shrink-0">
         <div class="flex flex-row gap-1.5 items-center">
             <x-lucide-calendar class="w-3.5 h-3.5 text-text-secondary"/> 
-            <p class="font-montserrat text-text-secondary text-sm">Due {{ $task->deadline->format('d M Y') }}</p>
+            @if (!is_null($task->deadline))
+                <p class="font-montserrat text-text-secondary text-sm">Due {{ $task->deadline->format('d M Y') }}</p>
+            @else
+                <p class="font-montserrat text-text-secondary text-sm">Due Date Not Set</p>
+            @endif
         </div>
 
         {{-- Added Comment Counter --}}

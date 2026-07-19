@@ -38,7 +38,7 @@
     <div class="w-full max-w-85 md:max-w-2xl lg:max-w-6xl h-auto lg:h-[85vh] lg:max-h-212.5 min-h-min lg:min-h-150 bg-background backdrop-blur-md rounded-[30px] lg:rounded-[40px] shadow-2xl flex flex-col lg:flex-row relative animate-reveal">
 
         <div class="absolute top-6 right-8 hidden lg:block z-50">
-            <img src="images/progrest_logo_green.png" class="h-8 w-auto hover:scale-105 transition duration-300">
+            <img src="/_green.png" class="h-8 w-auto hover:scale-105 transition duration-300">
         </div>
 
         <div class="w-full lg:w-1/2 p-5 lg:px-12 flex flex-col justify-center relative z-10 h-full animate-reveal delay-100 opacity-0">

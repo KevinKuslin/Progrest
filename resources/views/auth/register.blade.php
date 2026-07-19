@@ -44,7 +44,7 @@
         {{-- Logo --}}
         <div class="absolute top-6 right-8 hidden lg:block z-50">
             <img 
-                src="images/progrest_logo_green.png" 
+                src="/images/progrest_logo_green.png" 
                 alt="Progrest" 
                 class="h-8 w-auto hover:scale-105 transition duration-300 cursor-pointer"
             >

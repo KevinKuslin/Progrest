@@ -540,35 +540,35 @@
                                                 <div class="flex items-center">
                                                     {{-- Mobile --}}
                                                     <div class="flex lg:hidden">
-                                                        <template x-for="member in task.members.slice(0, 3)" :key="member.id">
+                                                        <template x-for="member in (task.members ?? []).slice(0,3)" :key="member.id">
                                                             <img
                                                                 :src="member.avatar ? member.avatar : '/images/profile.jpg'"
                                                                 class="w-8 h-8 shrink-0 min-w-8 rounded-full object-cover border-2 border-surface first:ml-1 -ml-2.5"
                                                             >
                                                         </template>
-                                                        <template x-if="task.members.length > 3">
+                                                        <template x-if="(task.members || []).length > 3">
                                                             <div
                                                                 class="w-8 h-8 rounded-full bg-background border-2 border-surface flex items-center justify-center text-xs font-semibold -ml-2.5"
                                                             >
-                                                                <span x-text="'+' + (task.members.length - 3)"></span>
+                                                                <span x-text="'+' + ((task.members || []).length - 3)"></span>
                                                             </div>
                                                         </template>
                                                     </div>
 
                                                     {{-- Desktop --}}
                                                     <div class="hidden lg:flex">
-                                                        <template x-for="member in task.members.slice(0, 5)" :key="member.id">
+                                                        <template x-for="member in (task.members ?? []).slice(0,5)" :key="member.id">
                                                             <img
                                                                 :src="member.avatar ? member.avatar : '/images/profile.jpg'"
                                                                 class="w-8 h-8 min-w-8 shrink-0 rounded-full object-cover border-2 border-surface first:ml-0 -ml-2.5"
                                                             >
                                                         </template>
 
-                                                        <template x-if="task.members.length > 5">
+                                                        <template x-if="(task.members || []).length > 5">
                                                             <div
                                                                 class="w-8 h-8 rounded-full bg-background border-2 border-surface flex items-center justify-center text-xs font-semibold -ml-2.5"
                                                             >
-                                                                <span x-text="'+' + (task.members.length - 5)"></span>
+                                                                <span x-text="'+' + ((task.members || []).length - 5)"></span>
                                                             </div>
                                                         </template>
                                                     </div>
@@ -584,7 +584,7 @@
                                                         class="cursor-pointer font-montserrat"
                                                         x-text="showMembers
                                                             ? 'Hide'
-                                                            : `View all (${task.members.length})`">
+                                                            : `View all (${(task.members || []).length})`">
                                                     </span>
 
                                                     <x-lucide-chevron-down
@@ -1104,50 +1104,50 @@
 
 
                                         {{-- Disable Warning Modal --}}
-                                        <div
-                                            x-show="showDisableCollabWarning"
-                                            x-cloak
-                                            class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 backdrop-blur-sm"
-                                        >
+                                        <template x-if="showDisableCollabWarning">
                                             <div
-                                                class="bg-background rounded-2xl p-6 max-w-md w-full shadow-xl"
-                                                @click.away="showDisableCollabWarning = false"
+                                                class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 backdrop-blur-sm"
                                             >
+                                                <div
+                                                    class="bg-background rounded-2xl p-6 max-w-md w-full shadow-xl"
+                                                    @click.away="showDisableCollabWarning = false"
+                                                >
 
-                                                <h3 class="text-lg font-semibold text-text-primary font-montserrat">
-                                                    Disable Go Collaboration?
-                                                </h3>
+                                                    <h3 class="text-lg font-semibold text-text-primary font-montserrat">
+                                                        Disable Go Collaboration?
+                                                    </h3>
 
-                                                <p class="mt-3 text-sm text-text-secondary leading-6 font-montserrat">
-                                                    Disabling Go Collaboration will remove this task from public collaboration.
-                                                    Existing collaborators may lose access, and pending requests may be cancelled.
-                                                </p>
+                                                    <p class="mt-3 text-sm text-text-secondary leading-6 font-montserrat">
+                                                        Disabling Go Collaboration will remove this task from public collaboration.
+                                                        Existing collaborators may lose access, and pending requests may be cancelled.
+                                                    </p>
 
-                                                <div class="flex justify-end gap-3 mt-6">
+                                                    <div class="flex justify-end gap-3 mt-6">
 
-                                                    <button
-                                                        type="button"
-                                                        @click="showDisableCollabWarning = false"
-                                                        class="px-4 py-2 rounded-xl bg-background border-2 border-border text-sm text-text-primary font-montserrat hover:bg-surface cursor-pointer"
-                                                    >
-                                                        Cancel
-                                                    </button>
+                                                        <button
+                                                            type="button"
+                                                            @click="showDisableCollabWarning = false"
+                                                            class="px-4 py-2 rounded-xl bg-background border-2 border-border text-sm text-text-primary font-montserrat hover:bg-surface cursor-pointer"
+                                                        >
+                                                            Cancel
+                                                        </button>
 
-                                                    <button
-                                                        type="button"
-                                                        @click="
-                                                            task.go_collab_enabled = false;
-                                                            showCollab = false;
-                                                            showDisableCollabWarning = false;
-                                                        "
-                                                        class="px-4 py-2 rounded-xl bg-red-500 text-white text-sm font-montserrat hover:bg-red-accent cursor-pointer"
-                                                    >
-                                                        Disable
-                                                    </button>
+                                                        <button
+                                                            type="button"
+                                                            @click="
+                                                                task.go_collab_enabled = false;
+                                                                showCollab = false;
+                                                                showDisableCollabWarning = false;
+                                                            "
+                                                            class="px-4 py-2 rounded-xl bg-red-500 text-white text-sm font-montserrat hover:bg-red-accent cursor-pointer"
+                                                        >
+                                                            Disable
+                                                        </button>
 
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </template>
                                     </div>
                                 </div>
 
@@ -1333,6 +1333,29 @@
                                 </div>
                             </div>
                         </div>
+
+                        <template x-if="!editing">
+                            <button
+                                type="button"
+                                @click="deleteTask()"
+                                class="flex items-center justify-center gap-2
+                                    rounded-xl
+                                    px-5 py-3
+                                    text-sm font-semibold
+                                    text-pastel-red-text
+                                    font-montserrat
+                                    border-2 border-pastel-red-text
+                                    hover:bg-surface
+                                    transition
+                                    w-full
+                                    cursor-pointer"
+                            >
+                                <x-lucide-trash-2 class="w-4 h-4"/>
+
+                                Delete Task
+                            </button>
+                        </template>
+
                     </div>
 
                     {{-- FOOTER --}}

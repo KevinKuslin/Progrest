@@ -18,7 +18,7 @@
     
     <div class="flex justify-between items-center px-10 py-5">
         <!-- Logo -->
-        <img id="logo-landing" src="images/progrest_logo_green.png" alt="" class="w-30">
+        <img id="logo-landing" src="/images/progrest_logo_green.png" alt="" class="w-30">
 
         <!-- Desktop -->
         <div class="hidden sm:flex gap-4 items-center">
@@ -185,7 +185,7 @@
 
         <!-- brand -->
         <div class="flex flex-col gap-2 items-start">
-            <img id="logo-footer" src="images/progrest_logo_white.png" alt="" class="w-40 h-auto">
+            <img id="logo-footer" src="/images/progrest_logo_white.png" alt="" class="w-40 h-auto">
             <p class="font-montserrat text-sm opacity-80 text-text-contrast">
                 Make progress and let others do the rest.
             </p>

@@ -36,15 +36,19 @@ class DashboardController extends Controller
             'statistics' => $this->accountStatistics($user, $projects),
             'contribution' => $this->contributionStatistics($user),
             'taskReminders' => $this->taskReminders($user),
+
+            'notifications' => $user->notifications()
+                ->latest()
+                ->take(10)
+                ->get(),
+
+            'unreadNotifications' => $user->unreadNotifications()
+                ->count(),
         ]);
     }
 
-    /**
-     * The four tiles in the Account Statistics panel.
-     */
     private function accountStatistics($user, $projects): array
     {
-        // A project counts as completed when it has tasks and all of them are done.
         $projectsCompleted = $projects->filter(function ($project) {
             return $project->tasks->count() > 0
                 && $project->tasks->every(fn ($task) => $task->is_completed);
@@ -69,13 +73,6 @@ class DashboardController extends Controller
         ];
     }
 
-    /**
-     * Task Contribution Statistics.
-     *
-     * Counts tasks the user is assigned to that were completed in each bucket,
-     * for three ranges. Returns labels, values and a y-axis scale per range so
-     * the view can switch between them without another request.
-     */
     private function contributionStatistics($user): array
     {
         return [
@@ -85,10 +82,6 @@ class DashboardController extends Controller
         ];
     }
 
-    /**
-     * Build one contribution series: $count buckets of $unit, ending with the
-     * current period.
-     */
     private function buildSeries($user, int $count, string $unit): array
     {
         $now = Carbon::now();

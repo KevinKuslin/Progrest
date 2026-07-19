@@ -66,6 +66,10 @@
     font-weight: 700;
 }
 
+[x-cloak] {
+    display: none !important;
+}
+
 @theme {
     /* LIGHT  */
     --color-primary: #14452F;

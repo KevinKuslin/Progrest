@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project; 
+use App\Notifications\ActivityNotification;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -125,7 +126,33 @@ class ProjectController extends Controller
         $memberIds[] = $user_id;
         $memberIds = array_unique($memberIds);
 
-        $project->users()->syncWithoutDetaching($memberIds);
+        $project->users()->syncWithoutDetaching($memberIds); 
+
+        foreach ($project->users as $member) {
+
+            if ($member->id == auth()->id()) {
+                $member->notify(
+                    new ActivityNotification(
+                        title: 'Project Created',
+                        message: 'You created the project "'.$project->title.'".',
+                        type: 'project_created',
+                        projectId: $project->id,
+                    )
+                );
+                continue; 
+            }
+
+            $member->notify(
+                new ActivityNotification(
+                    title: 'Project Created',
+                    message: auth()->user()->name.' created the project "'.$project->title.'".',
+                    type: 'project_created',
+                    projectId: $project->id,
+                )
+            );
+        }
+
+        $project->load('users');
 
         return redirect()->route('projects.index')->with('success', 'Project created successfully!');
     }

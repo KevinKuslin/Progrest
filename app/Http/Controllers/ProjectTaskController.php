@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\TaskImageHelper;
 use App\Models\Project;
 use App\Models\Task;
+use App\Notifications\ActivityNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -144,6 +145,41 @@ class ProjectTaskController extends Controller
         $task = Task::create($validated);
         $task->users()->sync($request->members ?? []);
 
+        // $task->load('users');
+
+        // dd(
+        //     $task->users->pluck('id'),
+        //     auth()->id()
+        // );
+
+        foreach ($task->project->users as $member) {
+
+            if ($member->id == auth()->id()) {
+                $member->notify(
+                    new ActivityNotification(
+                        title: 'Task Created',
+                        message: 'You created the task "'.$task->title.'".',
+                        type: 'task_created',
+                        projectId: $project->id,
+                        taskId: $task->id,
+                    )
+                );
+                continue;
+            }
+
+            $member->notify(
+                new ActivityNotification(
+                    title: 'Task Created',
+                    message: auth()->user()->name.' created the task "'.$task->title.'".',
+                    type: 'task_created',
+                    projectId: $project->id,
+                    taskId: $task->id,
+                )
+            );
+        }
+
+        $task->load('users');
+
         return redirect()
             ->back()
             ->with('success', 'Task created.');
@@ -237,6 +273,34 @@ class ProjectTaskController extends Controller
             $task->collaborators()->sync($pivot);
         } else {
             $task->collaborators()->detach();
+        }
+
+        $task->load('users');
+
+        foreach ($task->project->users as $member) {
+
+            if ($member->id == auth()->id()) {
+                $member->notify(
+                    new ActivityNotification(
+                        title: 'Task Updated',
+                        message: 'You updated the task "'.$task->title.'".',
+                        type: 'task_updated',
+                        projectId: $task->project_id,
+                        taskId: $task->id,
+                    )
+                );
+                continue;
+            }
+
+            $member->notify(
+                new ActivityNotification(
+                    title: 'Task Updated',
+                    message: auth()->user()->name.' updated the task "'.$task->title.'".',
+                    type: 'task_updated',
+                    projectId: $task->project_id,
+                    taskId: $task->id,
+                )
+            );
         }
 
         return response()->json([

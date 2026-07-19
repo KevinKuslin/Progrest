@@ -186,7 +186,7 @@
                             {{-- PROJECT TITLE INPUT --}}
 
                             <input
-                                x-model="title"
+                                x-model="task.title"
                                 name="title"
                                 type="text"
                                 placeholder="e.g. AquaVerse"
@@ -206,7 +206,7 @@
                             {{-- PROJECT DESCRIPTION INPUT --}}
 
                             <textarea
-                                x-model="description"
+                                x-model="project.description"
                                 name="description"
                                 rows="3"
                                 @input="
@@ -477,7 +477,7 @@
 
                                 <input
                                     type="date"
-                                    x-model="deadline"
+                                    x-model="project.deadline"
                                     name="deadline"
                                     class="date-input w-full rounded-lg
                                         border-[1.5px] border-text-primary/50
@@ -699,9 +699,9 @@
                         </div>
 
                         <div class="pr-2 flex flex-col">
-                            <h2 x-text="title || 'Untitled Project'"
+                            <h2 x-text="task.title || 'Untitled Project'"
                                 class="text-text-primary text-xl font-semibold font-parkinsans"></h2>
-                            <p x-text="description || 'Your project description goes here...'"
+                            <p x-text="task.description || 'Your project description goes here...'"
                                 class="text-text-primary text-sm mt-1 leading-snug"></p>
                         </div>
 
