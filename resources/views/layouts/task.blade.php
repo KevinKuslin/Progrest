@@ -135,8 +135,9 @@
                 </div>
             </div>
 
-            <div class="flex-1 overflow-y-auto">
-                <form method="POST" action="{{ route('projects.store') }}" class="flex flex-col gap-4">
+            <div class="flex-1 overflow-y-auto"
+                x-data="createTaskForm()">
+                <form method="POST" action="{{ route('projects.tasks.store', $project) }}" class="flex flex-col gap-4">
                     @csrf
                     <div class="space-y-4 p-4 flex flex-col border-[1.5px] rounded-xl border-border">
                         <div class="flex flex-row gap-2 items-center">
@@ -163,7 +164,7 @@
                         <div class="flex flex-col gap-1">
                             <p class="font-montserrat font-semibold text-[12px] text-text-primary">Task Description</p>
 
-                            {{-- PROJECT DESCRIPTION INPUT --}}
+                            {{-- Task DESCRIPTION INPUT --}}
 
                             <textarea
                                 x-model="description"
@@ -174,234 +175,202 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    {{-- Task Member Selection --}}
 
-                        {{-- APPEARANCE INPUT (COLOR THEME) --}}
-
-                        <div class="space-y-4 p-4 flex flex-col border-[1.5px] rounded-xl border-border">
-                            <div class="flex flex-row gap-2 items-center">
-                                <div class="shadow-2xl shadow-pastel-green-background">
-                                    <x-lucide-palette class="w-5 text-pastel-green-text"/>
-                                </div>
-                                <p class="font-montserrat font-semibold text-[14px] text-text-primary">Task Theme</p>
+                    <div
+                        class="bg-surface rounded-2xl p-4 space-y-4"
+                    >
+                        {{-- Header --}}
+                        <div class="flex items-center gap-2">
+                            <div class="shadow-2xl shadow-pastel-blue-background">
+                                <x-lucide-users class="w-5 text-primary"/>
                             </div>
 
-                            {{-- HIDDEN INPUT --}}
+                            <div>
+                                <p class="font-montserrat text-sm font-semibold text-text-primary">
+                                    Assigned Members
+                                </p>
 
-                            <input type="hidden" name="accent" id="selectedTheme" value="#0EA5A4">
-
-                            {{-- COLOR OPTIONS --}}
-
-                            <div class="grid grid-cols-2 min-[360px]:grid-cols-3 min-[480px]:grid-cols-4 place-items-center gap-y-4">
-                                <button
-                                    type="button"
-                                    @click="accentColor = '#0EA5A4'"
-                                    onclick="selectTheme('#0EA5A4', this)" 
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-cyan ring-4 ring-offset-2 ring-cyan/20"
-                                >
-                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast"/>
-                                </button>
-                                <button
-                                    type="button"
-                                    @click="accentColor = '#8B5A2B'"
-                                    onclick="selectTheme('#8B5A2B', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-brown ring-brown/20"
-                                >
-                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
-                                </button>
-                                <button
-                                    type="button"
-                                    @click="accentColor = '#7C2D8E'"
-                                    onclick="selectTheme('#7C2D8E', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-purple ring-purple/20"
-                                >
-                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
-                                </button>
-                                <button
-                                    type="button"
-                                    @click="accentColor = '#0056D2'"
-                                    onclick="selectTheme('#0056D2', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-blue ring-blue/20"
-                                >
-                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
-                                </button>
-                                <button
-                                    type="button"
-                                    @click="accentColor = '#F35C75'"
-                                    onclick="selectTheme('#F35C75', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-pink ring-pink/20"
-                                >
-                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
-                                </button>
-                                <button
-                                    type="button"
-                                    @click="accentColor = '#1F5D3A'"
-                                    onclick="selectTheme('#1F5D3A', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-green ring-green/20"
-                                >
-                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
-                                </button>
-                                <button
-                                    type="button"
-                                    @click="accentColor = '#F38D08'"
-                                    onclick="selectTheme('#F38D08', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-orange ring-orange/20"
-                                >
-                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
-                                </button>
-                                <button
-                                    type="button"
-                                    @click="accentColor = '#FFEB99'"
-                                    onclick="selectTheme('#FFEB99', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-yellow ring-yellow/20"
-                                >
-                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
-                                </button>
-                                <button
-                                    type="button"
-                                    @click="accentColor = '#000000'"
-                                    onclick="selectTheme('#000000', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-black ring-black/20"
-                                >
-                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
-                                </button>
-                                <button
-                                    type="button"
-                                    @click="accentColor = '#0F766E'"
-                                    onclick="selectTheme('#0F766E', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-teal ring-teal/20"
-                                >
-                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
-                                </button>
-                                <button
-                                    type="button"
-                                    @click="accentColor = '#84CC16'"
-                                    onclick="selectTheme('#84CC16', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-lime ring-lime/20"
-                                >
-                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
-                                </button>
-                                <button
-                                    type="button"
-                                    @click="accentColor = '#E11D48'"
-                                    onclick="selectTheme('#E11D48', this)"
-                                    class="flex justify-center items-center theme-option w-7 h-7 rounded-full bg-rose ring-rose/20"
-                                >
-                                    <x-lucide-check class="theme-check-icon w-4 text-text-contrast hidden"/>
-                                </button>
+                                <p class="text-xs text-text-secondary font-montserrat">
+                                    Add or remove members assigned to this task.
+                                </p>
                             </div>
                         </div>
 
-                        {{-- HIDDEN INPUT KHUSUS ICON --}}
+                        {{-- Search --}}
+                        <div class="space-y-1">
 
-                        <input type="hidden" name="icon" id="selectedIcon" value="folder">
+                            <p class="text-xs font-semibold text-text-primary font-montserrat">
+                                Search users
+                            </p>
 
-                        {{-- ICONS SELECTION INPUT --}}
+                            <div class="relative">
 
-                        <div class="space-y-4 p-4 flex flex-col border-[1.5px] rounded-xl border-border"
-                        >
-                            <div class="flex flex-col gap-3">
+                                <x-lucide-search
+                                    class="absolute left-4 top-1/2 -translate-y-1/2
+                                        w-4 h-4 text-text-secondary"
+                                />
 
-                                {{-- HEADER --}}
-                                <div class="flex flex-row gap-2 items-center">
-                                    <div class="shadow-2xl shadow-pastel-green-background">
-                                        <x-lucide-loader-pinwheel class="w-5 text-pastel-green-text"/>
+                                <input
+                                    type="text"
+                                    x-model="assignedMemberQuery"
+                                    @input="searchAssignedMembers()"
+                                    placeholder="Username or email..."
+                                    class="w-full rounded-xl
+                                        border-2 border-border
+                                        bg-background
+                                        py-2.5 pl-11 pr-10
+                                        text-[12px]
+                                        text-text-primary
+                                        outline-none
+                                        focus:border-primary font-montserrat"
+                                >
+
+                                <button
+                                    x-show="assignedMemberQuery.length"
+                                    @click="
+                                        assignedMemberQuery = '';
+                                        assignedSearchResults = [];
+                                    "
+                                    type="button"
+                                    class="absolute right-3 top-1/2
+                                        -translate-y-1/2
+                                        rounded-full p-1
+                                        hover:bg-surface cursor-pointer"
+                                >
+                                    <x-lucide-x class="w-4 h-4 text-text-primary"/>
+                                </button>
+
+                                {{-- Dropdown --}}
+                                <div
+                                    x-show="assignedSearchResults.length"
+                                    x-transition
+                                    class="absolute left-0 right-0 top-full mt-2
+                                        rounded-xl border border-border
+                                        bg-background
+                                        shadow-xl
+                                        overflow-hidden
+                                        z-50"
+                                >
+
+                                    <template
+                                        x-for="user in assignedSearchResults"
+                                        :key="user.id"
+                                    >
+
+                                        <button
+                                            type="button"
+                                            @click="addAssignedMember(user)"
+                                            class="w-full
+                                                flex items-center gap-2
+                                                px-2 py-3
+                                                hover:bg-surface
+                                                transition"
+                                        >
+
+                                            <img
+                                                :src="user.avatar || '/images/profile.jpg'"
+                                                class="w-6 h-6 rounded-full object-cover"
+                                            >
+
+                                            <div class="flex flex-col text-left">
+
+                                                <span
+                                                    class="font-semibold text-sm text-text-primary font-montserrat"
+                                                    x-text="user.name"
+                                                ></span>
+
+                                                <span
+                                                    class="text-[10px] text-text-secondary font-montserrat"
+                                                    x-text="user.email"
+                                                ></span>
+
+                                            </div>
+
+                                        </button>
+
+                                    </template>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        {{-- Selected members --}}
+                        <div class="space-y-2">
+
+                            <p class="text-xs font-semibold text-text-primary">
+                                Assigned Members
+                            </p>
+
+                            <template
+                                x-for="member in assignedMembers"
+                                :key="member.id"
+                            >
+
+                                <div
+                                    class="flex items-center justify-between
+                                        rounded-xl
+                                        bg-background
+                                        px-3 py-2
+                                        border border-border"
+                                >
+
+                                    <div class="flex items-center gap-3">
+
+                                        <img
+                                            :src="member.avatar || '/images/profile.jpg'"
+                                            class="w-9 h-9 rounded-full object-cover"
+                                        >
+
+                                        <div>
+
+                                            <p
+                                                class="font-medium text-sm text-text-primary"
+                                                x-text="member.name"
+                                            ></p>
+
+                                            <p
+                                                x-show="member.id == {{ $project->leader_id }}"
+                                                class="text-xs text-emerald-600"
+                                            >
+                                                Project Leader
+                                            </p>
+
+                                        </div>
+
                                     </div>
 
-                                    <p class="font-montserrat font-semibold text-[14px] text-text-primary">
-                                        Task Icon
-                                    </p>
+                                    <button
+                                        type="button"
+                                        @click="removeAssignedMember(member.id)"
+                                        class="w-8 h-8
+                                            rounded-full
+                                            hover:bg-red-50
+                                            text-red-500
+                                            transition"
+                                    >
+                                        <x-lucide-x class="w-4 h-4 mx-auto"/>
+                                    </button>
+
                                 </div>
 
-                                {{-- DEFAULT ICONS --}}
-                                <div class="grid grid-cols-2 min-[360px]:grid-cols-3 min-[480px]:grid-cols-4 place-items-center gap-y-4">
+                            </template>
 
-                                    <button type="button" 
-                                        @click="icon = 'folder'"
-                                        onclick="selectIcon('folder', this)"
-                                        class="icon-option bg-quartiary/80 p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-folder class="icon-icon w-4 h-4 text-text-contrast"/>
-                                    </button>
-
-                                    <button type="button"
-                                        @click="icon = 'clock'"
-                                        onclick="selectIcon('clock', this)"
-                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-clock class="icon-icon w-4 h-4 text-text-secondary"/>
-                                    </button>
-
-                                    <button type="button"
-                                        @click="icon = 'book-open'"
-                                        onclick="selectIcon('book-open', this)"
-                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-book-open class="icon-icon w-4 h-4 text-text-secondary"/>
-                                    </button>
-
-                                    <button type="button"
-                                        @click="icon = 'chart-column'"
-                                        onclick="selectIcon('chart-column', this)"
-                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-chart-column class="icon-icon w-4 h-4 text-text-secondary"/>
-                                    </button>
-
-                                    <button type="button"
-                                        @click="icon = 'trees'"
-                                        onclick="selectIcon('trees', this)"
-                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-trees class="icon-icon w-4 h-4 text-text-secondary"/>
-                                    </button>
-
-                                    <button type="button"
-                                        @click="icon = 'calendar'"
-                                        onclick="selectIcon('calendar', this)"
-                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-calendar class="icon-icon w-4 h-4 text-text-secondary"/>
-                                    </button>
-
-                                    <button type="button"
-                                        @click="icon = 'backpack'"
-                                        onclick="selectIcon('backpack', this)"
-                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-backpack class="icon-icon w-4 h-4 text-text-secondary"/>
-                                    </button>
-
-                                    <button type="button"
-                                        @click="icon = 'camera'"
-                                        onclick="selectIcon('camera', this)"
-                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-camera class="icon-icon w-4 h-4 text-text-secondary"/>
-                                    </button>
-
-                                    <button type="button"
-                                        @click="icon = 'shopping-cart'"
-                                        onclick="selectIcon('shopping-cart', this)"
-                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-shopping-cart class="icon-icon w-4 h-4 text-text-secondary"/>
-                                    </button>
-
-                                    <button type="button"
-                                        @click="icon = 'gamepad-2'"
-                                        onclick="selectIcon('gamepad-2', this)"
-                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-gamepad-2 class="icon-icon w-4 h-4 text-text-secondary"/>
-                                    </button>
-
-                                    <button type="button"
-                                        @click="icon = 'cat'"
-                                        onclick="selectIcon('cat', this)"
-                                        class="icon-option p-2 bg-background rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-cat class="icon-icon w-4 h-4 text-text-secondary"/>
-                                    </button>
-
-                                    <button type="button"
-                                        @click="icon = 'cooking-pot'"
-                                        onclick="selectIcon('cooking-pot', this)"
-                                        class="icon-option bg-background p-2 rounded-lg border border-border hover:bg-secondary transition">
-                                        <x-lucide-cooking-pot class="icon-icon w-4 h-4 text-text-secondary"/>
-                                    </button>
-                                </div>
-                            </div>
                         </div>
+
+                        <template
+                            x-for="member in assignedMembers"
+                            :key="'hidden-' + member.id"
+                        >
+                            <input
+                                type="hidden"
+                                name="members[]"
+                                :value="member.id"
+                            >
+                        </template>
+
                     </div>
 
                     {{-- Task TIMELINE INPUT --}}
@@ -567,108 +536,233 @@
     </div>
 
     <script>
+        function createTaskForm() {
+            return {
+
+                assignedMembers: [],
+                assignedMemberQuery: '',
+                assignedSearchResults: [],
+
+                async searchAssignedMembers() {
+                    if (this.assignedMemberQuery.length < 2) {
+                        this.assignedSearchResults = [];
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch(
+                            `/users/search?q=${encodeURIComponent(this.assignedMemberQuery)}`
+                        );
+
+                        const users = await response.json();
+
+                        this.assignedSearchResults = users.filter(user =>
+                            !this.assignedMembers.some(m => m.id === user.id)
+                        );
+
+                    } catch (error) {
+                        console.error(error);
+                        this.assignedSearchResults = [];
+                    }
+                },
+
+                addAssignedMember(user) {
+
+                    if (this.assignedMembers.some(m => m.id === user.id))
+                        return;
+
+                    this.assignedMembers.push(user);
+
+                    this.assignedMemberQuery = '';
+                    this.assignedSearchResults = [];
+                },
+
+                removeAssignedMember(id) {
+
+                    this.assignedMembers =
+                        this.assignedMembers.filter(m => m.id !== id);
+
+                }
+            }
+        }
+        
         function taskModal() {
             return {
                 show: false,
                 editing: false,
                 task: {},
-                selectedMembers: [],
-                selectedCollaborators: [], 
-                memberQuery: '',
-                showDisableCollabWarning: false, 
-                showCollab: false, 
-                searchResults: [],
+
+                // (Internal project member)
+                assignedMembers: [],
+                assignedMemberQuery: '',
+                assignedSearchResults: [],
+
+                // External collabolator via Go Collab
+                taskMembers: [],
+
+                showDisableCollabWarning: false,
+                showCollab: false,
+
+                newImage: null,
+
+                originalTask: {},
 
                 open(task) {
                     this.task = structuredClone(task);
+                    this.originalTask = JSON.stringify(task);
+
+                    this.newImage = null; 
+                    delete this.task.image_preview; 
 
                     this.task.go_collab_enabled =
                         Number(this.task.go_collab_enabled) === 1;
 
                     this.showCollab = this.task.go_collab_enabled;
 
-                    this.selectedMembers = [...(this.task.members ?? [])];
-                    this.selectedCollaborators = [...(this.task.collaborators ?? [])];
+                    this.assignedMembers = [...(this.task.members ?? [])];
+                    this.taskMembers = [...(this.task.collaborators ?? [])];
 
-                    this.memberQuery = '';
-                    this.searchResults = [];
+                    this.assignedMemberQuery = '';
+                    this.assignedSearchResults = [];
 
                     this.show = true;
                     this.editing = false;
                     this.showDisableCollabWarning = false;
                 },
 
-                addMember(user) {
-                    if (this.selectedMembers.some(m => m.id === user.id)) return;
-                    this.selectedMembers.push(user);
-                    this.task.members = [...this.selectedMembers];
-                    this.memberQuery = '';
-                    this.searchResults = [];
+                previewTaskImage(event) {
+                    const file = event.target.files[0];
+                    if (!file) return;
+                    this.newImage = file;
+                    this.task.image_preview = URL.createObjectURL(file);
+                }, 
+
+                addAssignedMember(user) {
+                    if (this.assignedMembers.some(m => m.id === user.id)) return;
+                    this.assignedMembers.push(user);
+                    this.task.members = [...this.assignedMembers];
+                    this.assignedMemberQuery = '';
+                    this.assignedSearchResults = [];
                 },
 
-                async searchUsers() {
-                    if (this.memberQuery.length < 2) {
-                        this.searchResults = [];
+                async searchAssignedMembers() {
+                    if (this.assignedMemberQuery.length < 2) {
+                        this.assignedSearchResults = [];
                         return;
                     }
+
                     try {
                         const response = await fetch(
-                            `/users/search?q=${encodeURIComponent(this.memberQuery)}`
+                            `/users/search?q=${encodeURIComponent(this.assignedMemberQuery)}`
                         );
-                        this.searchResults = await response.json();
+
+                        // Jaga supaya assigned user nda muncul di dropdown lagi 
+                        const users = await response.json();
+                        this.assignedSearchResults = users.filter(user =>
+                            !this.assignedMembers.some(member => member.id === user.id)
+                        );
                     } catch (error) {
                         console.error(error);
-                        this.searchResults = [];
+                        this.assignedSearchResults = [];
                     }
-                },
+                },  
 
                 async save() {
-                    try {
-                        const response = await fetch(`/tasks/${this.task.id}`, {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Accept': 'application/json',
-                                'X-CSRF-TOKEN': document
-                                    .querySelector('meta[name="csrf-token"]')
-                                    .content,
-                            },
-                            body: JSON.stringify({
-                                title: this.task.title,
-                                description: this.task.description,
-                                priority: this.task.priority,
-                                status: this.task.status,
-                                deadline: this.task.deadline,
-                                members: this.selectedMembers.map(m => m.id),
-                                go_collab_enabled: !!this.task.go_collab_enabled,
-                                go_collab_description: this.task.go_collab_description,
-                                go_collab_limit: this.task.go_collab_limit,
-                                go_collab_reward: this.task.go_collab_reward,
+                    try{
+                        const formData = new FormData();
 
-                                collaborators: this.selectedCollaborators.map(c => ({
-                                    id: c.id
-                                }))
-                            })
+                        formData.append('title', this.task.title);
+                        formData.append('description', this.task.description);
+                        formData.append('priority', this.task.priority);
+                        formData.append('status', this.task.status);
+                        formData.append('deadline', this.task.deadline ?? '');
+
+                        formData.append(
+                            'go_collab_enabled',
+                            this.task.go_collab_enabled ? 1 : 0
+                        );
+
+                        formData.append(
+                            'go_collab_description',
+                            this.task.go_collab_description ?? ''
+                        );
+
+                        formData.append(
+                            'go_collab_limit',
+                            this.task.go_collab_limit ?? ''
+                        );
+
+                        formData.append(
+                            'go_collab_reward',
+                            this.task.go_collab_reward ?? ''
+                        );
+
+                        this.assignedMembers.forEach(member => {
+                            formData.append('members[]', member.id);
                         });
+
+                        if (this.newImage) {
+                            formData.append('image', this.newImage);
+                        }
+
+                        formData.append('_method', 'PUT'); 
+
+                        const response = await fetch(`/tasks/${this.task.id}`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': document
+                                    .querySelector('meta[name="csrf-token"]').content,
+                                'Accept': 'application/json',
+                            },
+                            body: formData
+                        });
+
                         const data = await response.json();
-                        if (!response.ok)
-                            throw data;
+                        if (!response.ok) {
+                            console.error(data);
+                            alert("Unable to save task.");
+                            return;
+                        }
+                        this.originalTask = JSON.stringify(this.task);
                         location.reload();
-                    } catch (e) {
-                        console.error(e);
+                    } catch(error){
+                        console.error(error);
                         alert("Unable to save task.");
                     }
                 }, 
 
-                removeMember(id) {
-                    this.selectedMembers =
-                        this.selectedMembers.filter(m => m.id !== id);
-                    this.task.members = [...this.selectedMembers];
+                removeAssignedMember(id) {
+                    this.assignedMembers =
+                        this.assignedMembers.filter(m => m.id !== id);
+                    this.task.members = [...this.assignedMembers];
                 },
 
-                removeCollaborator(id) {
-                    this.task.collaborators =
-                        this.task.collaborators.filter(user => user.id !== id);
+                removeTaskMember(id) {
+                    this.taskMembers =
+                        this.taskMembers.filter(user => user.id !== id);
+
+                    this.task.collaborators = [...this.taskMembers];
+                },
+
+                cancelEdit() {
+                    console.log(this.originalTask);
+                    console.log(this.task);
+                    console.log("Cancel clicked"); 
+                    this.task = JSON.parse(this.originalTask);
+
+                    this.assignedMembers = [...(this.originalTask.members ?? [])];
+                    this.taskMembers = [...(this.originalTask.collaborators ?? [])];
+                    this.assignedMemberQuery = '';
+                    this.assignedSearchResults = [];
+
+                    this.newImage = null;
+                    delete this.task.image_preview; 
+
+                    this.task.go_collab_enabled =
+                        Number(this.task.go_collab_enabled) === 1;
+                    this.showCollab = this.task.go_collab_enabled;
+
+                    this.editing = false;
                 },
 
                 edit() {
@@ -678,9 +772,13 @@
                 close() {
                     this.show = false;
                     this.editing = false;
-                    this.memberQuery = '';
-                    this.searchResults = [];
-                    this.selectedMembers = [];
+                    this.task = {}; 
+
+                    this.assignedMemberQuery = '';
+                    this.assignedSearchResults = [];
+                    this.assignedMembers = [];
+
+                    this.taskMembers = [];
                 }
             }
         }

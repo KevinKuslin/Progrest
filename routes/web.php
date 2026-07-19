@@ -79,6 +79,9 @@ Route::middleware(['auth'])->group(function () {
         [ProjectMemberController::class, 'search']
     );
 
+    Route::post('/projects/{project}/tasks', [ProjectTaskController::class, 'store'])
+        ->name('projects.tasks.store'); 
+
     Route::put('/tasks/{task}', [ProjectTaskController::class, 'update'])
         ->name('tasks.update');
     

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\TaskImageHelper;
 use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectTaskController extends Controller
 {
@@ -122,6 +124,31 @@ class ProjectTaskController extends Controller
             'totalTasks', 'progress'));
     }
 
+    public function store(Request $request, Project $project){
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'deadline' => 'nullable|date',
+            'priority' => 'required|in:low,medium,high',
+            'status' => 'required|in:pending,in_progress',
+
+            // Assigned members
+            'members' => 'nullable|array',
+            'members.*' => 'exists:users,id',
+        ]);
+
+        $validated['project_id'] = $project->id;
+        $validated['image'] = TaskImageHelper::randomPlaceholder(); 
+        $validated['leader_id'] = auth()->id();
+
+        $task = Task::create($validated);
+        $task->users()->sync($request->members ?? []);
+
+        return redirect()
+            ->back()
+            ->with('success', 'Task created.');
+    }
+
     public function update(Request $request, Task $task){
 
         $validated = $request->validate([
@@ -143,7 +170,19 @@ class ProjectTaskController extends Controller
 
             'collaborators' => ['array'],
             'collaborators.*.id' => ['exists:users,id'],
+
+            'image' => 'nullable|image|max:4096',
         ]);
+
+        if ($request->hasFile('image')) {
+            if ($task->image &&
+                Storage::disk('public')->exists($task->image)) {
+                Storage::disk('public')->delete($task->image);
+            }
+            $validated['image'] = $request
+                ->file('image')
+                ->store('tasks', 'public');
+        }
 
         $task->update([
             'title' => $validated['title'],
@@ -158,6 +197,8 @@ class ProjectTaskController extends Controller
             'go_collab_description' => $validated['go_collab_description'] ?? null,
             'go_collab_limit' => $validated['go_collab_limit'] ?? null,
             'go_collab_reward' => $validated['go_collab_reward'] ?? 0,
+
+            'image' => $validated['image'] ?? $task->image,
         ]); 
 
         // Cek member keseluruhan (assigned member)

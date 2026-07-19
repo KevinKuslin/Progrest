@@ -66,7 +66,9 @@
     {{-- IMAGE PREVIEW --}}
     <div class="my-3 shrink-0">
         <img
-            src="{{ $task->image }}"
+            src="{{ str_starts_with($task->image, '/images/')
+                ? $task->image
+                : asset('storage/'.$task->image) }}"
             class="rounded-2xl w-full h-32 object-cover shadow-2xs"
         >
     </div>
@@ -111,6 +113,7 @@
             go_collab_description: @js($task->go_collab_description),
             go_collab_limit: @js($task->go_collab_limit),
             go_collab_reward: @js($task->go_collab_reward),
+            image: @js($task->image), 
             members: @js($task->users->map(fn ($member) => [
                 'id' => $member->id,
                 'name' => $member->name,

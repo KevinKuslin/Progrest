@@ -390,6 +390,88 @@
 
                     {{-- BODY --}}
                     <div class="flex-1 overflow-y-auto px-6 py-5 space-y-5">
+
+                        {{-- Task Image --}}
+
+                        <div class="space-y-2">
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">
+                                Task Image
+                            </p>
+
+                            <template x-if="!editing">
+                                <div class="rounded-2xl overflow-hidden border-2 border-border bg-background w-50">
+                                    <img
+                                        :src="
+                                            task.image_preview
+                                                ? task.image_preview
+                                                : (
+                                                    task.image && task.image.startsWith('/images/')
+                                                        ? task.image
+                                                        : '/storage/' + task.image
+                                                )
+                                        "
+                                        class="w-full h-24 object-cover"
+                                    >
+                                </div>
+                            </template>
+
+                            <template x-if="editing">
+                                <div class="rounded-2xl border-2 border-dashed border-border bg-background p-4">
+                                    <div class="flex items-center gap-5">
+                                        <img
+                                            :src="
+                                                task.image_preview
+                                                    ? task.image_preview
+                                                    : (
+                                                        task.image && task.image.startsWith('/images/')
+                                                            ? task.image
+                                                            : '/storage/' + task.image
+                                                    )
+                                            "
+                                            class="w-40 h-28 rounded-xl object-cover border border-border shrink-0"
+                                        >
+
+                                        <div class="flex flex-col justify-center gap-3 flex-1 font-montserrat">
+
+                                            <div>
+                                                <p class="font-semibold text-md text-text-primary">
+                                                    Replace Image
+                                                </p>
+
+                                                <p class="text-sm text-text-secondary mt-1">
+                                                    Upload a new image for this task.
+                                                </p>
+                                            </div>
+
+                                            <label
+                                                class="inline-flex w-fit items-center gap-2
+                                                    rounded-xl bg-primary px-4 py-2
+                                                    text-sm font-medium text-white
+                                                    cursor-pointer hover:bg-primary-hover transition"
+                                            >
+                                                <x-lucide-upload class="w-4 h-4"/>
+
+                                                <span>Choose Image</span>
+
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    @change="previewTaskImage($event)"
+                                                    class="hidden"
+                                                >
+                                            </label>
+
+                                            <p class="text-[11px] text-text-secondary">
+                                                JPG, PNG or WebP • Max 4 MB
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+
                         {{-- Title --}}
                         <div>
                             <p class="font-montserrat font-semibold text-[12px] text-text-primary">
@@ -602,8 +684,8 @@
 
                                                     <input
                                                         type="text"
-                                                        x-model="memberQuery"
-                                                        @input="searchUsers()"
+                                                        x-model="assignedMemberQuery"
+                                                        @input="searchAssignedMembers()"
                                                         placeholder="Username or email..."
                                                         class="w-full rounded-xl
                                                             border-2 border-border
@@ -616,10 +698,10 @@
                                                     >
 
                                                     <button
-                                                        x-show="memberQuery.length"
+                                                        x-show="assignedMemberQuery.length"
                                                         @click="
-                                                            memberQuery = '';
-                                                            searchResults = [];
+                                                            assignedMemberQuery = '';
+                                                            assignedSearchResults = [];
                                                         "
                                                         type="button"
                                                         class="absolute right-3 top-1/2
@@ -632,7 +714,7 @@
 
                                                     {{-- Dropdown --}}
                                                     <div
-                                                        x-show="searchResults.length"
+                                                        x-show="assignedSearchResults.length"
                                                         x-transition
                                                         class="absolute left-0 right-0 top-full mt-2
                                                             rounded-xl border border-border
@@ -643,13 +725,13 @@
                                                     >
 
                                                         <template
-                                                            x-for="user in searchResults"
+                                                            x-for="user in assignedSearchResults"
                                                             :key="user.id"
                                                         >
 
                                                             <button
                                                                 type="button"
-                                                                @click="addMember(user)"
+                                                                @click="addAssignedMember(user)"
                                                                 class="w-full
                                                                     flex items-center gap-2
                                                                     px-2 py-3
@@ -694,7 +776,7 @@
                                                 </p>
 
                                                 <template
-                                                    x-for="member in selectedMembers"
+                                                    x-for="member in assignedMembers"
                                                     :key="member.id"
                                                 >
 
@@ -733,7 +815,7 @@
 
                                                         <button
                                                             type="button"
-                                                            @click="removeMember(member.id)"
+                                                            @click="removeAssignedMember(member.id)"
                                                             class="w-8 h-8
                                                                 rounded-full
                                                                 hover:bg-red-50
@@ -1268,6 +1350,7 @@
                             <template x-if="editing">
                                 <div class="flex gap-2">
                                     <button
+                                        type="button"
                                         @click="save()"
                                         class="bg-quartiary text-white px-5 py-2 rounded-2xl hover:bg-quartiary-hover transition cursor-pointer"
                                     >
@@ -1275,7 +1358,8 @@
                                     </button>
 
                                     <button
-                                        @click="editing = false"
+                                        type="button"
+                                        @click="cancelEdit()"
                                         class="border-2 border-red-accent text-red-accent cursor-pointer px-5 py-2.5 rounded-2xl transition hover:bg-surface bg-background font-montserrat font-semibold"
                                     >
                                         Cancel
