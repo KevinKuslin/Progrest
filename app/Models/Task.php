@@ -59,8 +59,11 @@ class Task extends Model
         return $this->hasMany(TaskCollaboration::class);
     }
 
-    public function collaborators()
-    {
+    public function submission(){
+        return $this->hasOne(TaskSubmission::class);
+    }
+
+    public function collaborators(){
         return $this->belongsToMany(User::class, 'task_collaborations')
                     ->withPivot([
                         'status',

@@ -131,6 +131,14 @@ class User extends Authenticatable
         return $this->hasMany(TaskCollaboration::class);
     }
 
+    public function submittedTasks(){
+        return $this->hasMany(TaskSubmission::class, 'submitted_by');
+    }
+
+    public function reviewedTasks(){
+        return $this->hasMany(TaskSubmission::class, 'reviewed_by');
+    }
+
     public function collaborativeTasks(){
         return $this->belongsToMany(Task::class, 'task_collaborations')
                     ->withPivot([
