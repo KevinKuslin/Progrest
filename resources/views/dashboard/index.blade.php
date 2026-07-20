@@ -18,7 +18,7 @@
         </div>
         
         <div class="relative">
-            <button id="notif-btn" class="p-3 bg-background shadow-sm rounded-full border border-border hover:bg-surface transition-colors focus:outline-none">
+            <button id="notif-btn" class="p-3 bg-background shadow-sm rounded-full border border-border hover:bg-surface transition-colors focus:outline-none cursor-pointer">
                 <x-lucide-bell class="w-6 h-6 text-text-primary" />
             </button>
             <div id="notif-dropdown" class="hidden absolute right-0 mt-3 w-72 bg-background border border-border shadow-lg rounded-2xl p-5 z-50 font-montserrat">
@@ -116,9 +116,9 @@
                 </div>
                 <div class="bg-background rounded-3xl p-6 shadow-sm border border-border flex flex-col justify-between">
                     <div class="flex justify-end gap-3 mb-4" id="chart-tabs">
-                        <button data-range="weekly" class="chart-tab bg-surface border border-border text-text-primary text-xs font-montserrat font-bold px-4 py-1.5 rounded-full transition-colors focus:outline-none">Weekly</button>
-                        <button data-range="monthly" class="chart-tab active bg-border shadow-sm text-text-primary text-xs font-montserrat font-bold px-4 py-1.5 rounded-full transition-colors focus:outline-none">Monthly</button>
-                        <button data-range="annually" class="chart-tab bg-surface border border-border text-text-primary text-xs font-montserrat font-bold px-4 py-1.5 rounded-full transition-colors focus:outline-none">Annually</button>
+                        <button data-range="weekly" class="chart-tab bg-surface border border-border text-text-primary text-xs font-montserrat font-bold px-4 py-1.5 rounded-full transition-colors focus:outline-none cursor-pointer">Weekly</button>
+                        <button data-range="monthly" class="chart-tab active bg-border shadow-sm text-text-primary text-xs font-montserrat font-bold px-4 py-1.5 rounded-full transition-colors focus:outline-none cursor-pointer">Monthly</button>
+                        <button data-range="annually" class="chart-tab bg-surface border border-border text-text-primary text-xs font-montserrat font-bold px-4 py-1.5 rounded-full transition-colors focus:outline-none cursor-pointer">Annually</button>
                     </div>
                     
                     <div class="flex h-56 md:h-64">

@@ -26,7 +26,7 @@
                 class="absolute top-5 right-5 bg-primary hover:bg-primary-hover cursor-pointer text-white px-5 py-2 rounded-full font-montserrat font-semibold flex items-center gap-2 shadow-md"
             >
                 <x-lucide-pencil class="w-4 h-4" />
-                Edit Profile
+                {{__('main.profile.edit-profile')}}
             </button>
         </div>
         <!-- PROFILE CONTENT -->
@@ -46,7 +46,7 @@
             <div class="absolute right-10 top-6 flex flex-col items-start gap-2 text-text-secondary">
                 <div class="flex items-center gap-2">
                     <x-lucide-calendar class="w-4 h-4" />
-                    Joined {{ $u->created_at?->format('M Y') ?? 'Jan 2026' }}
+                    {{__('main.profile.joined')}} {{ $u->created_at?->format('M Y') ?? 'Jan 2026' }}
                 </div>
                 @if ($place)
                     <div class="flex items-center gap-2">
@@ -79,7 +79,7 @@
                         <span class="font-montserrat text-3xl font-bold text-text-primary">{{ $stats['projects_joined'] }}</span>
                     </div>
                     <span class="text-text-secondary">
-                        Projects Joined
+                        {{__('main.profile.projects-joined')}}
                     </span>
                 </div>
                 <div class="flex flex-col items-center py-3 border-l border-border">
@@ -90,7 +90,7 @@
                         <span class="font-montserrat text-3xl font-bold text-text-primary">{{ $stats['tasks_completed'] }}</span>
                     </div>
                     <span class="text-text-secondary">
-                        Tasks Completed
+                        {{__('main.profile.tasks-completed')}}
                     </span>
                 </div>
                 <div class="flex flex-col items-center py-3 border-l border-border">
@@ -101,7 +101,7 @@
                         <span class="font-montserrat text-3xl font-bold text-text-primary">{{ $stats['collaborations'] }}</span>
                     </div>
                     <span class="text-text-secondary">
-                        Collaborations
+                        {{__('main.profile.collaborations')}}
                     </span>
                 </div>
                 <div class="flex flex-col items-center py-3 border-l border-border">
@@ -112,7 +112,7 @@
                         <span class="font-montserrat text-3xl font-bold text-text-primary">{{ $stats['points'] }}</span>
                     </div>
                     <span class="text-text-secondary">
-                        Total Points
+                        {{__('main.profile.total-points')}}
                     </span>
                 </div>
             </div>
@@ -322,6 +322,57 @@
 
     </div>
 
+    {{-- Language Switch --}}
+
+    <div class="flex items-center justify-between rounded-4xl border border-border bg-background p-6 shadow-sm mt-8">
+        {{-- Left --}}
+        <div class="flex items-center gap-4 font-montserrat">
+            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary">
+                <x-lucide-languages class="w-6 h-6 text-text-contrast" />
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-text-primary">
+                    Language Preferences
+                </h3>
+                <p class="mt-1 text-sm text-text-secondary">
+                    Choose the language used throughout Progrest.
+                </p>
+            </div>
+        </div>
+
+        {{-- Right --}}
+        <div class="flex items-center gap-3">
+            <span
+                class="text-sm font-semibold transition-colors
+                {{ app()->getLocale() == 'id'
+                    ? 'text-text-primary'
+                    : 'text-placeholder' }}">
+                ID
+            </span>
+            <label class="relative inline-flex cursor-pointer items-center">
+                <input
+                    type="checkbox"
+                    class="peer sr-only"
+                    {{ app()->getLocale() == 'en' ? 'checked' : '' }}
+                    onchange="window.location.href='{{ app()->getLocale() == 'en'
+                        ? route('language.switch', 'id')
+                        : route('language.switch', 'en') }}'"
+                >
+                <div class="h-7 w-14 rounded-full bg-secondary transition-all duration-300 peer-checked:bg-primary"></div>
+                <div
+                    class="absolute left-1 flex h-5 w-5 items-center justify-center rounded-full bg-white shadow transition-all duration-300 peer-checked:translate-x-7">
+                    <i class="fa-solid fa-check text-[10px] text-secondary opacity-0 transition-opacity peer-checked:opacity-100"></i>
+                </div>
+            </label>
+            <span
+                class="text-sm font-semibold transition-colors
+                {{ app()->getLocale() == 'en'
+                    ? 'text-text-primary'
+                    : 'text-placeholder' }}">
+                EN
+            </span>
+        </div>
+    </div>
 </div>
 
 <!-- EDIT PROFILE MODAL -->

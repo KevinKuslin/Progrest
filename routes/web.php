@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CollabController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
@@ -92,6 +93,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/notifications/read', [NotificationController::class, 'markAllAsRead'])
         ->middleware('auth')
         ->name('notifications.read');
+
+    Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
     
     Route::get('/collab', [CollabController::class, 'index']);
 });

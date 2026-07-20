@@ -77,11 +77,17 @@
     <div class="mb-4 shrink-0">
         <h3 class="text-text-primary font-semibold font-montserrat mb-2 text-sm">Collaborator</h3>
         <div class="flex items-center">
-            @foreach ($task->users->take(3) as $user)
-                <img src="{{ $user->avatar ? $user->avatar : '/images/profile.jpg' }}" class="w-8 h-8 rounded-full border-2 border-white object-cover shadow-2xs first:ml-0 -ml-2.5">
-            @endforeach
-            @if ($task->users->count() > 3)
-                <div class="w-8 h-8 rounded-full border-2 border-white bg-surface flex items-center justify-center text-xs font-semibold text-text-primary">+{{$task->users->count() - 3}}</div>
+            @if ($task->users->count() > 0)
+                @foreach ($task->users->take(3) as $user)
+                    <img src="{{ $user->avatar ? $user->avatar : '/images/profile.jpg' }}" class="w-8 h-8 rounded-full border-2 border-white object-cover shadow-2xs first:ml-0 -ml-2.5">
+                @endforeach
+                @if ($task->users->count() > 3)
+                    <div class="w-8 h-8 rounded-full border-2 border-white bg-surface flex items-center justify-center text-xs font-semibold text-text-primary">+{{$task->users->count() - 3}}</div>
+                @endif
+            @else
+                <div class="w-full h-8 rounded-xl bg-surface flex items-center justify-center text-[12px] font-montserrat italic text-text-secondary">
+                    No collaborators assigned.
+                </div>
             @endif
         </div>
     </div>

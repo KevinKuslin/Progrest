@@ -51,7 +51,7 @@
                             name="direction"
                             value="{{ request('direction','desc') }}"
                         >
-                        <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none z-10">
+                        <div class="absolute inset-y-0 left-2.5 flex items-center pointer-events-none z-10">
                             <x-lucide-search class="w-5 h-5 text-white"/>
                         </div>
                         <input
@@ -59,7 +59,8 @@
                             value="{{ request('search') }}"
                             placeholder="Search task..."
                             onchange="this.form.submit()"
-                            class="w-80
+                            class="w-70
+                                text-sm
                                 rounded-xl
                                 bg-white/10
                                 border border-white/10
@@ -67,37 +68,107 @@
                                 text-white
                                 placeholder:text-white/60
                                 py-2.5
-                                pl-12
+                                pl-10
                                 pr-2
                                 outline-none
                                 font-montserrat"
                         >
                     </form>
 
-                    {{-- Button --}}
-                    <button
-                        onclick="openPanel()"
-                        @click="showCreateModal = true"
-                        class="flex items-center gap-3
-                            bg-quartiary
-                            hover:bg-quartiary-hover
-                            rounded-2xl
-                            px-4
-                            py-2.5
-                            text-white
-                            font-semibold
-                            cursor-pointer
-                            transition">
+                    {{-- Buttons --}}
+                    <div
+                        x-data="{ open: false }"
+                        class="flex items-center gap-3"
+                    >
+                        {{-- Create Task --}}
+                        <button
+                            onclick="openPanel()"
+                            @click="showCreateModal = true"
+                            class="flex items-center gap-3
+                                bg-quartiary
+                                hover:bg-quartiary-hover
+                                rounded-2xl
+                                px-3.5
+                                py-2.5
+                                text-white
+                                font-semibold
+                                font-montserrat text-sm
+                                cursor-pointer
+                                transition">
 
-                        <div
-                            class="w-6 h-6 rounded-full
-                                bg-primary
-                                flex items-center justify-center">
+                            <div
+                                class="w-6 h-6 rounded-full
+                                    bg-primary
+                                    flex items-center justify-center">
 
-                            <x-lucide-plus class="w-5"/>
+                                <x-lucide-plus class="w-5"/>
+                            </div>
+
+                            Create Task
+                        </button>
+
+                        {{-- Project Menu --}}
+                        <div class="relative">
+
+                            <button
+                                @click="open = !open"
+                                class="w-11 h-11
+                                    rounded-2xl
+                                    bg-white/10
+                                    hover:bg-white/15
+                                    border border-white/10
+                                    backdrop-blur-md
+                                    flex items-center justify-center cursor-pointer
+                                    transition">
+
+                                <x-lucide-ellipsis class="w-5 h-5 text-white"/>
+                            </button>
+
+                            {{-- Dropdown --}}
+                            <div
+                                x-show="open"
+                                @click.outside="open = false"
+                                x-transition
+                                x-cloak
+                                class="absolute right-0 mt-2
+                                    w-44
+                                    rounded-2xl
+                                    bg-surface
+                                    border border-white/10
+                                    shadow-xl
+                                    overflow-hidden
+                                    z-50">
+
+                                {{-- Edit --}}
+                                <button
+                                    class="w-full flex items-center gap-3
+                                        px-4 py-3
+                                        text-sm
+                                        font-montserrat
+                                        text-text-primary cursor-pointer
+                                        hover:bg-white/5">
+
+                                    <x-lucide-pencil class="w-4 h-4"/>
+                                    Edit Project
+                                </button>
+
+                                {{-- Delete --}}
+                                <button
+                                    class="w-full flex items-center gap-3
+                                        px-4 py-3
+                                        text-sm
+                                        font-montserrat cursor-pointer
+                                        text-red-400
+                                        hover:bg-red-500/10">
+
+                                    <x-lucide-trash-2 class="w-4 h-4"/>
+                                    Delete Project
+                                </button>
+
+                            </div>
+
                         </div>
-                        Create Task
-                    </button>
+                    </div>
                 </div>
             </div>
 
