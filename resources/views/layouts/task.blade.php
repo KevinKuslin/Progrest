@@ -820,6 +820,7 @@
                 showDisableCollabWarning: false,
                 showDeleteTaskWarning: false,
                 showCollab: false,
+                showCompleteModal: false,
 
                 newImage: null,
 
@@ -849,6 +850,15 @@
                     this.editing = false;
                     this.showDeleteTaskWarning = false;
                     this.showDisableCollabWarning = false;
+                },
+
+                openComplete(task) {
+                    this.task = structuredClone(task);
+                    this.showCompleteModal = true;
+                },
+
+                closeComplete() {
+                    this.showCompleteModal = false;
                 },
 
                 previewTaskImage(event) {

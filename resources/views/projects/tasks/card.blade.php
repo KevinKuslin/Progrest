@@ -150,12 +150,12 @@
     </button>
 
     <button
-        @click="openComplete(
+        @click="openComplete({
             id: {{ $task->id }},
             title: @js($task->title), 
             description: @js($task->description),
             priority: @js($task->priority),
-        )"
+        })"
         class="text-text-primary w-full py-1.5 border-2 border-gray-100 shadow-sm rounded-full flex items-center justify-center gap-2 font-semibold text-sm bg-mark-completed hover:bg-mark-completed/50 transition-colors font-montserrat shrink-0 cursor-pointer mt-3"
     >
         Mark as Complete

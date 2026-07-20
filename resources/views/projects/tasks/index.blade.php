@@ -2257,6 +2257,118 @@
                     </div>
                 </div>
             </div>
+
+            <div
+                x-show="showCompleteModal"
+                x-cloak
+                x-transition.opacity
+                class="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+                    <div
+                        @click.away="closeComplete()"
+                        class="bg-surface rounded-4xl shadow-xl w-full max-w-xl mx-6 overflow-hidden">
+                            {{-- Header --}}
+                            <div class="px-8 pt-7">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 rounded-2xl bg-mark-completed flex items-center justify-center">
+                                        <x-lucide-circle-check-big class="w-6 h-6 text-green-600"/>
+                                    </div>
+                                    <div>
+                                        <h2 class="font-bold text-xl">
+                                            Submit for Review
+                                        </h2>
+                                        <p class="text-text-secondary text-sm">
+                                            Submit your work for leader verification.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Task Summary --}}
+                            <div class="px-8 mt-6">
+                                <div class="rounded-2xl bg-background border border-border p-5">
+                                    <p class="text-xs uppercase tracking-widest text-text-secondary">
+                                        Task
+                                    </p>
+                                    <h3
+                                        class="font-bold text-lg mt-1"
+                                        x-text="task.title"
+                                    ></h3>
+                                </div>
+                            </div>
+
+                            {{-- Upload Section --}}
+                            <div class="px-8 mt-6">
+                                <label class="font-semibold">
+                                    Proof Image
+                                </label>
+                                <label
+                                    class="mt-3 border-2 border-dashed border-border rounded-3xl h-48 flex flex-col justify-center items-center cursor-pointer hover:border-primary transition"
+                                >
+                                    <x-lucide-image-plus class="w-10 h-10 text-text-secondary"/>
+                                    <p class="mt-3 font-medium">
+                                        Click to upload
+                                    </p>
+                                    <span class="text-sm text-text-secondary">
+                                        PNG, JPG, JPEG
+                                    </span>
+                                    <input
+                                        type="file"
+                                        class="hidden"
+                                        accept="image/*"
+                                    >
+                                </label>
+                            </div>
+
+                            {{-- Sertain Link --}}
+                            <div class="px-8 mt-6">
+                                <label class="font-semibold">
+                                    Submission Link
+                                </label>
+                                <input
+                                    type="url"
+                                    placeholder="https://..."
+                                    class="mt-3 w-full rounded-2xl border border-border bg-background px-5 py-3 outline-none focus:ring-2 focus:ring-primary"
+                                >
+                            </div>
+
+                            {{-- Notes Section --}}
+                            <div class="px-8 mt-6">
+                                <label class="font-semibold">
+                                    Notes (Optional)
+                                </label>
+                                <textarea
+                                    rows="4"
+                                    class="mt-3 w-full rounded-2xl border border-border bg-background px-5 py-3 resize-none outline-none focus:ring-2 focus:ring-primary"
+                                    placeholder="Explain what has been completed..."
+                                ></textarea>
+                            </div>
+
+                            {{-- Info Card --}}
+                            <div class="px-8 mt-6">
+                                <div class="rounded-2xl bg-primary/10 p-4 flex gap-3">
+                                    <x-lucide-info class="w-5 h-5 text-primary shrink-0"/>
+                                    <p class="text-sm text-text-secondary">
+                                        Your submission will be reviewed by the project leader before this task is marked as completed.
+                                    </p>
+                                </div>
+                            </div>
+
+                            {{-- Footer --}}
+                            <div class="px-8 py-7 flex justify-end gap-3">
+                                <button
+                                    @click="closeComplete()"
+                                    class="px-5 py-3 rounded-2xl border border-border hover:bg-background transition cursor-pointer"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    class="px-6 py-3 rounded-2xl bg-primary text-white font-semibold hover:opacity-90 transition cursor-pointer"
+                                >
+                                    Submit for Review
+                                </button>
+                            </div>
+                    </div>
+            </div>
         </div>
     @endif
 @endsection 
