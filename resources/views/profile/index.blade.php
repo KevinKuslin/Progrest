@@ -142,9 +142,9 @@
 
                 @unless (auth()->user()->hide_email)
                     <div class="flex items-center gap-3 text-text-secondary">
-                        <x-lucide-mail class="w-5 h-5 text-primary" />
+                        <x-lucide-mail class="w-5 h-5 text-primary shrink-0" />
 
-                        <span class="font-montserrat text-sm">
+                        <span class="font-montserrat text-[12px] truncate">
                             {{ auth()->user()->email }}
                         </span>
                     </div>
@@ -154,7 +154,7 @@
                     <div class="flex items-center gap-3 text-text-secondary">
                         <x-lucide-linkedin class="w-5 h-5 text-primary" />
 
-                        <span class="font-montserrat text-sm">
+                        <span class="font-montserrat text-[12px]">
                             {{ auth()->user()->linkedin }}
                         </span>
                     </div>
@@ -549,7 +549,11 @@
                         <label class="font-montserrat font-bold text-base">
                             {{ __('main.profile.about-me') }}
                             <span class="font-normal text-text-secondary">
+<<<<<<< HEAD
                                 {{ __('main.profile.about-hint') }}
+=======
+                                (max. 100 characters) (optional)
+>>>>>>> ebd9291bf24d6466db48d97cdd3de924f3079919
                             </span>
                         </label>
                         <span data-counter-for="about" class="hidden font-montserrat text-sm font-semibold text-red-600"></span>
@@ -570,14 +574,18 @@
                         <label class="font-montserrat font-bold text-base">
                             {{ __('main.profile.more-about') }}
                             <span class="font-normal text-text-secondary">
+<<<<<<< HEAD
                                 {{ __('main.profile.more-about-hint') }}
+=======
+                                (max. 255 characters) (optional)
+>>>>>>> ebd9291bf24d6466db48d97cdd3de924f3079919
                             </span>
                         </label>
                         <span data-counter-for="more_about" class="hidden font-montserrat text-sm font-semibold text-red-600"></span>
                     </div>
 
                     <textarea
-                        rows="22"
+                        rows="6"
                         name="more_about"
                         class="w-full border-2 border-border rounded-xl p-4 resize-none"
                     >{{ old('more_about', $currentUser->more_about) }}</textarea>
