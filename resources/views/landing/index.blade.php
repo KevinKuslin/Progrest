@@ -78,7 +78,7 @@
             <a href="{{ route('register') }}" class="font-montserrat bg-primary hover:bg-primary-hover transition text-center text-white px-6 py-3 rounded-lg font-semibold shadow-md">
                 {{ __('main.landing.get-started-free') }}
             </a>
-            <button id="scroll-features" class="font-montserrat border-2 text-primary border-light-border bg-background  hover:bg-light-border-hover text-center px-6 py-3 rounded-lg font-medium shadow-md transition">
+            <button id="scroll-features" class="font-montserrat border-2 text-primary border-light-border bg-background  hover:bg-light-border-hover text-center px-6 py-3 rounded-lg font-medium shadow-md cursor-pointer transition">
                 {{ __('main.landing.see-how') }}
             </button>
         </div>

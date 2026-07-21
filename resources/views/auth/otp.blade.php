@@ -89,13 +89,13 @@
                     @endif
 
                     <button type="submit"
-                        class="text-text-contrast w-full bg-primary hover:bg-primary-hover font-bold py-2.5 md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base">
+                        class="text-text-contrast w-full bg-primary hover:bg-primary-hover font-bold py-2.5 md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm cursor-pointer md:text-base">
                         {{ __('main.auth.verify-btn') }}
                     </button>
 
                     <div class="text-center text-xs md:text-sm text-text-secondary">
                         {{ __('main.auth.no-otp') }}
-                        <button type="button" class="font-bold text-primary hover:text-primary-hover hover:underline transition">
+                        <button type="button" class="font-bold text-primary cursor-pointer hover:text-primary-hover hover:underline transition">
                             {{ __('main.auth.resend') }}
                         </button>
                     </div>
