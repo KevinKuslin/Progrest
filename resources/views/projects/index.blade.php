@@ -142,7 +142,7 @@
                     <select
                         name="sort"
                         onchange="this.form.submit()"
-                        class="bg-background rounded-3xl px-3 shadow-sm font-montserrat text-sm text-text-primary hover:bg-surface transition-colors focus:outline-none cursor-pointer appearance-none"
+                        class="bg-background rounded-3xl pr-7 pl-4 shadow-sm font-montserrat text-sm text-text-primary hover:bg-surface transition-colors focus:outline-none cursor-pointer appearance-none"
                     >
                         
                         <option value="deadline" class="outline-none"
@@ -167,19 +167,25 @@
             </div>
         </div>
 
-        <div class="mt-4 grid  grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-3 mb-10">
-            @foreach ($projects as $project)
-                @include('projects.card', [
-                    'id' => $project->id,
-                    'title' => $project->title,
-                    'description' => $project->description,
-                    'progress' => $project->getProgressAttribute(),
-                    'collaborators' => $project->users,
-                    'accentColor' => $project->accent, 
-                    'icon' => $project->icon, 
-                    'days_remaining' => $project->days_remaining
-                ])
-            @endforeach
-        </div>
+        @if ($projects->isNotEmpty())
+            <div class="mt-4 grid  grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-3 mb-10">
+                @foreach ($projects as $project)
+                    @include('projects.card', [
+                        'id' => $project->id,
+                        'title' => $project->title,
+                        'description' => $project->description,
+                        'progress' => $project->getProgressAttribute(),
+                        'collaborators' => $project->users,
+                        'accentColor' => $project->accent, 
+                        'icon' => $project->icon, 
+                        'days_remaining' => $project->days_remaining
+                    ])
+                @endforeach
+            </div>
+        @else
+            <div class="bg-background rounded-3xl p-6 text-center shadow-sm border border-border mb-10 mt-5">
+                <p class="font-montserrat text-sm text-text-secondary">{{ __('main.proj.no-projects-at-all') }}</p>
+            </div>
+        @endif
     </div>
 @endsection 

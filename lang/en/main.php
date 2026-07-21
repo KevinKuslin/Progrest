@@ -168,6 +168,7 @@ return [
         "due-in-short" => "Due in",
         "days" => "days",
         "no-due-date" => "No due date",
+        "no-projects-at-all" => "No projects have been made yet. Create one to see them here."
     ],
     "task" => [
         "create" => "Create Task",

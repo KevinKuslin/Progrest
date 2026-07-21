@@ -186,7 +186,7 @@
                             {{-- PROJECT TITLE INPUT --}}
 
                             <input
-                                x-model="task.title"
+                                x-model="title"
                                 name="title"
                                 type="text"
                                 placeholder="{{ __('main.ph.project-title-eg') }}"
@@ -206,7 +206,7 @@
                             {{-- PROJECT DESCRIPTION INPUT --}}
 
                             <textarea
-                                x-model="project.description"
+                                x-model="description"
                                 name="description"
                                 rows="3"
                                 @input="
@@ -699,9 +699,9 @@
                         </div>
 
                         <div class="pr-2 flex flex-col">
-                            <h2 x-text="task.title || '{{ __('main.preview.untitled-project') }}'"
+                            <h2 x-text="title || '{{ __('main.preview.untitled-project') }}'"
                                 class="text-text-primary text-xl font-semibold font-parkinsans"></h2>
-                            <p x-text="task.description || '{{ __('main.preview.project-desc') }}'"
+                            <p x-text="description || '{{ __('main.preview.project-desc') }}'"
                                 class="text-text-primary text-sm mt-1 leading-snug"></p>
                         </div>
 

@@ -168,6 +168,7 @@ return [
         "due-in-short" => "Jatuh tempo dalam",
         "days" => "hari",
         "no-due-date" => "Tidak ada tenggat",
+        "no-projects-at-all" => "Tidak ada proyek yang tercatat. Buat proyek baru untuk dilihat di sini."
     ],
     "task" => [
         "create" => "Buat Tugas",
