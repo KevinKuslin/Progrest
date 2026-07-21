@@ -87,6 +87,11 @@ Route::middleware(['auth'])->group(function () {
         [ProjectMemberController::class, 'search']
     );
 
+    Route::delete(
+    '/collab/{project}/leave',
+    [CollabController::class,'leave']
+    )->name('collab.leave');
+
     Route::post('/projects/{project}/tasks', [ProjectTaskController::class, 'store'])
         ->name('projects.tasks.store'); 
 
@@ -101,6 +106,12 @@ Route::middleware(['auth'])->group(function () {
         ->name('notifications.read');
 
     Route::get('/collab', [CollabController::class, 'index']);
+
+    Route::post('/collab/create', [CollabController::class, 'create'])
+        ->name('collab.create');
+
+    Route::post('/collab/{project}/join', [CollabController::class, 'join'])
+        ->name('collab.join');
 });
 
 Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
