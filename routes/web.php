@@ -120,10 +120,13 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('auth')
         ->name('notifications.read');
 
-    Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
-    
-    Route::get('/collab', [CollabController::class, 'index'])->name('collab');
+    Route::get('/collab', [CollabController::class, 'index']);
+
+    Route::post('/collab/create', [CollabController::class, 'create'])
+        ->name('collab.create');
 
     Route::post('/collab/{project}/join', [CollabController::class, 'join'])
         ->name('collab.join');
 });
+
+Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
