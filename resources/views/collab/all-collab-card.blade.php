@@ -91,7 +91,7 @@
             </p>
             <div class="flex items-center gap-2">
                 <div class="flex">
-                    @foreach($task->users->take(3) as $user)
+                    @foreach($task->collaborators->take(3) as $user)
                         <img
                             src="{{ $user->avatar ?: '/images/profile.jpg' }}"
                             class="w-8 h-8 rounded-full border-2 border-white -ml-4 first:ml-0 object-cover"
@@ -99,7 +99,7 @@
                     @endforeach
                 </div>
                 <span class="text-sm font-semibold text-text-primary font-montserrat">
-                    {{ $task->users->count() }} / {{ $task->go_collab_limit }}
+                    {{ $task->collaborators->count() }} / {{ $task->go_collab_limit }}
                 </span>
             </div>
         </div>
@@ -146,7 +146,7 @@
 
     {{-- Join Button --}}
     <div class="mt-5 font-montserrat">
-        @if($task->users->count() >= $task->go_collab_limit)
+        @if($task->collaborators->count() >= $task->go_collab_limit)
             <button
                 disabled
                 class="w-full rounded-full py-2.5 bg-gray-300 text-gray-600 font-semibold cursor-not-allowed text-sm"
@@ -155,7 +155,7 @@
             </button>
         @else
             <button
-                class="w-full text-sm cursor-pointer rounded-full py-2.5 bg-primary hover:bg-primary/90 text-white font-semibold transition-colors flex justify-center items-center gap-2"
+                class="w-full text-sm cursor-pointer rounded-full py-2.5 bg-primary hover:bg-primary/90 text-white font-semibold transition-colors flex justify-center items-center gap-2 font-montserrat"
             >
                 Join Collaboration
                 <x-lucide-arrow-right class="w-4 h-4"/>

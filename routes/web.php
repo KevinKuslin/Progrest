@@ -132,11 +132,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/collab', [CollabController::class, 'index']);
 
-    Route::post('/collab/create', [CollabController::class, 'create'])
-        ->name('collab.create');
-
-    Route::post('/collab/{project}/join', [CollabController::class, 'join'])
-        ->name('collab.join');
+    Route::get('/collab/active', [CollabController::class, 'active'])
+        ->name('collab.active');
 });
 
 Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');

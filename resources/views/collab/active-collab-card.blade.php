@@ -28,12 +28,21 @@
             </div>
         </div>
 
-        {{-- Reward --}}
+        {{-- Status --}}
         <div class="absolute top-4 right-4">
-            <div class="bg-white/90 backdrop-blur px-3 py-1.5 rounded-lg flex items-center gap-1 shadow-sm">
-                <x-lucide-coins class="w-4 h-4 text-yellow-500"/>
-                <span class="font-semibold text-sm text-black/80 font-montserrat">
-                    {{ $task->go_collab_reward }} pts
+            <div class="bg-white/90 backdrop-blur px-2 py-1.5 rounded-lg flex items-center gap-1 shadow-sm">
+                @if ($task->status === 'pending')
+                    <x-lucide-hourglass class="w-4 h-4 text-pastel-blue-text" />
+                @elseif ($task->status === 'completed')
+                    <x-lucide-circle-check-big class="w-4 h-4 text-pastel-green-text" />
+                @elseif ($task->status === 'cancelled')
+                    <x-lucide-circle-x class="w-4 h-4 text-pastel-red-text" />
+                @else
+                    <x-lucide-clock class="w-4 h-4 text-pastel-yellow-text" />
+                @endif
+
+                <span class="font-semibold text-[12px] text-black/80 font-montserrat ml-1">
+                    {{ $task->status === 'pending' ? 'Pending' : ($task->status === 'in_progress' ? 'In Progress' : ($task->status === 'completed' ? 'Completed' : 'Cancelled')) }}
                 </span>
             </div>
         </div>
@@ -91,7 +100,7 @@
             </p>
             <div class="flex items-center gap-2">
                 <div class="flex">
-                    @foreach($task->users->take(3) as $user)
+                    @foreach($task->collaborators->take(3) as $user)
                         <img
                             src="{{ $user->avatar ?: '/images/profile.jpg' }}"
                             class="w-8 h-8 rounded-full border-2 border-white -ml-4 first:ml-0 object-cover"
@@ -99,7 +108,7 @@
                     @endforeach
                 </div>
                 <span class="text-sm font-semibold text-text-primary font-montserrat">
-                    {{ $task->users->count() }} / {{ $task->go_collab_limit }}
+                    {{ $task->collaborators->count() }} / {{ $task->go_collab_limit }}
                 </span>
             </div>
         </div>

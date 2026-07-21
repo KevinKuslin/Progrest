@@ -7,7 +7,7 @@
 
     <div class="bg-primary rounded-b-4xl px-8 py-6 flex flex-col lg:flex-row gap-4 justify-between shadow-md">
         <div>
-            <h1 class="font-montserrat text-white text-4xl font-bold">Collaboration</h1>
+            <h1 class="font-montserrat text-white text-4xl font-bold">Collaborations</h1>
             <h3 class="font-montserrat text-white/80 text-md mt-2">Collab with other users to complete a project together.</h3>
         </div>
 
@@ -99,7 +99,7 @@
         </div>
         @if ($activeCollabTasksCount > 3)
             <div class="px-8 mt-4 flex justify-end">
-                <a href="#"
+                <a href="{{ route('collab.active') }}"
                     class="font-montserrat font-semibold text-primary hover:underline flex items-center gap-2">
                     View All ({{ $activeCollabTasksCount }})
                     <x-lucide-arrow-right class="w-4 h-4"/>
@@ -108,16 +108,28 @@
         @endif
 
     @else
-
-        <div class="mx-8 mt-4 rounded-3xl bg-background p-8 text-center shadow-sm">
-            <x-lucide-users class="w-10 h-10 mx-auto text-text-secondary mb-3"/>
-            <h2 class="font-montserrat font-semibold text-text-primary">
-                No active collaborations
-            </h2>
-            <p class="font-montserrat text-sm text-text-secondary mt-2">
-                Join a collaboration below to start working with other teams.
-            </p>
-        </div>
+        @if(request()->filled('search'))
+            <div class="mx-8 mt-4 rounded-3xl bg-background p-8 text-center shadow-sm">
+                <x-lucide-users class="w-10 h-10 mx-auto text-text-secondary mb-3"/>
+                <h2 class="font-montserrat font-semibold text-text-primary">
+                    No active collaborations found
+                </h2>
+                <p class="font-montserrat text-sm text-text-secondary mt-2">
+                    No active collaborations match 
+                    <span class="font-semibold">"{{ request('search') }}"</span>
+                </p>
+            </div>
+        @else
+            <div class="mx-8 mt-4 rounded-3xl bg-background p-8 text-center shadow-sm">
+                <x-lucide-users class="w-10 h-10 mx-auto text-text-secondary mb-3"/>
+                <h2 class="font-montserrat font-semibold text-text-primary">
+                    No active collaborations
+                </h2>
+                <p class="font-montserrat text-sm text-text-secondary mt-2">
+                    Join a collaboration below to start working with other teams.
+                </p>
+            </div>
+        @endif
     @endif
 
     {{-- All Collabs --}}
@@ -125,65 +137,91 @@
     <div class="flex justify-between items-center px-8 mt-10">
         <h1 class="font-montserrat text-text-primary text-2xl font-bold">All Available Collabs</h1>
         
-        <div class="relative gap-4">
+        @if ($allCollabTasks->count() > 0)
+            <div class="relative gap-4">
 
-            {{-- SORT BUTTON --}}
+                {{-- SORT BUTTON --}}
+                <form method="GET" class="flex gap-3">
 
-            <form method="GET" class="flex gap-3">
+                    <input
+                        id="directionInput"
+                        type="hidden"
+                        name="direction"
+                        value="{{ request('direction', 'desc') }}"
+                    >
 
-                <input
-                    id="directionInput"
-                    type="hidden"
-                    name="direction"
-                    value="{{ request('direction', 'desc') }}"
-                >
+                    <button
+                        type="submit"
+                        name="direction"
+                        value="{{ request('direction') === 'asc' ? 'desc' : 'asc' }}"
+                        onclick="document.getElementById('directionInput').disabled = true"
+                        class="bg-background rounded-2xl p-2 shadow-sm hover:bg-surface transition-colors cursor-pointer"
+                    >
+                        <x-lucide-arrow-up-down class="w-5 h-5 text-text-primary"/>
+                    </button>
 
-                <button
-                    type="submit"
-                    name="direction"
-                    value="{{ request('direction') === 'asc' ? 'desc' : 'asc' }}"
-                    onclick="document.getElementById('directionInput').disabled = true"
-                    class="bg-background rounded-2xl p-2 shadow-sm hover:bg-surface transition-colors cursor-pointer"
-                >
-                    <x-lucide-arrow-up-down class="w-5 h-5 text-text-primary"/>
-                </button>
+                    {{-- Sort Dropdown --}}
+                    <select
+                        name="sort"
+                        onchange="this.form.submit()"
+                        class="bg-background rounded-3xl pr-7 pl-4 shadow-sm font-montserrat text-sm text-text-primary hover:bg-surface transition-colors focus:outline-none cursor-pointer appearance-none"
+                    >
+                        
+                        <option value="deadline" class="outline-none"
+                            {{ request('sort') === 'deadline' ? 'selected' : '' }}>
+                            {{ __('main.proj.sort-due') }}
+                        </option>
 
-                {{-- Sort Dropdown --}}
-                <select
-                    name="sort"
-                    onchange="this.form.submit()"
-                    class="bg-background rounded-3xl pr-7 pl-4 shadow-sm font-montserrat text-sm text-text-primary hover:bg-surface transition-colors focus:outline-none cursor-pointer appearance-none"
-                >
-                    
-                    <option value="deadline" class="outline-none"
-                        {{ request('sort') === 'deadline' ? 'selected' : '' }}>
-                        {{ __('main.proj.sort-due') }}
-                    </option>
+                        <option value="alphabetical"
+                            {{ request('sort') === 'alphabetical' ? 'selected' : '' }}>
+                            {{ __('main.proj.sort-alpha') }}
+                        </option>
 
-                    <option value="alphabetical"
-                        {{ request('sort') === 'alphabetical' ? 'selected' : '' }}>
-                        {{ __('main.proj.sort-alpha') }}
-                    </option>
+                        <option value="progress"
+                            {{ request('sort') === 'progress' ? 'selected' : '' }}>
+                            {{ __('main.proj.sort-progress') }}
+                        </option>
+                    </select>
 
-                    <option value="progress"
-                        {{ request('sort') === 'progress' ? 'selected' : '' }}>
-                        {{ __('main.proj.sort-progress') }}
-                    </option>
-                </select>
+                    <x-lucide-chevron-down class="w-3.5 h-3.5 absolute right-2 top-1/2 -translate-y-1/2 text-text-primary"/>
 
-                <x-lucide-chevron-down class="w-3.5 h-3.5 absolute right-2 top-1/2 -translate-y-1/2 text-text-primary"/>
-
-            </form>
-        </div>
+                </form>
+            </div>
+        @endif
     </div>
 
     {{-- Display All Collaborable Tasks --}}
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 items-start px-8 mb-8">
-        @foreach ($allCollabTasks as $task)
-            @include('collab.all-collab-card', [
-                'task' => $task,
-            ]) 
-        @endforeach
-    </div>
+    @if ($allCollabTasks->count() == 0)
+        @if (request()->filled('search'))
+            <div class="mx-8 mt-4 rounded-3xl bg-background p-8 text-center shadow-sm mb-8">
+                <x-lucide-users class="w-10 h-10 mx-auto text-text-secondary mb-3"/>
+                <h2 class="font-montserrat font-semibold text-text-primary">
+                    No open collaborations found
+                </h2>
+                <p class="font-montserrat text-sm text-text-secondary mt-2">
+                    No open collaborations match 
+                    <span class="font-semibold">"{{ request('search') }}"</span>
+                </p>
+            </div>
+        @else
+            <div class="mx-8 mt-4 rounded-3xl bg-background p-8 text-center shadow-sm mb-8">
+                <x-lucide-users class="w-10 h-10 mx-auto text-text-secondary mb-3"/>
+                <h2 class="font-montserrat font-semibold text-text-primary">
+                    No open collaborations
+                </h2>
+                <p class="font-montserrat text-sm text-text-secondary mt-2">
+                    Wait for other users to enable collaborations and see them here.
+                </p>
+            </div>
+        @endif
+    @else
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 items-start px-8 mb-8">
+            @foreach ($allCollabTasks as $task)
+                @include('collab.all-collab-card', [
+                    'task' => $task,
+                ]) 
+            @endforeach
+        </div>
+    @endif
 @endsection

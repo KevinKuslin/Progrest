@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CollabController extends Controller{
 
-    public function index(){
+    public function index(Request $request){
         $menu = [
             [
                 'navigations' => [
@@ -22,11 +22,25 @@ class CollabController extends Controller{
             ]
         ];
 
-        $user = Auth::user();
+        $user = Auth::user(); 
+        $search = $request->input('search');
+
+        $searchFilter = function ($query) use ($search) {
+            if ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%")
+                    ->orWhereHas('project', function ($project) use ($search) {
+                        $project->where('title', 'like', "%{$search}%");
+                    });
+                });
+            }
+        };
 
         $activeCollabTasks = Task::with([
             'project.leader',
             'project.users',
+            'users',
             'collaborations' => function ($query) {
                 $query->where('user_id', auth()->id());
             },
@@ -34,6 +48,7 @@ class CollabController extends Controller{
         ->whereHas('collaborations', function ($query) {
             $query->where('user_id', auth()->id());
         })
+        ->tap($searchFilter)
         ->latest()
         ->take(3)
         ->get();
@@ -53,17 +68,64 @@ class CollabController extends Controller{
         ->whereDoesntHave('users', function ($query) use ($user) {
             $query->where('users.id', $user->id);
         })
+        ->whereDoesntHave('collaborators', function ($query) use ($user) {
+            $query->where('users.id', $user->id);
+        })
         ->whereDoesntHave('project.users', function ($query) use ($user) {
             $query->where('users.id', $user->id);
         })
         ->whereHas('project', function ($query) use ($user) {
             $query->where('leader_id', '!=', $user->id);
         })
+        ->tap($searchFilter)
         ->latest()
         ->paginate(9);
 
         return view('collab.index', compact('menu', 'user', 'allCollabTasks', 'activeCollabTasks', 'activeCollabTasksCount'));
     }
 
-    
+    public function active(Request $request){
+        $user = auth()->user();
+
+        $search = $request->search;
+        $sort = $request->sort ?? 'deadline';
+        $direction = $request->direction ?? 'asc';
+
+        $query = Task::with([
+            'project.leader',
+            'project',
+            'collaborators',
+        ])
+        ->whereHas('collaborators', function ($q) use ($user) {
+            $q->where('users.id', $user->id)
+            ->where('task_collaborations.status', 'in_progress');
+        });
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%")
+                ->orWhereHas('project', function ($project) use ($search) {
+                        $project->where('title', 'like', "%{$search}%");
+                });
+            });
+        }
+
+        switch ($sort) {
+            case 'alphabetical':
+                $query->orderBy('title', $direction);
+                break;
+
+            case 'deadline':
+                $query->orderBy('deadline', $direction);
+                break;
+
+            default:
+                $query->latest();
+        }
+
+        $tasks = $query->paginate(9)->withQueryString();
+
+        return view('collab.active.index', compact('tasks'));
+    }    
 }
