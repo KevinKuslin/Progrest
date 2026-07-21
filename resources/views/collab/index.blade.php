@@ -83,11 +83,105 @@
         </div>
     </div>
 
+    {{-- Active Collabs --}}
+
+    <h1 class="font-montserrat text-text-primary text-2xl font-bold px-8">
+        Your Active Collabs
+    </h1>
+
+    @if ($activeCollabTasks->isNotEmpty())
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 items-start px-8">
+            @foreach ($activeCollabTasks as $task)
+                @include('collab.active-collab-card', [
+                    'task' => $task,
+                ])
+            @endforeach
+        </div>
+        @if ($activeCollabTasksCount > 3)
+            <div class="px-8 mt-4 flex justify-end">
+                <a href="#"
+                    class="font-montserrat font-semibold text-primary hover:underline flex items-center gap-2">
+                    View All ({{ $activeCollabTasksCount }})
+                    <x-lucide-arrow-right class="w-4 h-4"/>
+                </a>
+            </div>
+        @endif
+
+    @else
+
+        <div class="mx-8 mt-4 rounded-3xl bg-background p-8 text-center shadow-sm">
+            <x-lucide-users class="w-10 h-10 mx-auto text-text-secondary mb-3"/>
+            <h2 class="font-montserrat font-semibold text-text-primary">
+                No active collaborations
+            </h2>
+            <p class="font-montserrat text-sm text-text-secondary mt-2">
+                Join a collaboration below to start working with other teams.
+            </p>
+        </div>
+    @endif
+
+    {{-- All Collabs --}}
+
+    <div class="flex justify-between items-center px-8 mt-10">
+        <h1 class="font-montserrat text-text-primary text-2xl font-bold">All Available Collabs</h1>
+        
+        <div class="relative gap-4">
+
+            {{-- SORT BUTTON --}}
+
+            <form method="GET" class="flex gap-3">
+
+                <input
+                    id="directionInput"
+                    type="hidden"
+                    name="direction"
+                    value="{{ request('direction', 'desc') }}"
+                >
+
+                <button
+                    type="submit"
+                    name="direction"
+                    value="{{ request('direction') === 'asc' ? 'desc' : 'asc' }}"
+                    onclick="document.getElementById('directionInput').disabled = true"
+                    class="bg-background rounded-2xl p-2 shadow-sm hover:bg-surface transition-colors cursor-pointer"
+                >
+                    <x-lucide-arrow-up-down class="w-5 h-5 text-text-primary"/>
+                </button>
+
+                {{-- Sort Dropdown --}}
+                <select
+                    name="sort"
+                    onchange="this.form.submit()"
+                    class="bg-background rounded-3xl pr-7 pl-4 shadow-sm font-montserrat text-sm text-text-primary hover:bg-surface transition-colors focus:outline-none cursor-pointer appearance-none"
+                >
+                    
+                    <option value="deadline" class="outline-none"
+                        {{ request('sort') === 'deadline' ? 'selected' : '' }}>
+                        {{ __('main.proj.sort-due') }}
+                    </option>
+
+                    <option value="alphabetical"
+                        {{ request('sort') === 'alphabetical' ? 'selected' : '' }}>
+                        {{ __('main.proj.sort-alpha') }}
+                    </option>
+
+                    <option value="progress"
+                        {{ request('sort') === 'progress' ? 'selected' : '' }}>
+                        {{ __('main.proj.sort-progress') }}
+                    </option>
+                </select>
+
+                <x-lucide-chevron-down class="w-3.5 h-3.5 absolute right-2 top-1/2 -translate-y-1/2 text-text-primary"/>
+
+            </form>
+        </div>
+    </div>
+
     {{-- Display All Collaborable Tasks --}}
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 items-start">
-        @foreach ($tasks as $task)
-            @include('collab.card', [
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 items-start px-8 mb-8">
+        @foreach ($allCollabTasks as $task)
+            @include('collab.all-collab-card', [
                 'task' => $task,
             ]) 
         @endforeach

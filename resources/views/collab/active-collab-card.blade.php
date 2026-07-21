@@ -30,9 +30,9 @@
 
         {{-- Reward --}}
         <div class="absolute top-4 right-4">
-            <div class="bg-white/90 backdrop-blur px-3 py-1 rounded-lg flex items-center gap-1 shadow-sm">
-                <x-lucide-star class="w-4 h-4 text-yellow-500"/>
-                <span class="font-semibold text-sm text-text-primary">
+            <div class="bg-white/90 backdrop-blur px-3 py-1.5 rounded-lg flex items-center gap-1 shadow-sm">
+                <x-lucide-coins class="w-4 h-4 text-yellow-500"/>
+                <span class="font-semibold text-sm text-black/80 font-montserrat">
                     {{ $task->go_collab_reward }} pts
                 </span>
             </div>
@@ -41,7 +41,10 @@
 
     {{-- Project --}}
     <div class="flex items-center gap-2 text-sm text-text-secondary mb-2">
-        <x-lucide-folder class="w-4 h-4"/>
+        <x-dynamic-component 
+                :component="'lucide-' . ($task->project->icon ?: 'folder')"
+                class="w-4" 
+            />
         <span class="font-montserrat">
             {{ $task->project->title }}
         </span>
@@ -70,7 +73,7 @@
 
     {{-- Collaboration Description --}}
     <div class="mt-4">
-        <p class="text-sm text-text-secondary leading-relaxed line-clamp-3">
+        <p class="text-sm text-text-secondary leading-relaxed line-clamp-3 font-montserrat">
             {{ $task->go_collab_description }}
         </p>
     </div>
@@ -91,11 +94,11 @@
                     @foreach($task->users->take(3) as $user)
                         <img
                             src="{{ $user->avatar ?: '/images/profile.jpg' }}"
-                            class="w-8 h-8 rounded-full border-2 border-white -ml-2 first:ml-0 object-cover"
+                            class="w-8 h-8 rounded-full border-2 border-white -ml-4 first:ml-0 object-cover"
                         >
                     @endforeach
                 </div>
-                <span class="text-sm font-semibold text-text-primary">
+                <span class="text-sm font-semibold text-text-primary font-montserrat">
                     {{ $task->users->count() }} / {{ $task->go_collab_limit }}
                 </span>
             </div>
@@ -109,20 +112,28 @@
             @if($task->deadline)
 
                 @php
-                    $days = now()->diffInDays($task->deadline, false);
+                    $days = now()->startOfDay()->diffInDays($task->deadline->startOfDay(), false);
                 @endphp
 
-                @if($days < 0)
+                @if($days < -1)
                     <span class="text-red-500 font-semibold text-sm">
-                        Overdue
+                        Overdue by {{ $days * -1 }} days
+                    </span>
+                @elseif($days == -1)
+                    <span class="text-red-500 font-semibold text-sm">
+                        Overdue yesterday
                     </span>
                 @elseif($days == 0)
                     <span class="text-yellow-500 font-semibold text-sm">
                         Due Today
                     </span>
-                @else
+                @elseif($days > 1)
                     <span class="text-text-primary font-semibold text-sm">
                         {{ $days }} days left
+                    </span>
+                @else
+                    <span class="text-text-primary font-semibold text-sm">
+                        {{ $days }} day left
                     </span>
                 @endif
             @else
@@ -134,17 +145,17 @@
     </div>
 
     {{-- Join Button --}}
-    <div class="mt-5">
+    <div class="mt-5 font-montserrat">
         @if($task->users->count() >= $task->go_collab_limit)
             <button
                 disabled
-                class="w-full rounded-full py-2.5 bg-gray-300 text-gray-600 font-semibold cursor-not-allowed"
+                class="w-full rounded-full py-2.5 bg-gray-300 text-gray-600 font-semibold cursor-not-allowed text-sm"
             >
                 Collaboration Full
             </button>
         @else
             <button
-                class="w-full rounded-full py-2.5 bg-primary hover:bg-primary/90 text-white font-semibold transition-colors flex justify-center items-center gap-2"
+                class="w-full text-sm cursor-pointer rounded-full py-2.5 bg-primary hover:bg-primary/90 text-white font-semibold transition-colors flex justify-center items-center gap-2"
             >
                 Join Collaboration
                 <x-lucide-arrow-right class="w-4 h-4"/>
