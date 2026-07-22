@@ -23,16 +23,16 @@
             <!-- EDIT -->
             <button
                 onclick="document.getElementById('editProfileModal').classList.remove('hidden')"
-                class="absolute top-5 right-5 bg-primary hover:bg-primary-hover cursor-pointer text-white px-5 py-2 rounded-full font-montserrat font-semibold flex items-center gap-2 shadow-md"
+                class="absolute top-3 right-3 md:top-5 md:right-5 bg-primary hover:bg-primary-hover cursor-pointer text-white px-3 py-2 md:px-5 text-sm md:text-base rounded-full font-montserrat font-semibold flex items-center gap-2 shadow-md"
             >
                 <x-lucide-pencil class="w-4 h-4" />
                 {{__('main.profile.edit-profile')}}
             </button>
         </div>
         <!-- PROFILE CONTENT -->
-        <div class="relative px-10 pb-5">
+        <div class="relative px-4 md:px-10 pb-5">
             <!-- AVATAR -->
-            <div class="absolute left-10 -top-14">
+            <div class="absolute left-1/2 -translate-x-1/2 md:left-10 md:translate-x-0 -top-14">
                 <img
                     src="{{ $avatarUrl }}"
                     class="w-48 h-48 rounded-full object-cover border-[6px] border-background shadow-lg"
@@ -43,7 +43,7 @@
                 $u = auth()->user();
                 $place = collect([$u->city, $u->country])->filter()->implode(', ');
             @endphp
-            <div class="absolute right-10 top-6 flex flex-col items-start gap-2 text-text-secondary">
+            <div class="mt-2 mt-3 md:mt-0 md:absolute md:right-10 md:top-6 flex flex-col items-center md:items-start gap-2 text-text-secondary ">
                 <div class="flex items-center gap-2">
                     <x-lucide-calendar class="w-4 h-4" />
                     {{__('main.profile.joined')}} {{ $u->created_at?->format('M Y') ?? 'Jan 2026' }}
@@ -57,14 +57,14 @@
             </div>
 
             <!-- PROFILE INFO -->
-            <div class="pt-6.5 ml-54">
-                <h1 class="font-montserrat text-3xl font-bold text-text-primary">
+            <div class="pt-28 md:pt-6 md:ml-54 text-center md:text-left">
+                <h1 class="font-montserrat text-2xl md:text-3xl font-bold break-words font-bold text-text-primary">
                     {{ auth()->user()->username }}
                 </h1>
                 <p class="font-montserrat text-lg text-text-secondary mt-px">
                     {{ auth()->user()->name }}
                 </p>
-                <p class="mt-2 max-w-lg font-montserrat text-text-secondary whitespace-pre-line">{{ auth()->user()->about ?: __('main.profile.no-bio') }}</p>
+                <p class="mt-2 max-w-full md:max-w-lg break-words whitespace-pre-line font-montserrat text-text-secondary whitespace-pre-line">{{ auth()->user()->about ?: __('main.profile.no-bio') }}</p>
             </div>
         </div>
 
@@ -78,7 +78,7 @@
                         </div>
                         <span class="font-montserrat text-3xl font-bold text-text-primary">{{ $stats['projects_joined'] }}</span>
                     </div>
-                    <span class="text-text-secondary">
+                    <span class="text-xs md:text-sm text-center px-2 text-text-secondary">
                         {{__('main.profile.projects-joined')}}
                     </span>
                 </div>
@@ -231,7 +231,7 @@
                     </div>
 
                 @empty
-
+3xl
                     <p class="font-montserrat text-sm text-text-secondary">
                         {{ __('main.profile.no-tasks-helped') }}
                     </p>
