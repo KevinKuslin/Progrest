@@ -194,7 +194,7 @@
                         {{-- Tombol Register --}}
                         <button
                             type="submit"
-                            class="w-[80%] mx-auto block bg-primary hover:bg-primary-hover text-text-contrast font-bold py-2.5  md:py-2 rounded-xl transition-all shadow-md active:scale-95"
+                            class="w-[80%] mx-auto block bg-primary hover:bg-primary-hover text-text-contrast font-bold py-2.5  md:py-2 rounded-xl transition-all shadow-md active:scale-95 cursor-pointer"
                         >
                             {{ __('main.auth.register-btn') }}
                         </button>
