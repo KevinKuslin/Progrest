@@ -136,16 +136,14 @@ class TaskSubmissionController extends Controller{
         $reward = $task->go_collab_reward ?? 0;
 
         if ($task->go_collab_enabled) {
-
-            // Kurangi points dri internal members
+            // Deduct the reward from each internal member
             foreach ($task->users as $member) {
                 $member->decrement('points', $reward);
             }
-
-            // Kasih reward ke external collaborator
-            $submission->submitter->increment('points', $reward);
+            // Do nothing here.
+            // TaskCollaboration will automatically reward the collaborator.
         } else {
-            // Normal Task
+            // Normal task: reward every assigned member.
             foreach ($task->users as $member) {
                 $member->increment('points', $reward);
             }

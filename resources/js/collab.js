@@ -98,9 +98,35 @@ window.collabModal = function () {
             this.show = true;
         }, 
 
+        async leaveCollaboration() {
+            if (!confirm('Are you sure you want to leave this collaboration?')) {
+                return;
+            }
+            try {
+                const response = await fetch(`/collab/tasks/${this.collaboration.id}/leave`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': document
+                            .querySelector('meta[name="csrf-token"]')
+                            .content,
+                        'Accept': 'application/json',
+                    },
+                });
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.message || 'Unable to leave collaboration.');
+                }
+                this.close();
+                window.location.reload();
+            } catch (error) {
+                alert(error.message);
+            }
+        },
+
         close() {
 
             this.show = false;
+            this.modalMode = 'active';
 
             this.showCompleteModal = false;
             this.showSubmissionModal = false;

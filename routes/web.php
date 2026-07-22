@@ -139,12 +139,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post(
         '/collab/tasks/{task}/join',
         [CollabController::class, 'join']
-    );
+    )->name('collab.join');
 
     Route::delete(
         '/collab/tasks/{task}/leave',
         [CollabController::class, 'leave']
-    );
+    )->name('collab.leave');
 });
 
 Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
