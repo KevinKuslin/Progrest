@@ -140,8 +140,7 @@ class TaskSubmissionController extends Controller{
             foreach ($task->users as $member) {
                 $member->decrement('points', $reward);
             }
-            // Do nothing here.
-            // TaskCollaboration will automatically reward the collaborator.
+            $submission->submitter->increment('points', $reward);
         } else {
             // Normal task: reward every assigned member.
             foreach ($task->users as $member) {

@@ -451,7 +451,7 @@
                             class="bg-primary hover:bg-primary-hover cursor-pointer transition text-white px-5 py-2 rounded-full flex items-center gap-2 font-montserrat text-sm font-semibold"
                         >
                             <x-lucide-upload class="w-4 h-4" />
-                            {{ __('main.profile.upload-icon') }}
+                            {{ __('main.profile.upload-avatar') }}
                         </button>
 
                         <button

@@ -144,7 +144,12 @@ Route::middleware(['auth'])->group(function () {
     Route::delete(
         '/collab/tasks/{task}/leave',
         [CollabController::class, 'leave']
-    )->name('collab.leave');
+    )->name('collab.leave'); 
+
+    Route::get(
+        '/projects/{project}/members/search',
+        [UserController::class, 'searchProjectMembers']
+    )->name('projects.members.search');
 });
 
 Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');

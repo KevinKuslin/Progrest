@@ -341,7 +341,7 @@ return [
         "no-description" => "No description provided yet.",
         "language-pref" => "Language Preferences",
         "language-hint" => "Choose the language used throughout Progrest.",
-        "upload-icon" => "Upload Icon",
+        "upload-avatar" => "Upload Avatar",
         "upload-banner" => "Upload Banner",
         "username" => "Username",
         "full-name" => "Full Name",

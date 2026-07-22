@@ -493,7 +493,7 @@
                     {{-- Member Selection --}}
 
                     <div
-                        x-data="memberSearch()"
+                        x-data="memberSearch({{ $project->id }})"
                         class="space-y-4 rounded-xl border-[1.5px] border-border p-4 flex flex-col relative"
                     >
 
@@ -749,8 +749,9 @@
 
     </div>
     <script>
-        function memberSearch() {
+        function memberSearch(projectId) {
             return {
+                projectId,
                 query: '',
                 users: [],
                 selectedUsers: [],
@@ -761,27 +762,39 @@
                         this.users = [];
                         return;
                     }
+
                     this.loading = true;
+
                     const response = await fetch(
-                        `/users/search?q=${encodeURIComponent(this.query)}`
+                        `/projects/${this.projectId}/members/search?q=${encodeURIComponent(this.query)}`
                     );
+
                     this.users = await response.json();
+
+                    // Remove already selected users from dropdown
+                    this.users = this.users.filter(
+                        user => !this.selectedUsers.some(
+                            selected => selected.id === user.id
+                        )
+                    );
+
                     this.loading = false;
                 },
 
                 selectUser(user) {
-                    // Prevent duplicates
                     if (this.selectedUsers.some(u => u.id === user.id)) {
                         return;
                     }
 
                     this.selectedUsers.push(user);
-                    this.users = this.users.filter(u => u.id !== user.id);
+                    this.users = [];
                     this.query = '';
                 },
 
                 removeUser(id) {
-                    this.selectedUsers = this.selectedUsers.filter(user => user.id !== id);
+                    this.selectedUsers = this.selectedUsers.filter(
+                        user => user.id !== id
+                    );
                 }
             }
         }

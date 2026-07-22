@@ -58,9 +58,11 @@ class ProfileController extends Controller
             'projects_joined' => $projectIds->count(),
             'tasks_completed' => $tasksHelped->count(),
             // Other users who share projects with user
-            'collaborations'  => User::where('id', '!=', $user->id)
-                ->whereHas('projects', fn ($q) => $q->whereIn('projects.id', $projectIds))
-                ->count(),
+            'collaborations' => Task::whereHas('collaborations', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->where('status', 'completed')
+            ->count(),
             'points'          => (int) ($user->points ?? 0),
         ];
 

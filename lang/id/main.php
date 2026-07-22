@@ -341,7 +341,7 @@ return [
         "no-description" => "Belum ada deskripsi.",
         "language-pref" => "Preferensi Bahasa",
         "language-hint" => "Pilih bahasa yang digunakan di seluruh Progrest.",
-        "upload-icon" => "Unggah Ikon",
+        "upload-avatar" => "Unggah Avatar",
         "upload-banner" => "Unggah Banner",
         "username" => "Nama Pengguna",
         "full-name" => "Nama Lengkap",

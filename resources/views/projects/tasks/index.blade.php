@@ -3094,5 +3094,18 @@
                 </div>
             </div>
         </div>
+    @else
+        <div class="mx-8 mt-6 rounded-3xl bg-background p-8 text-center shadow-sm mb-8">
+            <x-lucide-clipboard-list class="w-12 h-12 mx-auto text-text-secondary mb-4"/>
+
+            <h2 class="font-montserrat font-semibold text-text-primary text-lg">
+                No tasks available in this project
+            </h2>
+
+            <p class="font-montserrat text-sm text-text-secondary mt-2 max-w-md mx-auto">
+                This project does not have any tasks yet. Create a task first to start organizing your project activities.
+            </p>
+
+        </div>
     @endif
 @endsection 

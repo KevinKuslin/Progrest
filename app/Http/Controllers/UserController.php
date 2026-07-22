@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class UserController extends Controller{
-    
-    public function search(Request $request){
+class UserController extends Controller
+{
+    public function search(Request $request)
+    {
         $search = trim($request->q);
 
         if ($search === '') {
@@ -16,7 +18,7 @@ class UserController extends Controller{
         }
 
         $users = User::query()
-            ->where('id', '!=', Auth::id()) 
+            ->where('id', '!=', Auth::id())
             ->where(function ($query) use ($search) {
                 $query->where('name', 'like', "%{$search}%")
                     ->orWhere('username', 'like', "%{$search}%")
@@ -29,6 +31,34 @@ class UserController extends Controller{
                 'username',
                 'email',
                 'avatar',
+            ]);
+
+        return response()->json($users);
+    }
+
+
+    public function searchProjectMembers(Request $request, Project $project)
+    {
+        $search = trim($request->q);
+
+        if ($search === '') {
+            return response()->json([]);
+        }
+
+        $users = $project->users()
+            ->where('users.id', '!=', Auth::id())
+            ->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('username', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            })
+            ->limit(10)
+            ->get([
+                'users.id',
+                'users.name',
+                'users.username',
+                'users.email',
+                'users.avatar',
             ]);
 
         return response()->json($users);
