@@ -5,6 +5,7 @@ window.collabModal = function () {
         showCompleteModal: false,
         showSubmissionModal: false,
         reviewMode: false,
+        modalMode: 'active', 
 
         collaboration: {
             id: null,
@@ -57,11 +58,45 @@ window.collabModal = function () {
         */
 
         open(collaboration) {
-
             this.collaboration = structuredClone(collaboration);
-
+            this.modalMode = 'active'; 
             this.show = true;
         },
+
+        async joinCollaboration() {
+            try {
+                const response = await fetch(
+                    `/collab/tasks/${this.collaboration.id}/join`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN':
+                                document.querySelector(
+                                    'meta[name="csrf-token"]'
+                                ).content,
+                            'Accept': 'application/json',
+                        },
+                    }
+                );
+                const data = await response.json();
+                if (!response.ok) {
+                    console.error(data);
+                    alert(data.message);
+                    return;
+                }
+                this.close();
+                location.reload();
+            } catch (error) {
+                console.error(error);
+                alert('Unable to join collaboration.');
+            }
+        }, 
+
+        openAvailable(collaboration) {
+            this.modalMode = 'available';
+            this.collaboration = structuredClone(collaboration);
+            this.show = true;
+        }, 
 
         close() {
 

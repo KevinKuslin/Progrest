@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\TaskCollaboration;
 use App\Models\TaskSubmission;
 use App\Notifications\ActivityNotification;
 use Illuminate\Http\Request;
@@ -154,6 +155,14 @@ class TaskSubmissionController extends Controller{
             'status' => 'completed',
             'is_completed' => true,
         ]);
+
+        if ($task->go_collab_enabled) {
+            TaskCollaboration::where('task_id', $task->id)
+                ->where('user_id', $submission->submitted_by)
+                ->update([
+                    'status' => 'completed',
+                ]);
+        }
 
         $project = $task->project;
 

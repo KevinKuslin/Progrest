@@ -144,22 +144,79 @@
         </div>
     </div>
 
-    {{-- Join Button --}}
+    {{-- Footer --}}
     <div class="mt-5 font-montserrat">
+
         @if($task->collaborators->count() >= $task->go_collab_limit)
+
             <button
                 disabled
-                class="w-full rounded-full py-2.5 bg-gray-300 text-gray-600 font-semibold cursor-not-allowed text-sm"
+                class="w-full
+                    rounded-full
+                    py-2.5
+                    bg-gray-300
+                    text-gray-600
+                    font-semibold
+                    cursor-not-allowed
+                    text-sm"
             >
                 Collaboration Full
             </button>
+
         @else
+
             <button
-                class="w-full text-sm cursor-pointer rounded-full py-2.5 bg-primary hover:bg-primary/90 text-white font-semibold transition-colors flex justify-center items-center gap-2 font-montserrat"
+                @click="openAvailable({{ Js::from($task) }})"
+                class="w-full
+                    rounded-full
+                    py-2.5
+                    bg-primary
+                    hover:bg-primary/90
+                    text-white
+                    font-semibold
+                    transition-colors
+                    flex
+                    items-center cursor-pointer
+                    justify-center
+                    gap-2
+                    text-sm"
             >
-                Join Collaboration
-                <x-lucide-arrow-right class="w-4 h-4"/>
+                <x-lucide-eye class="w-4 h-4"/>
+                View Details
             </button>
+
+            <template x-if="mode === 'available'">
+                <div class="flex justify-end gap-3">
+                    <button
+                        @click="close()"
+                        class="px-6 py-2
+                            rounded-2xl
+                            border-2 border-border
+                            hover:bg-surface
+                            transition
+                            font-montserrat
+                            text-text-primary
+                            cursor-pointer"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        @click="joinCollaboration()"
+                        class="px-6 py-2
+                            rounded-2xl
+                            bg-primary
+                            hover:bg-primary/90
+                            text-white
+                            transition
+                            font-montserrat
+                            cursor-pointer"
+                    >
+                        Join Collaboration
+                    </button>
+                </div>
+            </template>
+
         @endif
+
     </div>
 </div>

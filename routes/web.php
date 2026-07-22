@@ -135,6 +135,16 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/collab/active', [CollabController::class, 'active'])
         ->name('collab.active');
+
+    Route::post(
+        '/collab/tasks/{task}/join',
+        [CollabController::class, 'join']
+    );
+
+    Route::delete(
+        '/collab/tasks/{task}/leave',
+        [CollabController::class, 'leave']
+    );
 });
 
 Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');

@@ -144,4 +144,85 @@ class CollabController extends Controller{
 
         return view('collab.active.index', compact('menu', 'activeCollabTasks'));
     }
+
+    public function join(Task $task){
+        $user = auth()->user();
+
+        abort_unless(
+            $task->go_collab_enabled,
+            403,
+            'This task is not accepting collaborators.'
+        );
+
+        abort_if(
+            $task->status === 'completed' || $task->status === 'cancelled',
+            403,
+            'This collaboration is no longer available.'
+        );
+
+        // Cannot join own project
+        abort_if(
+            $task->project->leader_id === $user->id,
+            403,
+            'Project leaders cannot join their own collaboration.'
+        );
+
+        // Internal assigned member
+        abort_if(
+            $task->users()->where('users.id', $user->id)->exists(),
+            403,
+            'Assigned members cannot join as collaborators.'
+        );
+
+        // Already collaborating
+        abort_if(
+            $task->collaborators()->where('users.id', $user->id)->exists(),
+            422,
+            'You have already joined this collaboration.'
+        );
+
+        // Collaboration limit
+        abort_if(
+            $task->collaborators()->count() >= $task->go_collab_limit,
+            422,
+            'This collaboration is already full.'
+        );
+
+        $task->collaborators()->attach($user->id, [
+            'status' => 'in_progress',
+            'reward_earned' => 0,
+            'joined_at' => now(),
+        ]);
+
+        return response()->json([
+            'success' => true,
+        ]);
+    }
+
+    public function leave(Task $task){
+        $user = auth()->user();
+
+        $collaboration = TaskCollaboration::where([
+            'task_id' => $task->id,
+            'user_id' => $user->id,
+        ])->first();
+
+        abort_unless(
+            $collaboration,
+            404,
+            'You are not collaborating on this task.'
+        );
+
+        abort_if(
+            $task->status === 'pending',
+            403,
+            'A submission is currently under review.'
+        );
+
+        $collaboration->delete();
+
+        return response()->json([
+            'success' => true,
+        ]);
+    }
 }
